@@ -22,7 +22,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  home.packages = with pkgs; [ obsidian texliveFull cargo julia zoxide fzf ];
+  home.packages = with pkgs; [
+    obsidian
+    texliveFull
+    cargo
+    julia
+    zoxide
+    fzf
+    slack
+  ];
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -93,7 +101,18 @@
     enable = true;
     userName = "Theo Rode";
     userEmail = "theorodester@gmail.com";
-    extraConfig = { init.defaultBranch = "main"; };
+    extraConfig = {
+      init.defaultBranch = "main";
+      safe.directory = [
+        "/home/theo/Documents/Obsidian_Vault"
+        "/home/theo/Documents/HMC/HMC_MATH019_Answer_Keys"
+        "/home/theo/Documents/HMC/HMC_Semester_2"
+        "/home/theo/Documents/HMC/HMC_Semester_3"
+        "/home/theo/Documents/HMC/HMC_Semester_4"
+        "/home/theo/Documents/Resume"
+        "/home/theo/Documents/CalTech/julia_retrieval/Retrieval"
+      ];
+    };
   };
 
   # Let Home Manager install and manage itself.
