@@ -31,6 +31,7 @@
     fzf
     slack
     conda
+    zip
   ];
 
   # Home Manager can also manage your environment variables through
