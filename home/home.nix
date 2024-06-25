@@ -30,6 +30,7 @@
     zoxide
     fzf
     slack
+    conda
   ];
 
   # Home Manager can also manage your environment variables through

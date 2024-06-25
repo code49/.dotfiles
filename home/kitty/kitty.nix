@@ -14,7 +14,7 @@
       url_style = "dotted";
 
       confirm_os_window_close = 0;
-      background_opacity = "0.5";
+      background_opacity = "0.6";
 
       # theme 
       background = "#" + theme.base00;
