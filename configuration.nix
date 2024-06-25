@@ -75,7 +75,7 @@
   programs.hyprland = {
     enable = true;
     package =
-      inputs.hyprland.packages.${pkgs.system}.hyprland; # enable git version of hyprland
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland; # enable git version of hyprland
     xwayland.enable = true;
   };
 

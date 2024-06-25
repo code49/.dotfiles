@@ -12,6 +12,11 @@
 
     # git version of hyprland
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -108,7 +113,7 @@
 
     in {
       nixosConfigurations = {
-        conceivably-a-shark = lib.nixosSystem {
+        ${systemSettings.hostname} = lib.nixosSystem {
           inherit system;
           modules = [ ./configuration.nix ];
           specialArgs = {

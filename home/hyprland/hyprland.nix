@@ -4,6 +4,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
 
+    package = pkgs.hyprland;
+    xwayland.enable = true;
+
     settings = {
       "monitor" = [ ",preferred,auto,auto" "DP-6,3440x1440@175,0x0,1" ];
 
