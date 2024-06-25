@@ -92,6 +92,7 @@
     shellAliases = {
       ll = "ls -l";
       ".." = "cd ..";
+      "ssh" = "kitten ssh";
     };
 
     envExtra = ''
