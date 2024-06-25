@@ -44,7 +44,7 @@
       }
       {
         name = "python";
-        auto-format = true;
+        # auto-format = true;
       }
     ];
 
