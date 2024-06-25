@@ -32,8 +32,7 @@
     slack
     conda
     zip
-    zoom-us
-
+    # zoom-us
   ];
 
   # Home Manager can also manage your environment variables through
