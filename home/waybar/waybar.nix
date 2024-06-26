@@ -145,8 +145,8 @@
       };
       pulseaudio = {
         format = "{icon} {volume}%";
-        format-muted = "󰝟";
-        format-icons = { default = [ "󰕿" "󰖀" "󰕾" ]; };
+        format-muted = "󰝟 ";
+        format-icons = { default = [ "󰕿" "󰖀" "󰕾 " ]; };
         # on-scroll-up= "bash ~/.scripts/volume up";
         # on-scroll-down= "bash ~/.scripts/volume down";
         scroll-step = 5;
