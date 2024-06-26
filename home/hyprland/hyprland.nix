@@ -59,7 +59,7 @@
         blur = {
           enabled = true;
           size = 5;
-          passes = 1;
+          passes = 2;
           new_optimizations = true;
         };
 
