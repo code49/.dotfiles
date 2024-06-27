@@ -237,6 +237,7 @@
     discord
     spotify
     btop
+    nvtopPackages.full
 
     python3
   ];
