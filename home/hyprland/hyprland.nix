@@ -1,10 +1,11 @@
-{ config, pkgs, theme, ... }: {
+{ inputs, config, pkgs, theme, ... }: {
   imports = [ ./hyprlock.nix ./hypridle.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
 
-    package = pkgs.hyprland;
+    package =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
 
     settings = {

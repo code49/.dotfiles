@@ -129,6 +129,7 @@
           modules = [ ./home/home.nix ];
 
           extraSpecialArgs = {
+            inherit inputs;
             inherit userSettings;
             inherit theme;
           };
