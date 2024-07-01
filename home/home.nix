@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }:
+{ inputs, config, pkgs, lib, userSettings, ... }:
 
 {
   imports = [
@@ -20,7 +20,10 @@
 
   home.stateVersion = "23.11"; # DONT CHANGE
 
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = import ~/.dotfiles/home/nixpkgs-config.nix;
+  xdg.configFile."nixpkgs/config.nix".source =
+    ~/.dotfiles/home/nixpkgs-config.nix;
 
   home.packages = with pkgs; [
     obsidian
