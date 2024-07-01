@@ -13,6 +13,7 @@
     ./btop/btop.nix
     ./vscode/vscode.nix
     ./fastfetch/fastfetch.nix
+    ./scientific-fhs/scientific_fhs.nix
   ];
 
   home.username = "theo";
@@ -29,7 +30,7 @@
     obsidian
     texliveFull
     cargo
-    julia
+    # julia
     zoxide
     fzf
     slack

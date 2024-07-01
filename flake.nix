@@ -17,6 +17,9 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    # https://github.com/olynch/scientific-fhs
+    scientific-fhs.url = "github:olynch/scientific-fhs";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
