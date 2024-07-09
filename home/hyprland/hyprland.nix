@@ -1,5 +1,5 @@
 { inputs, config, pkgs, theme, ... }: {
-  imports = [ ./hyprlock.nix ./hypridle.nix ];
+  # imports = [ ./hyprlock.nix ./hypridle.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -11,8 +11,7 @@
     settings = {
       "monitor" = [ ",preferred,auto,auto" "DP-6,3440x1440@175,0x0,1" ];
 
-      "exec-once" =
-        [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" "hypridle &" ];
+      "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
 
       "$terminal" = "kitty";
       "$menu" = "wofi";

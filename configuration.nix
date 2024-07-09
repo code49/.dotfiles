@@ -97,11 +97,18 @@
   };
 
   hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-    };
+    # opengl = {
+    #   enable = true;
+    #   driSupport = true;
+    #   driSupport32Bit = true;
+    # };
+
+    # this might be needed to replace above? 
+    # graphics = {
+    #   enable32Bit = true; 
+    #   enable = true; 
+    # }
+
     nvidia = {
       modesetting.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable; # .beta
@@ -129,12 +136,12 @@
 
   # Security 
   security = {
-    # pam.services.swaylock = {
-    #   text = ''
-    #     auth include login
-    #   '';
-    # };
-    pam.services.hyprlock = { }; # enable hyprlock
+    pam.services.swaylock = {
+      text = ''
+        auth include login
+      '';
+    };
+    # pam.services.hyprlock = { }; # enable hyprlock
   };
 
   # Services 
@@ -196,8 +203,8 @@
     mako
     libnotify # for mako
 
-    hyprlock
-    hypridle
+    # hyprlock
+    # hypridle
 
     swww
     kitty
@@ -210,8 +217,8 @@
     swaynotificationcenter
     wlr-randr
     wl-clipboard
-    # swayidle
-    # swaylock
+    swayidle
+    swaylock
     xdg-desktop-portal-hyprland
     xdg-utils
     xdg-desktop-portal

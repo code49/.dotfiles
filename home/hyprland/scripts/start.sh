@@ -12,4 +12,6 @@ blueman-applet &
 
 waybar & 
 
+swayidle -w before-sleep 'swaylock -f'
+
 mako 

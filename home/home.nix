@@ -9,7 +9,7 @@
     ./wofi/wofi.nix
     ./hyprland/hyprland.nix
     ./mako/mako.nix
-    # ./swaylock/swaylock.nix
+    ./swaylock/swaylock.nix
     ./btop/btop.nix
     ./vscode/vscode.nix
     ./fastfetch/fastfetch.nix
