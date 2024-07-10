@@ -61,7 +61,7 @@ sudo nixos-rebuild switch
 ```
 to apply changes.
 
-We also want to move to the unstable branch of nixos (scary I know, but this is still far less unstable than arch's main branch):
+We also want to move to the unstable branch of nixos (scary I know, but this is still far less unstable than arch's "stable" branch):
 ```bash
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos 
 sudo nixos-rebuild switch --upgrade-all
