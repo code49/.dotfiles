@@ -97,6 +97,8 @@
       ll = "ls -l";
       ".." = "cd ..";
       "ssh" = "kitten ssh";
+      "b" = "btop";
+      "n" = "nvtop";
     };
 
     envExtra = ''
