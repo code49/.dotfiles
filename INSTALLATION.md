@@ -43,23 +43,8 @@ Through the graphical installer, I mostly followed the instructions and picked r
 We need to do some basic configuration before we can fully proceed. This involves editing the configuration file.
 
 We can use `sudoedit` for editing the configuration file (`/etc/nixos/configuration.nix`) (i.e. `sudoedit /etc/nixos/configuration.nix`) 
-I added the following lines to the configuration file: 
-```nix
-# Enable CUPS to print documents
-services.printing.enable = true; 
 
-# Enable sound with pipewire 
-sound.enable = true; 
-hardware.pulseaudio.enable = false; 
-security.rtkit.enable = true; 
-services.pipewire = {
-  enable = true; 
-  alsa.enable = true; 
-  alsa.support32Bit = true; 
-  pulse.enable = true;
-};
-```
-I also edited the environment packages to add `vim` and `git` (at least initially): 
+I edited the environment packages to add `vim` and `git` (at least initially): 
 ```nix
 environment.systemPackages = with pkgs; [
   vim
@@ -68,7 +53,7 @@ environment.systemPackages = with pkgs; [
 ```
 You could use any text editor other than `vim`, like `nano` would work or `helix` or `nvim`.
 
-In order to rebuild nixos, you need internet, which you can connect to by running `nmtui` and then connecting to a wifi network through the UI. This is pretty self-explanatory.
+In order to rebuild nixos, you need internet (because we are installing packages here), which you can connect to by running `nmtui` and then connecting to a wifi network through the UI. This is pretty self-explanatory.
 
 I can then run the following: 
 ```bash
