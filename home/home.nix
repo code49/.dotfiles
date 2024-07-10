@@ -26,6 +26,7 @@
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   home.packages = with pkgs; [
+    google-chrome
     obsidian
     texliveFull
     cargo
