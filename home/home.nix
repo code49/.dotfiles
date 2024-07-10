@@ -57,6 +57,7 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
   };
 
   dconf.settings = {
