@@ -124,7 +124,7 @@
         };
       };
       homeConfigurations = {
-        theo = home-manager.lib.homeManagerConfiguration {
+        ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home/home.nix ];
 

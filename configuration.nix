@@ -166,7 +166,7 @@
   # Define a user account.
   users.users.${userSettings.username} = {
     isNormalUser = true;
-    description = "theo rode";
+    description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [ ];
   };

@@ -15,8 +15,8 @@
     ./fastfetch/fastfetch.nix
   ];
 
-  home.username = "theo";
-  home.homeDirectory = "/home/theo";
+  home.username = userSettings.username;
+  home.homeDirectory = "/home/${userSettings.username}";
 
   home.stateVersion = "23.11"; # DONT CHANGE
 
