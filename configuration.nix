@@ -247,6 +247,9 @@
     nvtopPackages.full
 
     python3
+
+    wireplumber
+    pipewire
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
