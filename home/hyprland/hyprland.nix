@@ -35,7 +35,7 @@
       "xwayland" = { force_zero_scaling = true; };
 
       env = [
-      	"WLR_DRM_DEVICES,$HOME/.dotfiles/gpu_symlinks/igpu:$HOME/.dotfiles/gpu_symlinks/dgpu"
+      	"AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1"
       ];
 
       "general" = {
