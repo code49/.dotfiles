@@ -63,7 +63,7 @@
         "file://${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.src}";
     };
     "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
-
+    "org/gnome/desktop/datetime" = { automatic-timezone = true; };
   };
 
   gtk = {
