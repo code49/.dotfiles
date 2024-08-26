@@ -134,10 +134,11 @@
       "$mod" = "SUPER";
 
       # turning off laptop screen on lid close
-      # bindl = [
-      #   '',switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
-      #   '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
-      # ];
+      bindl = [
+        ''
+          ,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
+        '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
+      ];
 
       bind = [
         "$mod, SPACE, exec, wofi"
