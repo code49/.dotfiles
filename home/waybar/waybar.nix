@@ -33,8 +33,8 @@
       modules-right = [
         "tray"
         "battery"
-        "pulseaudio"
         "backlight"
+        "pulseaudio"
         # "network" 
         "clock"
       ];
@@ -228,7 +228,7 @@
         color: #${theme.base09};
       }
 
-      #pulseaudio {
+      #backlight {
         padding: 0;
       }
 
@@ -238,7 +238,7 @@
         padding: 0 20px; 
       }
 
-      #backlight {
+      #pulseaudio {
         border-radius: 0 24px 24px 0;
         padding: 0 20px; 
       }

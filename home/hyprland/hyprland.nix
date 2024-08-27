@@ -8,8 +8,15 @@
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
 
+    extraConfig = ''
+      device {
+        name=logitech-g502-x-plus-millennium-falcon
+        sensitivity=-0.5
+      }
+    '';
+
     settings = {
-      "monitor" = [ ",preferred,auto,auto" "DP-6,3440x1440@175,0x0,1" ];
+      "monitor" = [ ",preferred,auto,auto" "DP-5,3440x1440@175,0x0,1" ];
 
       "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
 
@@ -100,10 +107,17 @@
 
       misc = { force_default_wallpaper = 0; };
 
-      device = {
-        name = "epic-mouse-v1";
-        sensitivity = "-0.5";
-      };
+      # device = [
+      #   {
+      #     name = "epic-mouse-v1";
+      #     sensitivity = "-0.5";
+      #   }
+
+      #   {
+      #     name = "logitech-g502-x-plus-millennium-falcon";
+      #     sensitivity = "-0.5";
+      #   }
+      # ];
 
       windowrulev2 = [
         "suppressevent maximize, class:.*" # apparently this is nice
@@ -147,6 +161,8 @@
         "$mod, W, killactive,"
         "$mod, M, exit"
         "$mod, V, togglefloating"
+
+        "$mod CTRL SHIFT, W, exec, swww img ~/.dotfiles/wallpapers/shark_coral_background_1_upscale.jpg &"
 
         "$mod, Q, exec, $terminal"
         "$mod, F, exec, firefox"

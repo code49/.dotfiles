@@ -102,6 +102,8 @@
       "ssh" = "kitten ssh";
       "b" = "btop";
       "n" = "nvtop";
+      "pjcr" =
+        "/home/${userSettings.username}/.cargo/bin/pjcr"; # project creator needs to be installed with cargo
     };
 
     envExtra = ''
