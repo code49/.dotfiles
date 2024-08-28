@@ -109,6 +109,8 @@
 
       # firefox window + tab shortcuts; work-y stuff
       ffcan = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://canvas.cmu.edu' &! ; exit";
+      ffgs = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://gradescope.com' &! ; exit";
+      ffpz = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://piazza.com/class/lzszsxremeq3r3' &! ; exit"; # default to 18-100 F24
 
       ffdrive = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://drive.google.com' &! ; exit";
       ffcal = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://calendar.google.com' &! ; exit";
@@ -128,6 +130,7 @@
       # firefox window + tab shortcuts; slack (because slack is *exceptionally* annoying)
       ffcia = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://app.slack.com/client/T15JH0RJ8' &! ; exit";
       ff100 = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://app.slack.com/client/T0785RZ6M5L' &! ; exit";
+      ffio = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://app.slack.com/client/T070WJHP2E4' &! ; exit";
 
       # firefox window + tab shortcuts; other stuff
       ffsptfy = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://open.spotify.com' &! ; exit";
