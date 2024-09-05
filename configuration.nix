@@ -175,6 +175,11 @@
   # enabling flakes 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # garbage collection (keep only last 5 generations)
+  nix.settings.auto-optimise-store = true;
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than +5";
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

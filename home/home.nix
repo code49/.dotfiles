@@ -33,6 +33,7 @@
     fzf
     conda
     zip
+    unzip
   ];
 
   # Home Manager can also manage your environment variables through
@@ -111,10 +112,11 @@
       ffcan = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://canvas.cmu.edu' &! ; exit";
       ffgs = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://gradescope.com' &! ; exit";
       ffpz = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://piazza.com/class/lzszsxremeq3r3' &! ; exit"; # default to 18-100 F24
+      ffciab = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://docs.google.com/spreadsheets/d/1TGXTU7LcW0SnHU4GyXS6LyfdWWZ7TZOOrYGZ6hPWRoQ/edit?gid=1723876336#gid=1723876336' &! ; exit";
 
       ffdrive = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://drive.google.com' &! ; exit";
       ffcal = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://calendar.google.com' &! ; exit";
-      
+
       ffgmail = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://mail.google.com/mail/u/0/#inbox' &! ; exit";
       ffcmail = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://mail.google.com/mail/u/0/#inbox' &! ; exit";
 
@@ -136,6 +138,8 @@
       ffsptfy = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://open.spotify.com' &! ; exit";
       ffyou = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://youtube.com' &! ; exit";
       fftv = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://tv.youtube.com' &! ; exit";
+
+      ffph = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://photos.google.com' &! ; exit";
 
       ffsfg = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://www.espn.com/mlb/team/_/name/sf/san-francisco-giants' &! ; exit";
       fflbs = "nohup /run/current-system/sw/bin/firefox -p dchan-personal 'https://tv.youtube.com' 'https://livebaseballscorecards.com' &! ; exit";
