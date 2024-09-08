@@ -123,7 +123,7 @@
         "suppressevent maximize, class:.*" # apparently this is nice
 
         "opacity 1.0 0.6,class:^(kitty)$"
-        "opacity 0.7 0.7,class:^(code-oss)$"
+        "opacity 0.7 0.7,class:^(Code)$"
 
         "noanim,class:^(wofi)$"
 
