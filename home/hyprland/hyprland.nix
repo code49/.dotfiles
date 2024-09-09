@@ -168,7 +168,7 @@
         "$mod, F, exec, firefox"
 
         # suspend/hibernate
-        "$mod CTRL SHIFT, H, exec, systemctl hibernate"
+        "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
         "$mod CTRL SHIFT, S, exec, systemctl suspend"
 
         # moving focus
