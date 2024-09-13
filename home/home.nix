@@ -36,7 +36,7 @@
     slack
     conda
     zip
-    # zoom-us
+    zoom-us
     unzip
   ];
 
@@ -59,6 +59,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+    # DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
   };
 
   dconf.settings = {
