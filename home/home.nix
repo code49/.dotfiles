@@ -101,6 +101,7 @@
       rb = "printf 'manually-requested REBOOT in 3 seconds; \`ctrl + c\` or otherwise destroy this terminal window to cancel this operation.\n'; sleep 3; reboot"; # quickly reboot the system
       sd = "printf 'manually-requested SHUTDOWN in 3 seconds; \`ctrl + c\` or otherwise destroy this terminal window to cancel this operation.\n'; sleep 3; shutdown now"; # add delay for shutdown-ing
       cls = "clear"; # windows-style clear terminal command
+      ncode = "code .; exit"; # opens current directory in VS code, then exits
 
       # firefox window shortcuts
       ffc = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu &! ; exit";
