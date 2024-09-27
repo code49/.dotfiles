@@ -39,6 +39,7 @@
     zoom-us
     unzip
     gimp
+    viu
   ];
 
   # Home Manager can also manage your environment variables through
