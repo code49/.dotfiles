@@ -40,6 +40,7 @@
     unzip
     gimp
     viu
+    vlc
   ];
 
   # Home Manager can also manage your environment variables through
