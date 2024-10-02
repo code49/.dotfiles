@@ -154,6 +154,10 @@
         "$mod, Q, exec, $terminal"
 	"$mod, F1, layoutmsg, swapnext"
 	"$mod, F2, layoutmsg, swapwithmaster master"
+	"$mod, F3, layoutmsg, orientationleft"
+	"$mod, F4, layoutmsg, orientationright"
+	"$mod, F5, layoutmsg, addmaster"
+	"$mod, F6, layoutmsg, removemaster"
 
         # moving focus
         "$mod, J, movefocus, l"

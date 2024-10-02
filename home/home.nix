@@ -97,7 +97,7 @@
       # shell shortcuts
       ls = "ls -a"; # shows hidden files :)
       rm = "rm -i"; # adds reminder before rm'ing
-      ssh = "kitten ssh"; # allows kitty-stuff to work over ssh
+      ssh = "kitty ssh"; # allows kitty-stuff to work over ssh
       rb = "printf 'manually-requested REBOOT in 3 seconds; \`ctrl + c\` or otherwise destroy this terminal window to cancel this operation.\n'; sleep 3; reboot"; # quickly reboot the system
       sd = "printf 'manually-requested SHUTDOWN in 3 seconds; \`ctrl + c\` or otherwise destroy this terminal window to cancel this operation.\n'; sleep 3; shutdown now"; # add delay for shutdown-ing
       cls = "clear"; # windows-style clear terminal command
