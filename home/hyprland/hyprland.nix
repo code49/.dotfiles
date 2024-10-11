@@ -9,8 +9,9 @@
     settings = {
       "monitor" = [  
 	"eDP-1,2560x1440@60.00Hz,0x0,1.25"
-	"DP-7,2560x1440@165.08Hz,auto-right,1" # external dell display to the right of the internal laptop one 
-      	",preferred,auto-up,auto" # when connecting some unknown display, go up
+	"DP-7,2560x1440@165.08Hz,auto-right,1" # home dell display
+	"HDMI-A-1,1920x1080@100.00Hz,auto-right,0.75" # cmu school library display (?)
+      	",preferred,auto-right,auto" # when connecting some unknown display, go right
       ];
 
       "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
@@ -140,13 +141,15 @@
       "$mod" = "SUPER";
 
       # turning off laptop screen on lid close
-      # bindl = [
-      #   '',switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
-      #   '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
-      # ];
+      bindl = [
+        '',switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
+        '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
+      ];
 
       bind = [
-        "$mod, SPACE, exec, wofi"
+        
+	# desktop/windows management
+	"$mod, SPACE, exec, wofi"
         # ''$mod, S, exec, grim -l 2 -g "$(slurp)" - | swappy -f''
         ''$mod, S, exec, grim -l 2 -g "$(slurp -d)" - | wl-copy''
         "$mod, W, killactive,"
@@ -154,10 +157,13 @@
         "$mod, Q, exec, $terminal"
 	"$mod, F1, layoutmsg, swapnext"
 	"$mod, F2, layoutmsg, swapwithmaster master"
-	"$mod, F3, layoutmsg, orientationleft"
-	"$mod, F4, layoutmsg, orientationright"
-	"$mod, F5, layoutmsg, addmaster"
-	"$mod, F6, layoutmsg, removemaster"
+	"$mod, F3, layoutmsg, orientationcycle left right center"
+	"$mod, F4, layoutmsg, addmaster"
+	"$mod, F5, layoutmsg, removemaster"
+
+	# suspend/hibernate
+	"$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
+	"$mod CTRL SHIFT, S, exec, systemctl suspend"
 
         # moving focus
         "$mod, J, movefocus, l"
