@@ -113,13 +113,17 @@
       ffcan = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://canvas.cmu.edu' &! ; exit";
       ffgs = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://gradescope.com' &! ; exit";
       ffpz = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://piazza.com/class/lzszsxremeq3r3' &! ; exit"; # default to 18-100 F24
-      ffciab = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://docs.google.com/spreadsheets/d/1TGXTU7LcW0SnHU4GyXS6LyfdWWZ7TZOOrYGZ6hPWRoQ/edit?gid=1723876336#gid=1723876336' &! ; exit";
+      ffciaf = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://docs.google.com/spreadsheets/d/1TGXTU7LcW0SnHU4GyXS6LyfdWWZ7TZOOrYGZ6hPWRoQ/edit?gid=1723876336#gid=1723876336' &! ; exit";
 
       ffdrive = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://drive.google.com' &! ; exit";
       ffcal = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://calendar.google.com' &! ; exit";
 
       ffgmail = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://mail.google.com/mail/u/0/#inbox' &! ; exit";
       ffcmail = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://mail.google.com/mail/u/0/#inbox' &! ; exit";
+
+      ffdss = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://desmos.com/scientific' &! ; exit";
+      ffdsc = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://desmos.com/calculator' &! ; exit";
+      ffds3d = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://desmos.com/3d' &! ; exit";
 
       ffno="nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://www.notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566' &! ; exit";
 
