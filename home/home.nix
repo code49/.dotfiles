@@ -125,6 +125,9 @@
       ffdsc = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://desmos.com/calculator' &! ; exit";
       ffds3d = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://desmos.com/3d' &! ; exit";
 
+      ffghp = "nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://github.com' &! ; exit";
+      ffghc = "nohup /run/current-system/sw/bin/firefox -p dchan2-cmu -new-window 'https://github.com' &! ; exit";
+
       ffno="nohup /run/current-system/sw/bin/firefox -p dchan-personal -new-window 'https://www.notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566' &! ; exit";
 
       # firefox window + tab shortcuts; message-y stuff
