@@ -6,8 +6,8 @@
       theme = "custom_theme";
 
       editor = {
-        line-number = "relative";
-        mouse = false;
+        line-number = "absolute";
+        mouse = true;
         idle-timeout = 20; # ms before autocomplete
 
         cursor-shape = {

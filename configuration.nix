@@ -34,6 +34,7 @@
 
   # Set your time zone.
   time.timeZone = "America/New_York";
+  # time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -54,7 +55,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire 
-  sound.enable = true;
+  sound.enable = false;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

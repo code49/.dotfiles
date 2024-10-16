@@ -7,11 +7,11 @@
     xwayland.enable = true;
 
     settings = {
-      "monitor" = [  
-	"eDP-1,2560x1440@60.00Hz,0x0,1.25"
-	"DP-7,2560x1440@165.08Hz,auto-right,1" # home dell display
-	"HDMI-A-1,1920x1080@100.00Hz,auto-right,0.75" # cmu school library display (?)
-      	",preferred,auto-right,auto" # when connecting some unknown display, go right
+      "monitor" = [
+        "eDP-1,2560x1440@60.00Hz,0x0,1.25"
+        "DP-7,2560x1440@165.08Hz,auto-right,1" # home dell display
+        "HDMI-A-1,1920x1080@100.00Hz,auto-right,0.75" # cmu school library display (?)
+        ",preferred,auto-right,auto" # when connecting some unknown display, go right
       ];
 
       "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
@@ -28,16 +28,14 @@
 
         follow_mouse = 1;
 
-        touchpad = { natural_scroll = "no"; };
+        touchpad = { natural_scroll = "yes"; };
 
         sensitivity = 0;
       };
 
       "xwayland" = { force_zero_scaling = true; };
 
-      env = [
-      	"AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1"
-      ];
+      env = [ "AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1" ];
 
       "general" = {
         gaps_in = 4;
@@ -95,12 +93,12 @@
         preserve_split = "yes";
       };
 
-      master = { 
-      	allow_small_split = true;
-	mfact=0.6;
-      	new_status = "inherit";
-	new_on_top = true;
-	orientation = "right";
+      master = {
+        allow_small_split = true;
+        mfact = 0.6;
+        new_status = "inherit";
+        new_on_top = true;
+        orientation = "right";
       };
 
       gestures = { workspace_swipe = "off"; };
@@ -114,6 +112,8 @@
 
       windowrulev2 = [
         "suppressevent maximize, class:.*" # apparently this is nice
+
+        "minsize 100 100,class:^(Dve.exe)$"
 
         "opacity 1.0 0.6,class:^(kitty)$"
         "opacity 0.7 0.7,class:^(code-oss)$"
@@ -142,28 +142,29 @@
 
       # turning off laptop screen on lid close
       bindl = [
-        '',switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
+        ''
+          ,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
         '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
       ];
 
       bind = [
-        
-	# desktop/windows management
-	"$mod, SPACE, exec, wofi"
+
+        # desktop/windows management
+        "$mod, SPACE, exec, wofi"
         # ''$mod, S, exec, grim -l 2 -g "$(slurp)" - | swappy -f''
         ''$mod, S, exec, grim -l 2 -g "$(slurp -d)" - | wl-copy''
         "$mod, W, killactive,"
         "$mod, F, togglefloating"
         "$mod, Q, exec, $terminal"
-	"$mod, F1, layoutmsg, swapnext"
-	"$mod, F2, layoutmsg, swapwithmaster master"
-	"$mod, F3, layoutmsg, orientationcycle left right center"
-	"$mod, F4, layoutmsg, addmaster"
-	"$mod, F5, layoutmsg, removemaster"
+        "$mod, F1, layoutmsg, swapnext"
+        "$mod, F2, layoutmsg, swapwithmaster master"
+        "$mod, F3, layoutmsg, orientationcycle left right center"
+        "$mod, F4, layoutmsg, addmaster"
+        "$mod, F5, layoutmsg, removemaster"
 
-	# suspend/hibernate
-	"$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
-	"$mod CTRL SHIFT, S, exec, systemctl suspend"
+        # suspend/hibernate
+        "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
+        "$mod CTRL SHIFT, S, exec, systemctl suspend"
 
         # moving focus
         "$mod, J, movefocus, l"
