@@ -31,7 +31,11 @@
         touchpad = { natural_scroll = "yes"; };
 
         sensitivity = 0;
+
+        numlock_by_default = true;
       };
+
+      "cursor" = { hide_on_key_press = true; };
 
       "xwayland" = { force_zero_scaling = true; };
 
@@ -175,8 +179,8 @@
         # resizing active window 
         "$mod SHIFT, L, resizeactive, 20 0"
         "$mod SHIFT, J, resizeactive, -20 0"
-        # "$mod SHIFT, I, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
-        # "$mod SHIFT, K, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
+        "$mod SHIFT, I, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
+        "$mod SHIFT, K, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
 
         # moving active window
         "$mod CONTROL, J, movewindow, l"

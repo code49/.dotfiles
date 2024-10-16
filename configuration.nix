@@ -33,8 +33,8 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
-  # time.timeZone = "America/Los_Angeles";
+  # time.timeZone = "America/New_York";
+  time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -199,6 +199,7 @@
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     }))
+    pkgs.wttrbar
 
     mako
     libnotify # for mako
