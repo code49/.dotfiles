@@ -179,8 +179,8 @@
         # resizing active window 
         "$mod SHIFT, L, resizeactive, 20 0"
         "$mod SHIFT, J, resizeactive, -20 0"
-        "$mod SHIFT, I, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
-        "$mod SHIFT, K, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
+        # "$mod SHIFT, I, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
+        # "$mod SHIFT, K, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
 
         # moving active window
         "$mod CONTROL, J, movewindow, l"
@@ -217,13 +217,9 @@
         ", xf86audiolowervolume, exec, pamixer -d 5"
         ", xf86audioMute, exec, pamixer -t"
 
-        # keyboard brightness control 
-        ", xf86KbdBrightnessDown, exec, brightnessctl -d dell::kbd_backlight set 33%-"
-        ", xf86KbdBrightnessUp, exec, brightnessctl -d dell::kbd_backlight set 33%+"
-
         # screen backlight control
-        ", xf86MonBrightnessDown, exec, brightnessctl set 10%-"
-        ", xf86MonBrightnessUp, exec, brightnessctl set 10%+"
+        ", xf86MonBrightnessDown, exec, brightnessctl set 5%-"
+        ", xf86MonBrightnessUp, exec, brightnessctl set 5%+"
       ];
     };
   };

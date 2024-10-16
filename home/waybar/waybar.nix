@@ -26,19 +26,13 @@
         "custom/playerctl#play"
         "custom/playerctl#forward"
         "custom/playerlabel"
+        "custom/weather"
       ];
-      modules-center = [ 
-      	"clock"
-      ];
-      modules-right = [
-        "hyprland/workspaces"
-	"tray"
-        "battery"
-        "pulseaudio"
-        "backlight" 
-      ];
+      modules-center = [ "clock" ];
+      modules-right =
+        [ "hyprland/workspaces" "tray" "battery" "pulseaudio" "backlight" ];
       clock = {
-      	interval = 1;
+        interval = 1;
         format = "{:%A | %d.%m.%y | %H:%M:%S}";
         tooltip = "true";
         tooltip-format = ''
@@ -59,6 +53,13 @@
           default = "";
           sort-by-number = true;
         };
+      };
+      "custom/weather" = {
+        format = "{}°";
+        tooltip = true;
+        interval = 900;
+        exec = "wttrbar";
+        return-type = "json";
       };
       "custom/playerctl#backward" = {
         format = "󰙣 ";
@@ -95,7 +96,7 @@
         on-click = "";
       };
       battery = {
-      	interval = 10;
+        interval = 10;
         states = {
           good = 95;
           warning = 30;
@@ -211,7 +212,7 @@
       }
 
       #tray, #pulseaudio, #network, #battery, #disk, #cpu, #memory, #backlight,
-      #custom-playerctl.backward, #custom-playerctl.play, #custom-playerctl.forward{
+      #custom-playerctl.backward, #custom-playerctl.play, #custom-playerctl.forward {
         background: #${theme.dark_background_primary};
         font-weight: bold;
         margin: 5px 0px;
@@ -258,7 +259,7 @@
         border-radius: 0 24px 24px 0;
       }
 
-      #clock {
+      #clock, #custom-weather {
         color: #${theme.base0B};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
