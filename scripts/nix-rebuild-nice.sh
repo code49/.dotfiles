@@ -11,7 +11,6 @@ sudo nixos-rebuild switch --flake ~/.dotfiles --upgrade-all
 
 # attempt garbage collection
 sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system +$SAVE_GENERATIONS
-sudo nix-collect-garbage -d
 
 # rebuild to make this actually show correctly on boot screen?
 sudo nixos-rebuild switch --flake ~/.dotfiles --upgrade-all
