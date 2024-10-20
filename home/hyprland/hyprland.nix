@@ -34,7 +34,9 @@
 
         touchpad = { natural_scroll = "no"; };
 
-        sensitivity = 0;
+        sensitivity = 0.0;
+        # force_no_accel = 1;
+        # accel_profile = "flat";
       };
 
       "xwayland" = { force_zero_scaling = true; };

@@ -108,6 +108,7 @@
       "n" = "nvtop";
       "pjcr" =
         "/home/${userSettings.username}/.cargo/bin/pjcr"; # project creator needs to be installed with cargo
+      "ns" = "nix-shell";
     };
 
     envExtra = ''
