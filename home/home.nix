@@ -95,7 +95,7 @@
     shellAliases = {
 
       # shell shortcuts
-      ls = "ls -a"; # shows hidden files :)
+      ls = "ls -al"; # shows hidden files, list view :)
       rm = "rm -i"; # adds reminder before rm'ing
       ssh = "kitty ssh"; # allows kitty-stuff to work over ssh
       rb = ''
