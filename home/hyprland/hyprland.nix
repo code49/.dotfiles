@@ -45,6 +45,8 @@
         # force reasonable cursor sizes 
         "GDK_SCALE, 2"
         "XCURSOR_SIZE,32"
+        "HYPRCURSOR_THEME,theme_NotwaitaBlack"
+        "HYPRCURSOR_SIZE,24"
       ];
 
       "general" = {
