@@ -65,6 +65,11 @@
     pulse.enable = true;
   };
 
+  # Enable bluetooth via blueman, default off
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = false;
+  services.blueman.enable = true;
+
   # Enabling hyprland
   programs.hyprland = {
     enable = true;

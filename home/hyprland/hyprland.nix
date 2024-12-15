@@ -14,7 +14,11 @@
         ",preferred,auto-right,auto" # when connecting some unknown display, go right
       ];
 
-      "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
+      "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh",
+                      "[workspace 1 silent] nohup firefox -p dchan-personal 'notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566''calendar.google.com' 'mail.google.com'",
+                      "[workspace 1 silent] nohup firefox -p dchan-personal 'davidlechan.dev' 'open.spotify.com'",
+                      "[workspace 2 silent] nohup firefox -p dchan-personal 'discord.com/channels/@me'"
+                    ];
 
       "$terminal" = "kitty";
       "$menu" = "wofi";
