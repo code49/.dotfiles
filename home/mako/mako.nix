@@ -5,7 +5,7 @@
     sort = "-time";
 
     # Style
-    font = "JetBrainsMono Nerd Font 12";
+    font = "JetBrainsMono Nerd Font 9";
     width = 300;
     height = 100;
     margin = "10";
