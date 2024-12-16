@@ -100,10 +100,10 @@
       ssh = "kitty ssh"; # allows kitty-stuff to work over ssh
       rb = ''
         printf 'manually-requested REBOOT in 1 second; `ctrl + c` or otherwise destroy this terminal window to cancel this operation.
-        '; sleep 1; reboot''; # quickly reboot the system
+        '; sleep 1.75; reboot''; # quickly reboot the system
       sd = ''
         printf 'manually-requested SHUTDOWN in 1 second; `ctrl + c` or otherwise destroy this terminal window to cancel this operation.
-        '; sleep 1; shutdown now''; # add delay for shutdown-ing
+        '; sleep 1.75; shutdown now''; # add delay for shutdown-ing
       cls = "clear"; # windows-style clear terminal command
       ncode = "code .; exit"; # opens current directory in VS code, then exits
 
