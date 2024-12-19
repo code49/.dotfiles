@@ -116,8 +116,7 @@
       mtlb = "./.dotfiles/scripts/matlab.sh &! ; exit";
 
       # firefox shortcuts (this is crazy scuffed)
-      ff =
-        "tmp_func() {./.dotfiles/scripts/firefox_shortcuts.sh $1; exit} ; tmp_func";
+      ff = "tmp_func() {~/.dotfiles/scripts/firefox_shortcuts.sh $1; exit}; tmp_func";
 
     };
 

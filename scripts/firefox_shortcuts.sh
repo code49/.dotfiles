@@ -3,6 +3,9 @@
 # Script for interpreting (and subsequently opening) firefox windows via shortcuts.
 #
 
+# stop execution if we reach a non-zero exit code
+set -e
+
 # grab shortcut string as a variable
 SHORTCUT=$1
 
@@ -17,7 +20,7 @@ open_ff() {
   nohup /run/current-system/sw/bin/firefox -p $PROFILE -new-window $URL &!
 
   # finished with script
-  exit
+  exit 0
   
 }
 
@@ -188,7 +191,7 @@ case $SHORTCUT in
 
   # default ; shortcut not found, error
   *)
-    echo "no firefox shortcut with this value found; please try again"
+    exit 127
   ;;
 
 esac
