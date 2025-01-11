@@ -10,7 +10,7 @@
       "monitor" = [
         "eDP-1,2560x1440@60.00Hz,0x0,1.25"
         "DP-7,2560x1440@165.08Hz,auto-right,1" # home dell display
-        "HDMI-A-1,1920x1080@100.00Hz,auto-right,0.75" # cmu school library display (?)
+        "HDMI-A-1,1920x1080@60.00Hz,auto-right,0.75" # cmu school library display (?)
         ",preferred,auto-right,auto" # when connecting some unknown display, go right
       ];
 
@@ -43,7 +43,13 @@
 
       "xwayland" = { force_zero_scaling = true; };
 
-      env = [ "AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1" ];
+      env = [
+        "AQ_DRM_DEVICES,/dev/dri/card2:/dev/dri/card1"
+        "HYPRCURSOR_THEME,theme_GoogleDot-Violet"
+        "HYPRCURSOR_SIZE,24"
+        "XCURSOR_SIZE,32"
+        "GDK_SCALE,2"
+      ];
 
       "general" = {
         gaps_in = 4;
@@ -70,10 +76,10 @@
           new_optimizations = true;
         };
 
-        drop_shadow = "no";
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
+        # drop_shadow = "no";
+        # shadow_range = 4;
+        # shadow_render_power = 3;
+        # "col.shadow" = "rgba(1a1a1aee)";
       };
 
       animations = {

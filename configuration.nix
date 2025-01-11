@@ -55,8 +55,8 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire 
-  sound.enable = false;
-  hardware.pulseaudio.enable = false;
+  # sound.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -158,7 +158,7 @@
     dbus.enable = true;
     gvfs.enable = true;
     gnome = { gnome-keyring.enable = true; };
-  };
+  }; # character set not appearing
 
   # Define a user account.
   users.users.${userSettings.username} = {
@@ -171,12 +171,14 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  fonts.packages = with pkgs;
-    [
-      (nerdfonts.override {
-        fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
-      })
-    ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.jetbrains-mono
+    # (nerdfonts.override {
+    #   fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
+    # })
+  ];
 
   # enabling flakes 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

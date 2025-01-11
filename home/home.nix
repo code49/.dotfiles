@@ -73,7 +73,7 @@
     # configuring dark mode
     theme = {
       name = "Adwaita-dark";
-      package = pkgs.gnome.gnome-themes-extra;
+      package = pkgs.gnome-themes-extra;
     };
   };
 
@@ -97,7 +97,7 @@
       # shell shortcuts
       ls = "ls -al"; # shows hidden files, list view :)
       rm = "rm -i"; # adds reminder before rm'ing
-      ssh = "kitty ssh"; # allows kitty-stuff to work over ssh
+      ssh = "kitten ssh"; # allows kitty-stuff to work over ssh
       rb = ''
         printf 'manually-requested REBOOT in 1 second; `ctrl + c` or otherwise destroy this terminal window to cancel this operation.
         '; sleep 1.75; reboot''; # quickly reboot the system
@@ -116,7 +116,8 @@
       mtlb = "./.dotfiles/scripts/matlab.sh &! ; exit";
 
       # firefox shortcuts (this is crazy scuffed)
-      ff = "tmp_func() {~/.dotfiles/scripts/firefox_shortcuts.sh $1; exit}; tmp_func";
+      ff =
+        "tmp_func() {~/.dotfiles/scripts/firefox_shortcuts.sh $1; exit}; tmp_func";
 
     };
 
