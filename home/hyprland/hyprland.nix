@@ -170,6 +170,7 @@
 
         "$mod, Q, exec, $terminal"
         "$mod, F, exec, firefox"
+        "$mod, O, exec, obsidian"
 
         # suspend/hibernate
         "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
