@@ -105,9 +105,13 @@
 
     # this might be needed to replace above? 
     # graphics = {
-    #   enable32Bit = true; 
-    #   enable = true; 
-    # }
+    #   enable32Bit = true;
+    #   enable = true;
+
+    #   extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+
+    #   extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiVdpau libvdpau-va-gl ];
+    # };
 
     nvidia = {
       modesetting.enable = true;
