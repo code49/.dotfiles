@@ -43,6 +43,7 @@
     vlc
     strawberry
     meshlab
+    inkscape
   ];
 
   # Home Manager can also manage your environment variables through
