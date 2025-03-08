@@ -1,0 +1,10 @@
+resize_algorithm = none
+hotspot_x = 0.5
+hotspot_y = 0.5
+
+define_size = 22, left_ptr.svg, 10
+
+define_override = center_ptr
+define_override = default
+define_override = top_left_arrow
+define_override = arrow

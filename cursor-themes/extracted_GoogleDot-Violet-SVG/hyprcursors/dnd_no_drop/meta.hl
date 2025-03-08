@@ -1,0 +1,12 @@
+resize_algorithm = none
+hotspot_x = 0.5
+hotspot_y = 0.5
+
+define_size = 22, dnd_no_drop.svg, 10
+
+define_override = forbidden
+define_override = crossed_circle
+define_override = no-drop
+define_override = 0.53b6e0fcb3499374a867c041f52298f0
+define_override = not-allowed
+define_override = circle

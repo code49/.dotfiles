@@ -1,0 +1,10 @@
+resize_algorithm = none
+hotspot_x = 0.5
+hotspot_y = 0.5
+
+define_size = 22, left_ptr_watch.svg, 10
+
+define_override = progress
+define_override = 0.58e8e1c95fe2fc01f976f1e063a24ccd
+define_override = 3ecb610c1bf2410f44200f48c40d3599
+define_override = 0.50000000000000020006000e7e9ffc3f

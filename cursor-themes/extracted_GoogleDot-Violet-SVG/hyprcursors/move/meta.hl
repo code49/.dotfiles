@@ -1,0 +1,14 @@
+resize_algorithm = none
+hotspot_x = 0.5
+hotspot_y = 0.5
+
+define_size = 22, move.svg, 10
+
+define_override = dnd-move
+define_override = closedhand
+define_override = 9081237383d959aa00f00170e968f
+define_override = dnd-none
+define_override = grabbing
+define_override = 4498f0e0c1937ffe01fd06f973665830
+define_override = fcf21c00b30f7e3f83fe0dfd12e71cff
+define_override = pointer_move

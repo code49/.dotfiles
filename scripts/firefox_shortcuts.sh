@@ -55,7 +55,7 @@ case $SHORTCUT in
 
   # piazza ; no default class selected
   "pz")
-    open_ff dchan2-cmu 'piazza.com'
+    open_ff dchan2-cmu 'https://piazza.com/class/m5r0n3olzww5tl'
   ;;
 
   # personal drive
@@ -142,7 +142,7 @@ case $SHORTCUT in
 
   # 18-100
   "100")
-    open_ff dchan2-cmu 'app.slack.com/client/T0785RZ6M5L'
+    open_ff dchan2-cmu 'app.slack.com/client/T0886BT2HU3'
   ;;
 
   # IO harness group

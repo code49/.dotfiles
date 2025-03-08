@@ -8,16 +8,17 @@
 
     settings = {
       "monitor" = [
-        "eDP-1,2560x1440@60.00Hz,0x0,1.25"
+        "eDP-1,2560x1440@60.00Hz,0x0,1.25" # internal laptop display
         "DP-7,2560x1440@165.08Hz,auto-right,1" # home dell display
-        "HDMI-A-1,1920x1080@60.00Hz,auto-right,0.75" # cmu school library display (?)
-        ",preferred,auto-right,auto" # when connecting some unknown display, go right
+        "HDMI-A-1,1920x1080@60.00Hz,auto-right,2" # cmu school library display (?)
+        ",preferred,auto-right,0.25" # when connecting some unknown display, go right
       ];
 
       "exec-once" = [
         "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
-        "[workspace 1 silent] nohup firefox -p dchan-personal 'notion.so/davidlechan/Tasks-and-Schedule-d03cd6231ead496e808bdf0fe03f8566' 'calendar.google.com'"
-        "[workspace 1 silent] nohup firefox -p dchan-personal 'davidlechan.dev' 'open.spotify.com'"
+        "sleep 8; waybar &"
+        "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'notion.so/davidlechan/Tasks-and-Schedule-d03cd6231ead496e808bdf0fe03f8566'"
+        "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'calendar.google.com'"
       ];
 
       "$terminal" = "kitty";
@@ -138,17 +139,16 @@
         "tile,class:^(obsidian)$ # force obsidian to tile "
 
         "opacity 0.7 0.7,class:^(discord)$"
-        "opacity 0.5 0.3,class:^(Spotify)$"
+        "opacity 0.7 0.7,class:^(Spotify)$"
 
         "opacity 0.8 0.8,class:^(firefox)$,title:(Gradescope)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
         "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(RapidIdentity)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Harvey Mudd College Mail)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(theorodester@gmail.com)(.*)$"
-
+        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Tasks and Schedule)(.*)"
+        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Carnegie Mellon University Mail)(.*)$"
+        "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(davidlechan@gmail.com)(.*)$"
         "opacity 0.7 0.7,class:^(rstudio)$"
       ];
 

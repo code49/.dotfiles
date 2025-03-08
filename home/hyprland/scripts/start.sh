@@ -13,7 +13,7 @@ nm-applet --indicator &
 blueman-applet &
 
 # top status bar
-waybar & 
+# waybar &
 
 # lockscreen
 swayidle -w before-sleep 'swaylock -f' &

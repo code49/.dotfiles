@@ -1,0 +1,10 @@
+resize_algorithm = none
+hotspot_x = 0.5
+hotspot_y = 0.5
+
+define_size = 22, dotbox.svg, 10
+
+define_override = target
+define_override = icon
+define_override = draped_box
+define_override = dot_box_mask

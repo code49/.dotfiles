@@ -33,8 +33,8 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  # time.timeZone = "America/New_York";
-  time.timeZone = "America/Los_Angeles";
+  time.timeZone = "America/New_York";
+  # time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -67,7 +67,7 @@
 
   # Enable bluetooth via blueman, default off
   hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = false;
+  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
   # Enabling hyprland
