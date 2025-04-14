@@ -45,6 +45,7 @@
     meshlab
     inkscape
     yt-dlp
+    gnupg
   ];
 
   # Home Manager can also manage your environment variables through
