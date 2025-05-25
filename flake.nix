@@ -112,8 +112,11 @@
       nixosConfigurations = {
         conceivably-a-shark = lib.nixosSystem {
           inherit system;
-          modules =
-            [ ./configuration.nix ./conceivably-a-shark-configuration.nix ];
+          modules = [
+            ./configuration.nix
+            ./conceivably-a-shark-configuration.nix
+            ./conceivably-a-shark-hardware-configuration.nix
+          ];
           specialArgs = {
             inherit inputs;
             inherit systemSettings;
