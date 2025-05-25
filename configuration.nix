@@ -178,12 +178,15 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  fonts.packages = with pkgs;
-    [
-      (nerdfonts.override {
-        fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
-      })
-    ];
+  fonts.packages = with pkgs; [
+    nerd-fonts._0xproto
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    # (nerdfonts.override {
+    #   fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
+    # })
+  ];
 
   # enabling flakes 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

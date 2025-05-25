@@ -137,14 +137,14 @@
         "opacity 0.7 0.7,class:^(discord)$"
         "opacity 0.5 0.3,class:^(Spotify)$"
 
-        "opacity 0.8 0.8,class:^(firefox)$,title:(Gradescope)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
-        "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(RapidIdentity)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Harvey Mudd College Mail)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(theorodester@gmail.com)(.*)$"
+        # "opacity 0.8 0.8,class:^(firefox)$,title:(Gradescope)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
+        # "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(RapidIdentity)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Harvey Mudd College Mail)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(theorodester@gmail.com)(.*)$"
 
         "opacity 0.7 0.7,class:^(rstudio)$"
       ];
