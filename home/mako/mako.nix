@@ -2,37 +2,39 @@
   services.mako = {
     enable = true;
 
-    sort = "-time";
+    settings = {
+      sort = "-time";
 
-    # Style
-    font = "JetBrainsMono Nerd Font 12";
-    width = 300;
-    height = 100;
-    margin = "10";
-    padding = "15";
-    borderSize = 2;
-    borderRadius = 20;
-    icons = true;
-    maxIconSize = 48;
-    markup = true;
-    actions = true;
-    defaultTimeout = 5000;
-    ignoreTimeout = false;
-    maxVisible = 5;
-    layer = "overlay";
-    anchor = "top-center";
+      # Style
+      font = "JetBrainsMono Nerd Font 12";
+      width = 300;
+      height = 100;
+      margin = "10";
+      padding = "15";
+      border-size = 2;
+      border-radius = 20;
+      icons = true;
+      max-icon-size = 48;
+      markup = true;
+      actions = true;
+      default-timeout = 5000;
+      ignore-timeout = false;
+      max-visible = 5;
+      layer = "overlay";
+      anchor = "top-center";
 
-    # coloring 
-    textColor = "#" + theme.base07;
-    borderColor = "#" + theme.base0B;
-    progressColor = "over #" + theme.base09;
-    backgroundColor = "#" + theme.dark_background_primary + "80";
+      # coloring 
+      text-color = "#" + theme.base07;
+      border-color = "#" + theme.base0B;
+      progress-color = "over #" + theme.base09;
+      background-color = "#" + theme.dark_background_primary + "80";
 
-    max-history = 100;
-    on-button-left = dismiss;
-    on-button-middle = none;
-    on-button-right = dismiss-all;
-    on-touch = dismiss;
+      max-history = 100;
+    };
+    # onButtonLeft = "dismiss";
+    # onButtonMiddle = "none";
+    # onButtonRight = "dismiss-all";
+    # onTouch = "dismiss";
 
     # [urgency=low];
     # border-color=#${theme.base0D};
