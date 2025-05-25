@@ -28,25 +28,22 @@
     progressColor = "over #" + theme.base09;
     backgroundColor = "#" + theme.dark_background_primary + "80";
 
-    extraConfig = ''
-      max-history=100
-      on-button-left=dismiss
-      on-button-middle=none
-      on-button-right=dismiss-all
-      on-touch=dismiss
+    max-history = 100;
+    on-button-left = dismiss;
+    on-button-middle = none;
+    on-button-right = dismiss-all;
+    on-touch = dismiss;
 
-      [urgency=low]
-      border-color=#${theme.base0D}
-      default-timeout=2000
+    # [urgency=low];
+    # border-color=#${theme.base0D};
+    # default-timeout=2000;
 
-      [urgency=normal]
-      border-color=#${theme.base0B}
-      default-timeout=5000
+    # [urgency=normal];
+    # border-color=#${theme.base0B};
+    # default-timeout=5000;
 
-      [urgency=high]
-      border-color=#${theme.base0Balt}
-      default-timeout=10000
-    '';
-
+    # [urgency=high];
+    # border-color=#${theme.base0Balt};
+    # default-timeout=10000;
   };
 }
