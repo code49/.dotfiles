@@ -6,7 +6,6 @@
 
 {
   imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
     ./applications/steam/steam.nix
   ];
 
@@ -17,7 +16,7 @@
   boot.initrd.kernelModules = [ "nvidia" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
-  networking.hostName = systemSettings.hostname; # Define your hostname.
+  # networking.hostName = systemSettings.hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -55,7 +54,7 @@
 
   # Enable sound with pipewire 
   # sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -121,12 +120,12 @@
       powerManagement.finegrained = false; # experimental, might be bad
       open = false; # use NVidia open source drivers (still alpha)
 
-      # make sure correct Bus ID for system! Can run: lspci
-      prime = {
-        # sync.enable = true; # might be good when plugged into external monitor? 
-        nvidiaBusId = "PCI:1:0:0";
-        intelBusId = "PCI:0:2:0";
-      };
+      # # make sure correct Bus ID for system! Can run: lspci
+      # prime = {
+      #   # sync.enable = true; # might be good when plugged into external monitor? 
+      #   nvidiaBusId = "PCI:1:0:0";
+      #   intelBusId = "PCI:0:2:0";
+      # };
     };
   };
 

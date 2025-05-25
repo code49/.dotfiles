@@ -26,10 +26,7 @@
 
       # ---------- SYSTEM SETTINGS ---------- # 
       system = "x86_64-linux";
-      systemSettings = {
-        hostname = "conceivably-a-shark";
-        timezone = "America/Los_Angeles";
-      };
+      systemSettings = { timezone = "America/Los_Angeles"; };
 
       # ----------- USER SETTINGS ----------- #
       userSettings = {
@@ -113,9 +110,10 @@
 
     in {
       nixosConfigurations = {
-        ${systemSettings.hostname} = lib.nixosSystem {
+        conceivably-a-shark = lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules =
+            [ ./configuration.nix ./conceivably-a-shark-configuration.nix ];
           specialArgs = {
             inherit inputs;
             inherit systemSettings;
