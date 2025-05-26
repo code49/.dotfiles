@@ -7,18 +7,24 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./applications/steam/steam.nix
-    imputs.home-manager.nixosModules.default
+    inputs.home-manager.nixosModules.default
   ];
+
+  # Define a user account.
+  users.users.${userSettings.username} = {
+    isNormalUser = true;
+    description = userSettings.name;
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [ ];
+  };
 
   home-manager = {
     extraSpecialArgs = {
       inherit inputs;
       inherit userSettings;
       inherit theme;
-    }
-    users = {
-      userSettings.username = import ./home/home.nix
     };
+    users = { ${userSettings.username} = import ./home/home.nix; };
   };
 
   # Bootloader.
@@ -176,14 +182,6 @@
     dbus.enable = true;
     gvfs.enable = true;
     gnome = { gnome-keyring.enable = true; };
-  };
-
-  # Define a user account.
-  users.users.${userSettings.username} = {
-    isNormalUser = true;
-    description = userSettings.name;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages

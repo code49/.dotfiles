@@ -118,7 +118,7 @@
             ./hosts/conceivably-a-shark/hardware-configuration.nix
             inputs.home-manager.nixosModules.default
           ];
-          extraSpecialArgs = {
+          specialArgs = {
             inherit inputs;
             inherit systemSettings;
             inherit userSettings;
