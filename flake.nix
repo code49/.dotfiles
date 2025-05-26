@@ -126,17 +126,5 @@
           };
         };
       };
-      # homeConfigurations = {
-      #   ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
-      #     inherit pkgs;
-      #     modules = [ ./home/home.nix ];
-
-      #     extraSpecialArgs = {
-      #       inherit inputs;
-      #       inherit userSettings;
-      #       inherit theme;
-      #     };
-      #   };
-      # };
     };
 }
