@@ -2,12 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, config, pkgs, systemSettings, userSettings, ... }:
+{ inputs, config, pkgs, systemSettings, userSettings, theme, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
     ./applications/steam/steam.nix
+    imputs.home-manager.nixosModules.default
   ];
+
+  home-manager = {
+    extraSpecialArgs = {
+      inherit inputs;
+      inherit userSettings;
+      inherit theme;
+    }
+    users = {
+      userSettings.username = import ./home/home.nix
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

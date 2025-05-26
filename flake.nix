@@ -116,25 +116,27 @@
             ./configuration.nix
             ./hosts/conceivably-a-shark/configuration.nix
             ./hosts/conceivably-a-shark/hardware-configuration.nix
+            inputs.home-manager.nixosModules.default
           ];
-          specialArgs = {
-            inherit inputs;
-            inherit systemSettings;
-            inherit userSettings;
-          };
-        };
-      };
-      homeConfigurations = {
-        ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home/home.nix ];
-
           extraSpecialArgs = {
             inherit inputs;
+            inherit systemSettings;
             inherit userSettings;
             inherit theme;
           };
         };
       };
+      # homeConfigurations = {
+      #   ${userSettings.username} = home-manager.lib.homeManagerConfiguration {
+      #     inherit pkgs;
+      #     modules = [ ./home/home.nix ];
+
+      #     extraSpecialArgs = {
+      #       inherit inputs;
+      #       inherit userSettings;
+      #       inherit theme;
+      #     };
+      #   };
+      # };
     };
 }
