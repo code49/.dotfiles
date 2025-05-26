@@ -114,8 +114,8 @@
           inherit system;
           modules = [
             ./configuration.nix
-            ./conceivably-a-shark-configuration.nix
-            ./conceivably-a-shark-hardware-configuration.nix
+            ./hosts/conceivably-a-shark/configuration.nix
+            ./hosts/conceivably-a-shark/hardware-configuration.nix
           ];
           specialArgs = {
             inherit inputs;
