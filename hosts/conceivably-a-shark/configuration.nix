@@ -5,12 +5,13 @@
 
   monitors = [{
     name = "DP-5";
+    primary = true;
     width = 3440;
     height = 1440;
     refreshRate = 175;
-    x = 0;
-    y = 0;
+    position = "0x0";
     enabled = true;
+    scale = "1";
   }];
 
   networking.hostName = "conceivably-a-shark";

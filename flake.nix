@@ -113,8 +113,8 @@
         conceivably-a-shark = lib.nixosSystem {
           inherit system;
           modules = [
-            ./configuration.nix
             ./hosts/conceivably-a-shark/configuration.nix
+            ./configuration.nix
             ./hosts/conceivably-a-shark/hardware-configuration.nix
             inputs.home-manager.nixosModules.default
           ];

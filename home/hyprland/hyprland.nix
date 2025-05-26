@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, theme, ... }: {
+{ inputs, config, pkgs, theme, nixosSystemMonitors, ... }: {
   # imports = [ ./hyprlock.nix ./hypridle.nix ];
 
   wayland.windowManager.hyprland = {
@@ -16,20 +16,15 @@
     '';
 
     settings = {
-      monitor = [
-        ",preferred,auto,auto"
-      ] ++ (map
-        (m:
-          let
-            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-              position = "${toString m.x}x${toString m.y}";
-          in
-            "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
-        )
-        (config.monitors);
-      );
-      #   "DP-5,3440x1440@175,0x0,1"
-      # ];
+      monitor = [ ",preferred,auto,auto" ] ++ (map (m:
+        "${m.name},${
+          if m.enabled then
+            "${toString m.width}x${toString m.height}@${
+              toString m.refreshRate
+            },${m.position},${m.scale}"
+          else
+            "disable"
+        }") (nixosSystemMonitors));
 
       "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
 

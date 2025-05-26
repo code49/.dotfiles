@@ -23,6 +23,8 @@
       inherit inputs;
       inherit userSettings;
       inherit theme;
+
+      nixosSystemMonitors = config.monitors;
     };
     users = { ${userSettings.username} = import ./home/home.nix; };
   };
