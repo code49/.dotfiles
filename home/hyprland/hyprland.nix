@@ -16,7 +16,20 @@
     '';
 
     settings = {
-      "monitor" = [ ",preferred,auto,auto" "DP-5,3440x1440@175,0x0,1" ];
+      monitor = [
+        ",preferred,auto,auto"
+      ] ++ (map
+        (m:
+          let
+            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+              position = "${toString m.x}x${toString m.y}";
+          in
+            "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
+        )
+        (config.monitors);
+      );
+      #   "DP-5,3440x1440@175,0x0,1"
+      # ];
 
       "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
 

@@ -1,7 +1,17 @@
 { inputs, config, pkgs, systemSettings, userSettings, ... }:
 
 {
-  imports = [ ];
+  imports = [ ../../modules/monitors.nix ];
+
+  monitors = [{
+    name = "DP-5";
+    width = 3440;
+    height = 1440;
+    refreshRate = 175;
+    x = 0;
+    y = 0;
+    enabled = true;
+  }];
 
   networking.hostName = "conceivably-a-shark";
 
