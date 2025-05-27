@@ -125,6 +125,21 @@
             inherit theme;
           };
         };
+        plausibly-a-shark = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/plausibly-a-shark/configuration.nix
+            ./configuration.nix
+            ./hosts/plausibly-a-shark/hardware-configuration.nix
+            inputs.home-manager.nixosModules.default
+          ];
+          specialArgs = {
+            inherit inputs;
+            inherit systemSettings;
+            inherit userSettings;
+            inherit theme;
+          };
+        };
       };
     };
 }
