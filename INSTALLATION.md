@@ -74,12 +74,17 @@ git clone https://github.com/TheSharkhead2/.dotfiles.git
 ```
 Make sure that this is cloned to the path `~/.dotfiles`. From now on, I will assume this is your path. 
 
-We can enter the directory (`cd .dotfiles`). There are a few things we need to change, for starters, we want to use the `hardware-configuration.nix` that was generated when we first installed nix, not the one that is currently included in the configuration we just downloaded. So, we can run `cp /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix`. 
+We now need to choose which of the two configurations we want to use:
+- `conceivably-a-shark`: A configuration assuming you have an intel CPU (for integrated graphics) and an nvidia gpu (i.e. a laptop)
+- `plausibly-a-shark`: A configuration assuming you only have an nvidia GPU (i.e. a tower)
+
+We can enter the directory (`cd .dotfiles`). There are a few things we need to change, for starters, we want to use the `hardware-configuration.nix` that was generated when we first installed nix, not the one that is currently included in the configuration we just downloaded. Therefore, given the hostname you chose above, we want to copy the file at `/etc/nixos/hardware-configuration.nix` to `.dotfiles/hosts/HOSTNAME/hardware-configuration.nix`.
+
 Additionally, if you picked encryption, if you look at your original generated `configuration.nix` (`vim /etc/nixos/configuration.nix`), you may see lines that look like: 
 ```nix
   boot.initrd.luks.devices."luks-c63f4f2f-e6cc-4cbf-80d2-b734d6e08c7b".device = "/dev/disk/by-uuid/c63f4f2f-e6cc-4cbf-80d2-b734d6e08c7b";
 ```
-Copy all of these lines into your `~/.dotfiles/hardware-configruation.nix` file. You can put them anywhere within the "body" of the script: 
+Copy all of these lines into your `hardware-configruation.nix` file you just copied into your host directory. You can put them anywhere within the "body" of the script: 
 ```nix
 { config, lib, pkgs, modulesPath, ... }: 
 
@@ -91,7 +96,8 @@ Copy all of these lines into your `~/.dotfiles/hardware-configruation.nix` file.
 ```
 Note that you will likely see other almost identical lines in the `hardware-configuration.nix` already. DO NOT REMOVE THESE. If you look closely, they are slightly different. 
 
-Now in your `~/.dotfiles/configuration.nix` file (which will from now on be referred to as your `configuration.nix` file), on (or around) line 112 you will see an `nvidia` section. In particular, you will see: 
+#### If you picked `conceivably-a-shark`
+Now in your `~/.dotfiles/hosts/conceivably-a-shark/configuration.nix` file (which will from now on be referred to as your `configuration.nix` file), on (or around) line 112 you will see an `nvidia` section. In particular, you will see: 
 ```nix
 # make sure correct Bus ID for system! Can run: lspci
 prime = {
@@ -112,48 +118,23 @@ and a line that is similar to:
 (we are looking for our nvidia gpu)
 In particular, our config expects our intel gpu at bus id `0:2:0`, or when translated to `lspci` language `00:02.0`, and our nvidia gpu at bus id `1:0:0` (or `01:00.0`). If these are not what you see in `lspci`, you need to update your config to match. In particular, every id will be similar to the form `01:00.0`. To convert to the id you will put in your config file, replace the `.` with a `:`, and remove the leading zero (if there is one) on the first and second numbers (separated by the colon). For example, `00:15.3` would become `0:15:3`. 
 
+#### Continue from here for all installs
+
 Once you made these changes, you are actually okay to move on, but there might be some other things you will want to change. In particular, you may want to change values seen in `~/.dotfiles/flake.nix`. Here, near the top (after `outputs = {}`) you will see values like `systemSettings.hostname` which you can change to be the desired name of your device (like on your internet or when bluetooth devices see it). You may want to change your `timezone` (here as well). You name also want to change your `username` and `name` under `userSettings` which will be the username and name, respectively, of your (single) user account. 
 
 You probably also want to change your `git` username and email, which are set at the end of your `home/home.nix` file. 
 
 From here, we can rebuild the system with (ensure you are in the directory `~/.dotfiles`): 
 ```sh
-sudo nixos-rebuild switch --flake . --upgrade-all
-home-manager switch --flake .
+sudo nixos-rebuild switch --flake .#HOSTNAME --upgrade-all
 ```
+(Here `HOSTNAME` is the host system you chose)
 Reboot your system after this and you should be set! In particular, you should boot into a screen where you will see a could NixOS builds ("generations"), just pick the latest one. If you selected to encrypt your disk, it will ask you for that password next, and then will boot into your OS. You should see a pretty basic gnome-style screen where you can select your account and log in. This should then boot you straight into Hyprland! Note that `SUPER + Q` is bound to opening the terminal. 
 
 From now on, every time you change your configuration, you can rebuild your system with: 
 ```sh
 sudo nixos-rebuild switch --flake . # make sure you are in ~/.dotfiles
 ```
-Every time you change your home-manager configuration (which I will talk about later), you run: 
-```sh
-home-manager switch --flake .
-```
-### Switching to the git version of Hyprland
-You probably want to do this as the version of Hyprland in `nixpkgs` is a little old. First, determine that you aren't already on the git version by running: 
-```sh
-hyprctl version
-realpath $(which Hyprland)
-```
-The first *should* make some mention of being built from some commit and should give a recent date. Further the second command should include a reference to the newest version of Hyprland in the path. As long as the second command checks out, you are good (don't worry too much if the first command just gives no info). But if the second command gives reference to an old version of Hyprland, then proceed: 
-
-We need to rebuild our system without Hyprland once and then add Hyprland back in order to enable the caching functionailty so you don't have to manually build Hyprland every time. To do this, in `home/home.nix` comment out the `./hyprland/hyprland.nix` line in the `imports` array at the top of the file. Further, comment out the following code in `configuration.nix`: 
-```nix
-  programs.hyprland = {
-    enable = true;
-    package =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland; # enable git version of hyprland
-    xwayland.enable = true;
-  };
-```
-Now run: 
-```sh
-sudo nixos-rebuild switch --flake .
-home-manager switch --flake .
-```
-Then, uncomment everything you just commented are re-run the above commands. From there, reboot and you should see that the first steps we took to see if Hyprland was on the git version now return what we expected. 
 
 ### Further Configuration
 The first thing you may want to do is change the color scheme of the entire system. All of the colors are controlled in `flake.nix` under the `theme` variable set in the `outputs = {}` section. 
