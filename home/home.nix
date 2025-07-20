@@ -24,6 +24,9 @@
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+  xdg.configFile."electron-flags.conf".source = ./electron-flags.conf;
+  xdg.configFile."electron32-flags.conf".source = ./electron-flags.conf;
+  xdg.configFile."code-flags.conf".source = ./electron-flags.conf;
 
   home.pointerCursor = {
     enable = true;
@@ -95,6 +98,9 @@
 
   gtk = {
     enable = true;
+
+    cursorTheme.name = "GoogleDot-Black";
+    cursorTheme.size = 18;
 
     # configuring dark mode
     theme = {

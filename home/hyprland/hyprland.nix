@@ -56,6 +56,7 @@
         "XCURSOR_THEME,GoogleDot-Black"
         "HYPRCURSOR_THEME,hypr_GoogleDot-Black"
         "HYPRCURSOR_SIZE,18"
+        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
       ];
 
       "general" = {
@@ -178,7 +179,7 @@
 
         "$mod, Q, exec, $terminal"
         "$mod, F, exec, firefox"
-        "$mod, O, exec, obsidian"
+        "$mod, O, exec, obsidian --ozone-platform=wayland --enable-features=UseOzonePlatform"
 
         # suspend/hibernate
         "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
