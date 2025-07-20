@@ -47,14 +47,15 @@
         # accel_profile = "flat";
       };
 
-      "xwayland" = { force_zero_scaling = true; };
+      xwayland = { force_zero_scaling = true; };
 
       env = [
         # force reasonable cursor sizes 
         "GDK_SCALE, 2"
-        "XCURSOR_SIZE,32"
-        "HYPRCURSOR_THEME,theme_NotwaitaBlack"
-        "HYPRCURSOR_SIZE,24"
+        "XCURSOR_SIZE,12"
+        "XCURSOR_THEME,GoogleDot-Black"
+        "HYPRCURSOR_THEME,hypr_GoogleDot-Black"
+        "HYPRCURSOR_SIZE,18"
       ];
 
       "general" = {

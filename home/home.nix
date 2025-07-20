@@ -25,8 +25,20 @@
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.google-cursor;
+    name = "GoogleDot-Black";
+    size = 12;
+  };
+  home.file.".icons" = {
+    source = ../icons;
+    recursive = true;
+  };
+
   home.packages = with pkgs; [
     google-chrome
+    google-cursor
     obsidian
     texliveFull
     cargo
