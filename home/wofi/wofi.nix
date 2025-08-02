@@ -6,7 +6,7 @@
       hide_scroll = true;
       show = "drun";
       width = "30%";
-      lines = 8;
+      height = "20%";
       line_wrap = "word";
       term = "kitty";
       allow_markup = true;
@@ -35,7 +35,7 @@
 
       #window {
         background: rgba(${theme.dark_background_primary_rgb}, 0.4);
-        margin: auto; 
+        margin: auto;
         padding: 10px;
         border-radius: 20px; 
         border: 3px solid #${theme.base0B};
@@ -47,10 +47,6 @@
         border-radius: 15px; 
       }
 
-      #outer-box {
-        padding: 20px;
-      }
-
       #img {
         margin-right: 6px;
       }
@@ -58,6 +54,10 @@
       #entry { 
         padding: 10px; 
         border-radius: 15px; 
+      }
+
+      #outer-box {
+        padding: 10px;
       }
 
       #entry:selected {
