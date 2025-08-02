@@ -176,10 +176,10 @@
       xkb.variant = "";
       excludePackages = [ pkgs.xterm ];
       videoDrivers = [ "nvidia" ];
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
+    };
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
     };
     libinput.enable = true;
     dbus.enable = true;

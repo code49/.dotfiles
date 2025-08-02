@@ -62,6 +62,7 @@
     yt-dlp
     gnupg
     pinentry
+    gemini-cli
   ];
 
   # Home Manager can also manage your environment variables through
