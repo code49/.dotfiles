@@ -40,29 +40,39 @@
   };
 
   home.packages = with pkgs; [
-    google-chrome
-    google-cursor
-    obsidian
-    texliveFull
     cargo
-    # julia
     zoxide
     fzf
-    slack
     conda
     zip
-    zoom-us
     unzip
-    gimp
-    viu
-    vlc
-    strawberry
-    meshlab
-    inkscape
-    yt-dlp
-    gnupg
-    pinentry
-    gemini-cli
+    zoom-us
+
+    google-cursor
+
+    # google-chrome
+    # google-cursor
+    # obsidian
+    # texliveFull
+    # cargo
+    # julia
+    # zoxide
+    # fzf
+    # slack
+    # conda
+    # zip
+    # zoom-us
+    # unzip
+    # gimp
+    # viu
+    # vlc
+    # strawberry
+    # meshlab
+    # inkscape
+    # yt-dlp
+    # gnupg
+    # pinentry
+    # gemini-cli
   ];
 
   # Home Manager can also manage your environment variables through
