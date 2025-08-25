@@ -28,7 +28,6 @@
 
       "exec-once" = [
         "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
-        "sleep 8; waybar &"
         "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'notion.so/davidlechan/Tasks-and-Schedule-d03cd6231ead496e808bdf0fe03f8566'"
         "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'calendar.google.com'"
       ];
