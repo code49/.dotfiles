@@ -2,7 +2,7 @@
 
 swww-daemon & 
 # swww img ~/Wallpapers/jwst_1.png & 
-swww img ~/.dotfiles/wallpapers/shark_coral_background_1_upscale.jpg &
+swww img ~/.dotfiles/wallpapers/backgroundblend.png &
 
 # networking applet
 nm-applet --indicator &
