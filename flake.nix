@@ -37,7 +37,7 @@
 
       # ----------- THEME SETTINGS ---------- #
       theme = {
-        # grayscale going from dark to light
+        # grayscale going from dark to light - "dark mode"
         base00 = "1d1f21";
         base01 = "282a2e";
         base02 = "373b41";
@@ -57,55 +57,55 @@
         base07_rgb = "255, 255, 255";
 
         # accent colors
-        base08 = "ff6e67"; # light red
-        base09 = "fea3b5"; # pink
-        base0A = "f3c969"; # gold
-        base0B = "6ecefe"; # "7dcef7"; # light blue
-        base0C = "a8ff60"; # green
-        base0D = "7aa6da"; # dark blue
-        base0E = "a284dc"; # purple
-        base0F = "cc6666"; # dark red
+        base08 = "ffadad"; # light red
+        base09 = "f8cfd2"; # light-light red ; tertiary (background) accent
+        base0A = "fdffb6"; # yellow
+        base0B = "daa9ff"; # magenta ; secondary accent
+        base0C = "caffbf"; # green
+        base0D = "bdb2ff"; # purple ; primary accent "daa9ff";
+        base0E = "9bf6ff"; # light blue
+        base0F = "a0c4ff"; # blue
 
-        base08_rgb = "255, 110, 103";
-        base09_rgb = "254, 163, 181";
-        base0A_rgb = "243, 201, 105";
-        base0B_rgb = "110, 206, 254";
-        base0C_rgb = "168, 255, 96";
-        base0D_rgb = "122, 166, 218";
-        base0E_rgb = "162, 132, 220";
-        base0F_rgb = "204, 102, 102";
+        base08_rgb = "255, 173, 173";
+        base09_rgb = "248, 207, 210";
+        base0A_rgb = "253, 255, 182";
+        base0B_rgb = "218, 169, 255";
+        base0C_rgb = "202, 255, 191";
+        base0D_rgb = "189, 178, 255"; 
+        base0E_rgb = "155, 246, 255";
+        base0F_rgb = "160, 196, 255";
 
-        # accent colors alts for kitty
-        base08alt = "eb2c23";
-        base09alt = "f14881";
-        base0Aalt = "fab414";
-        base0Balt = "0daeff";
-        base0Calt = "7cfa14";
-        base0Dalt = "2379de";
-        base0Ealt = "5912e3";
-        base0Falt = "a31414";
+        # accent colors alts for kitty - accents, but desaturated 50%
+        base08alt = "eac1c1";
+        base09alt = "eed9db";
+        base0Aalt = "ecedc8";
+        base0Balt = "d7bee9"; 
+        base0Calt = "d4efcf";
+        base0Dalt = "cbc5ec"; 
+        base0Ealt = "b4e1e6";
+        base0Falt = "b8cae7";
 
-        base08alt_rgb = "235, 44, 35";
-        base09alt_rgb = "241, 72, 128";
-        base0Aalt_rgb = "250, 180, 20";
-        base0Balt_rgb = "13, 174, 255";
-        base0Calt_rgb = "124, 250, 20";
-        base0Dalt_rgb = "35, 121, 222";
-        base0Ealt_rgb = "89, 18, 227";
-        base0Falt_rgb = "163, 20, 20";
+        base08alt_rgb = "234, 193, 193";
+        base09alt_rgb = "238, 217, 219";
+        base0Aalt_rgb = "236, 237, 200";
+        base0Balt_rgb = "215, 190, 233"; 
+        base0Calt_rgb = "212, 239, 207";
+        base0Dalt_rgb = "203, 197, 236"; 
+        base0Ealt_rgb = "180, 225, 230";
+        base0Falt_rgb = "184, 202, 231";
 
         # base0Dalt gradient (main accent)
-        base0Dalt2 = "1b5eab";
-        base0Dalt3 = "134278";
-        base0Dalt4 = "0b2645";
+        base0Dalt2 = "c4bcf5";
+        base0Dalt3 = "cbc5ec";
+        base0Dalt4 = "d2cfe2";
 
-        base0Dalt2_rgb = "27, 94, 171";
-        base0Dalt3_rgb = "19, 66, 120";
-        base0Dalt4_rgb = "11, 38, 69";
+        base0Dalt2_rgb = "196, 188, 245";
+        base0Dalt3_rgb = "203, 197, 236";
+        base0Dalt4_rgb = "210, 207, 226";
 
         # main background options 
-        dark_background_primary = "120C2E";
-        dark_background_primary_rgb = "18, 12, 46";
+        dark_background_primary = "343061";
+        dark_background_primary_rgb = "52, 48, 97";
       };
 
     in {
