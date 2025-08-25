@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       image =
-        "~/.dotfiles/wallpapers/shark_coral_background_1_upscale_blurred.jpg";
+        "~/.dotfiles/wallpapers/backgroundblend_blur.png";
 
       font = "JetBrainsMono Nerd Font";
       font-size = 40;
