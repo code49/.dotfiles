@@ -8,12 +8,12 @@
     #   inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
 
-    extraConfig = ''
-      device {
-        name=logitech-g502-x-plus-millennium-falcon
-        sensitivity=-0.5
-      }
-    '';
+    # extraConfig = ''
+    #   device {
+    #     name=logitech-g502-x-plus-millennium-falcon
+    #     sensitivity=-0.5
+    #   }
+    # '';
 
     settings = {
       monitor = [ ",preferred,auto,auto" ] ++ (map (m:
@@ -26,7 +26,12 @@
             "disable"
         }") (nixosSystemMonitors));
 
-      "exec-once" = [ "bash ~/.dotfiles/home/hyprland/scripts/start.sh" ];
+      "exec-once" = [
+        "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
+        "sleep 8; waybar &"
+        "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'notion.so/davidlechan/Tasks-and-Schedule-d03cd6231ead496e808bdf0fe03f8566'"
+        "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'calendar.google.com'"
+      ];
 
       "$terminal" = "kitty";
       "$menu" = "wofi";
@@ -40,11 +45,12 @@
 
         follow_mouse = 1;
 
-        touchpad = { natural_scroll = "no"; };
+        touchpad = { natural_scroll = "yes"; };
 
         sensitivity = 0.0;
         # force_no_accel = 1;
         # accel_profile = "flat";
+
       };
 
       xwayland = { force_zero_scaling = true; };
@@ -53,21 +59,21 @@
         # force reasonable cursor sizes 
         "GDK_SCALE, 2"
         "XCURSOR_SIZE,12"
-        "XCURSOR_THEME,GoogleDot-Black"
-        "HYPRCURSOR_THEME,hypr_GoogleDot-Black"
+        "XCURSOR_THEME,GoogleDot-Violet"
+        "HYPRCURSOR_THEME,hypr_GoogleDot-Violet"
         "HYPRCURSOR_SIZE,18"
         "ELECTRON_OZONE_PLATFORM_HINT,wayland"
       ];
 
       "general" = {
-        gaps_in = 5;
-        gaps_out = "5,10,10,10";
+        gaps_in = 4;
+        gaps_out = "4,8,8,8";
         border_size = 2;
         "col.active_border" =
           "rgba(${theme.base0B}ee) rgba(${theme.base09}ee) 45deg";
         "col.inactive_border" = "rgba(${theme.dark_background_primary}aa)";
 
-        layout = "dwindle";
+        layout = "master";
 
         allow_tearing = false;
       };
@@ -75,7 +81,7 @@
       "misc" = { disable_hyprland_logo = "yes"; };
 
       decoration = {
-        rounding = 10;
+        rounding = 5;
 
         blur = {
           enabled = true;
@@ -84,7 +90,7 @@
           new_optimizations = true;
         };
 
-        # drop_shadow = "yes";
+        # drop_shadow = "no";
         # shadow_range = 4;
         # shadow_render_power = 3;
         # "col.shadow" = "rgba(1a1a1aee)";
@@ -115,7 +121,13 @@
         preserve_split = "yes";
       };
 
-      master = { new_status = "master"; };
+      master = {
+        allow_small_split = true;
+        mfact = 0.6;
+        new_status = "inherit";
+        new_on_top = true;
+        orientation = "right";
+      };
 
       gestures = { workspace_swipe = "off"; };
 
@@ -136,8 +148,10 @@
       windowrulev2 = [
         "suppressevent maximize, class:.*" # apparently this is nice
 
+        "minsize 100 100,class:^(Dve.exe)$"
+
         "opacity 1.0 0.6,class:^(kitty)$"
-        "opacity 0.8 0.8,class:^(Code)$"
+        "opacity 0.7 0.7,class:^(code-oss)$"
 
         "noanim,class:^(wofi)$"
 
@@ -145,16 +159,16 @@
         "tile,class:^(obsidian)$ # force obsidian to tile "
 
         "opacity 0.7 0.7,class:^(discord)$"
-        "opacity 0.5 0.3,class:^(Spotify)$"
+        "opacity 0.7 0.7,class:^(Spotify)$"
 
         "opacity 0.8 0.8,class:^(firefox)$,title:(Gradescope)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
+        "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
         "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(RapidIdentity)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Harvey Mudd College Mail)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(theorodester@gmail.com)(.*)$"
-
+        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Tasks and Schedule)(.*)"
+        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Carnegie Mellon University Mail)(.*)$"
+        "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(davidlechan@gmail.com)(.*)$"
         "opacity 0.7 0.7,class:^(rstudio)$"
       ];
 
@@ -167,19 +181,21 @@
         '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
       ];
 
+      # super-keybinds
       bind = [
+
+        # desktop/windows management
         "$mod, SPACE, exec, wofi"
         # ''$mod, S, exec, grim -l 2 -g "$(slurp)" - | swappy -f''
         ''$mod, S, exec, grim -l 2 -g "$(slurp -d)" - | wl-copy''
         "$mod, W, killactive,"
-        "$mod, M, exit"
-        "$mod, V, togglefloating"
-
-        "$mod CTRL SHIFT, W, exec, swww img ~/.dotfiles/wallpapers/shark_coral_background_1_upscale.jpg &"
-
+        "$mod, F, togglefloating"
         "$mod, Q, exec, $terminal"
-        "$mod, F, exec, firefox"
-        "$mod, O, exec, obsidian --ozone-platform=wayland --enable-features=UseOzonePlatform"
+        "$mod, F1, layoutmsg, swapnext"
+        "$mod, F2, layoutmsg, swapwithmaster master"
+        "$mod, F3, layoutmsg, orientationcycle left right center"
+        "$mod, F4, layoutmsg, addmaster"
+        "$mod, F5, layoutmsg, removemaster"
 
         # suspend/hibernate
         "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
@@ -194,8 +210,8 @@
         # resizing active window 
         "$mod SHIFT, L, resizeactive, 20 0"
         "$mod SHIFT, H, resizeactive, -20 0"
-        "$mod SHIFT, K, resizeactive, 0, -20"
-        "$mod SHIFT, J, resizeactive, 0, 20"
+        "$mod SHIFT, K, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
+        "$mod SHIFT, J, resizeactive, 0, 20"  # this doesn't do anything in 'master' layout
 
         # moving active window
         "$mod CTRL, H, movewindow, l"
@@ -237,9 +253,10 @@
         ", xf86KbdBrightnessUp, exec, brightnessctl -d dell::kbd_backlight set 33%+"
 
         # screen backlight control
-        ", xf86MonBrightnessDown, exec, brightnessctl set 10%-"
-        ", xf86MonBrightnessUp, exec, brightnessctl set 10%+"
+        ", xf86MonBrightnessDown, exec, brightnessctl set 5%-"
+        ", xf86MonBrightnessUp, exec, brightnessctl set 5%+"
       ];
+
     };
   };
 }
