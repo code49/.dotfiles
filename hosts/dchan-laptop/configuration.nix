@@ -3,18 +3,9 @@
 {
   imports = [ ../../modules/monitors.nix ];
 
-  monitors = [{
-    name = "DP-5";
-    primary = true;
-    width = 3440;
-    height = 1440;
-    refreshRate = 175;
-    position = "0x0";
-    enabled = true;
-    scale = "1";
-  }];
+  # monitors = [];
 
-  networking.hostName = "conceivably-a-shark";
+  networking.hostName = "dchan-laptop";
 
   hardware = {
     nvidia = {

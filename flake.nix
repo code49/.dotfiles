@@ -26,12 +26,12 @@
 
       # ---------- SYSTEM SETTINGS ---------- # 
       system = "x86_64-linux";
-      systemSettings = { timezone = "America/Los_Angeles"; };
+      systemSettings = { timezone = "America/New_York"; };
 
       # ----------- USER SETTINGS ----------- #
       userSettings = {
-        username = "theo";
-        name = "Theo Rode";
+        username = "dchan";
+        name = "David Chan";
 
       };
 
@@ -110,27 +110,12 @@
 
     in {
       nixosConfigurations = {
-        conceivably-a-shark = lib.nixosSystem {
+        dchan-laptop = lib.nixosSystem {
           inherit system;
           modules = [
-            ./hosts/conceivably-a-shark/configuration.nix
+            ./hosts/dchan-laptop/configuration.nix
             ./configuration.nix
-            ./hosts/conceivably-a-shark/hardware-configuration.nix
-            inputs.home-manager.nixosModules.default
-          ];
-          specialArgs = {
-            inherit inputs;
-            inherit systemSettings;
-            inherit userSettings;
-            inherit theme;
-          };
-        };
-        plausibly-a-shark = lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/plausibly-a-shark/configuration.nix
-            ./configuration.nix
-            ./hosts/plausibly-a-shark/hardware-configuration.nix
+            ./hosts/dchan-laptop/hardware-configuration.nix
             inputs.home-manager.nixosModules.default
           ];
           specialArgs = {
