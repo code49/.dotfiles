@@ -4,7 +4,7 @@
 alias ssh="kitty ssh"
 
 # nixos rebuild command
-alias nix-reb="sudo nixos-rebuild switch --flake ~/.dotfiles"
+alias nix-reb="~/.dotfiles/scripts/nix-rebuild-nice.sh"
 
 # misc
 alias ls="ls -a"
