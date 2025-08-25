@@ -14,30 +14,37 @@
     settings.mainBar = {
       position = "top";
       layer = "top";
-      height = 40;
+      height = 25;
       margin-top = 0;
       margin-bottom = 0;
-      margin-left = 5;
-      margin-right = 5;
+      margin-left = 0;
+      margin-right = 0;
       modules-left = [
+        "custom/launcher"
         "cpu"
         "memory"
+        # "disk"
         "custom/playerctl#backward"
         "custom/playerctl#play"
         "custom/playerctl#forward"
         "custom/playerlabel"
-        "custom/weather"
       ];
-      modules-center = [ "clock" ];
-      modules-right =
-        [ "hyprland/workspaces" "tray" "battery" "pulseaudio" "backlight" ];
+      modules-center = [ "hyprland/workspaces" ];
+      modules-right = [
+        "tray"
+        "battery"
+        "backlight"
+        "pulseaudio"
+        # "network" 
+        "clock"
+      ];
       clock = {
-        interval = 1;
-        format = "{:%A | %d.%m.%y | %H:%M:%S}";
+        format = "{:%a, %d %b, %H:%M}";
         tooltip = "true";
         tooltip-format = ''
           <big>{:%Y %B}</big>
-          <big><tt>{calendar}</tt></big>'';
+          <tt><small>{calendar}</small></tt>'';
+        format-alt = " {:%d/%m}";
       };
       "wlr/workspaces" = {
         active-only = false;
@@ -53,13 +60,6 @@
           default = "";
           sort-by-number = true;
         };
-      };
-      "custom/weather" = {
-        format = "{}°";
-        tooltip = true;
-        interval = 900;
-        exec = "wttrbar";
-        return-type = "json";
       };
       "custom/playerctl#backward" = {
         format = "󰙣 ";
@@ -96,16 +96,15 @@
         on-click = "";
       };
       battery = {
-        interval = 10;
         states = {
           good = 95;
           warning = 30;
           critical = 15;
         };
-        format = "{icon}  {capacity}% ({time} remaining)";
+        format = "{icon}  {capacity}%";
         format-charging = "  {capacity}%";
         format-plugged = " {capacity}% ";
-        format-alt = "{icon} {capacity}% ({time} remaining)";
+        format-alt = "{icon} {time}";
         format-icons = [ "" "" "" "" "" ];
       };
 
@@ -189,14 +188,14 @@
         padding: 0px 5px;
         margin: 0px 3px;
         border-radius: 16px;
-        color: #${theme.dark_background_primary};
+        color: transparent;
         background: #${theme.base0B};
         transition: all 0.3s ease-in-out;
       }
 
       #workspaces button.active {
         background-color: #${theme.base0Balt};
-        color: #${theme.dark_background_primary};
+        color: transparent;
         border-radius: 16px;
         min-width: 50px;
         background-size: 400% 400%; 
@@ -212,7 +211,7 @@
       }
 
       #tray, #pulseaudio, #network, #battery, #disk, #cpu, #memory, #backlight,
-      #custom-playerctl.backward, #custom-playerctl.play, #custom-playerctl.forward {
+      #custom-playerctl.backward, #custom-playerctl.play, #custom-playerctl.forward{
         background: #${theme.dark_background_primary};
         font-weight: bold;
         margin: 5px 0px;
@@ -229,7 +228,7 @@
         color: #${theme.base09};
       }
 
-      #pulseaudio {
+      #backlight {
         padding: 0;
       }
 
@@ -239,7 +238,7 @@
         padding: 0 20px; 
       }
 
-      #backlight {
+      #pulseaudio {
         border-radius: 0 24px 24px 0;
         padding: 0 20px; 
       }
@@ -259,7 +258,7 @@
         border-radius: 0 24px 24px 0;
       }
 
-      #clock, #custom-weather {
+      #clock {
         color: #${theme.base0B};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
@@ -331,4 +330,3 @@
 # border-radius: 24px 24px 24px 24px;
 # padding: 0 20px;
 # margin-left: 7px;
-

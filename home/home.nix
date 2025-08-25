@@ -31,7 +31,7 @@
   home.pointerCursor = {
     enable = true;
     package = pkgs.google-cursor;
-    name = "GoogleDot-Black";
+    name = "GoogleDot-Violet";
     size = 12;
   };
   home.file.".icons" = {
@@ -100,8 +100,8 @@
   gtk = {
     enable = true;
 
-    cursorTheme.name = "GoogleDot-Black";
-    cursorTheme.size = 18;
+    cursorTheme.name = "GoogleDot-Violet";
+    cursorTheme.size = 12;
 
     # configuring dark mode
     theme = {
@@ -143,19 +143,19 @@
 
   programs.git = {
     enable = true;
-    userName = "Theo Rode";
-    userEmail = "theorodester@gmail.com";
+    userName = "David Chan";
+    userEmail = "davidlechan@gmail.com";
     extraConfig = {
-      init.defaultBranch = "main";
-      safe.directory = [
-        "/home/theo/Documents/Obsidian_Vault"
-        "/home/theo/Documents/HMC/HMC_MATH019_Answer_Keys"
-        "/home/theo/Documents/HMC/HMC_Semester_2"
-        "/home/theo/Documents/HMC/HMC_Semester_3"
-        "/home/theo/Documents/HMC/HMC_Semester_4"
-        "/home/theo/Documents/Resume"
-        "/home/theo/Documents/CalTech/julia_retrieval/Retrieval"
-      ];
+      init.defaultBranch = "master";
+      # safe.directory = [
+      #  "/home/theo/Documents/Obsidian_Vault"
+      #  "/home/theo/Documents/HMC/HMC_MATH019_Answer_Keys"
+      #  "/home/theo/Documents/HMC/HMC_Semester_2"
+      #  "/home/theo/Documents/HMC/HMC_Semester_3"
+      #  "/home/theo/Documents/HMC/HMC_Semester_4"
+      #  "/home/theo/Documents/Resume"
+      #  "/home/theo/Documents/CalTech/julia_retrieval/Retrieval"
+      # ];
     };
   };
 
