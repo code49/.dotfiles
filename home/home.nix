@@ -136,18 +136,32 @@
     enable = true;
 
     shellAliases = {
-      ll = "ls -l";
+      ls = "ls -a";
       ".." = "cd ..";
       "ssh" = "kitten ssh";
       "b" = "btop";
       "n" = "nvtop";
-      "pjcr" =
-        "/home/${userSettings.username}/.cargo/bin/pjcr"; # project creator needs to be installed with cargo
       "ns" = "nix-shell";
+      "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh"
     };
 
     envExtra = ''
       eval "$(zoxide init --cmd cd zsh)"
+
+      ff() {
+   
+      	# run script
+         	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
+      
+      	# case on script exit code to decide whether to kill terminal
+      	if [ $? -eq 0 ]; then
+      		exit
+      	else 
+      		echo "firefox shortcut script failed."
+      	fi
+      		
+      }
+      
     '';
   };
 
