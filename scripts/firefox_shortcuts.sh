@@ -41,7 +41,7 @@ case $SHORTCUT in
 
   # private window (personal profile) ; 
   "pri")
-    nohup /run/current-system/sw/bin/firefox -private-window &! ; exit
+    nohup /run/current-system/sw/bin/firefox -private-window & disown ; exit
   ;;
 
   # --- url-specific shortcuts ---

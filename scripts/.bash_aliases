@@ -8,4 +8,21 @@ alias nix-reb="~/.dotfiles/scripts/nix-rebuild-nice.sh"
 
 # misc
 alias ls="ls -a"
-alias ff="~/.dotfiles/scripts/firefox_shortcuts.sh &; exit"
+
+
+# firefox shortcut script is tricky
+ff() {
+   
+	# run script
+   	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
+
+	# case on script exit code to decide whether to kill terminal
+	if [ $? -eq 0 ]; then
+		exit
+	else 
+		echo "firefox shortcut script failed."
+	fi
+		
+}
+# export -f ff
+
