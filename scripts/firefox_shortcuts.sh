@@ -55,7 +55,7 @@ case $SHORTCUT in
 
   # piazza ; no default class selected
   "pz")
-    open_ff dchan2-cmu 'https://piazza.com/class/m5r0n3olzww5tl'
+    open_ff dchan2-cmu 'https://legacy.piazza.com/class/mernozt93b66ii'
   ;;
 
   # personal drive
@@ -105,6 +105,16 @@ case $SHORTCUT in
   "no")
     open_ff dchan-personal 'www.notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566'
   ;;
+  
+  # overleaf-personal
+  "olp")
+    open_ff dchan-personal 'https://www.overleaf.com/project'
+  ;;
+
+  # overleaf-cmu
+  "olc")
+    open_ff dchan2-cmu 'https://www.overleaf.com/project'
+  ;;
 
   # messaging stuff
   
@@ -142,7 +152,7 @@ case $SHORTCUT in
 
   # 18-100
   "100")
-    open_ff dchan2-cmu 'app.slack.com/client/T0886BT2HU3'
+    open_ff dchan2-cmu 'app.slack.com/client/T0992RLKWCX/C0992RM15RD'
   ;;
 
   # IO harness group
@@ -175,6 +185,11 @@ case $SHORTCUT in
   # sfg espn page
   "sfg")
     open_ff dchan-personal 'espn.com/mlb/team/_/name/sf/san-francisco-giants'
+  ;;
+
+  # chatgpt 
+  "gpt")
+    open_ff dchan-personal 'chatgpt.com'
   ;;
 
   # google gemini

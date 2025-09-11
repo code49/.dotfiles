@@ -142,7 +142,7 @@
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
-      "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh"
+      "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
     };
 
     envExtra = ''
