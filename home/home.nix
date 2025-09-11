@@ -138,6 +138,7 @@
     shellAliases = {
       ls = "ls -a";
       ".." = "cd ..";
+      "gitac" = "git add -A; git commit -m";
       "ssh" = "kitten ssh";
       "b" = "btop";
       "n" = "nvtop";
