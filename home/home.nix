@@ -136,7 +136,7 @@
     enable = true;
 
     shellAliases = {
-      ls = "ls -a";
+      ls = "ls -a1";
       ".." = "cd ..";
       "gitac" = "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
       "ssh" = "kitten ssh";

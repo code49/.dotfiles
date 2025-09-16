@@ -115,6 +115,11 @@ case $SHORTCUT in
   "olc")
     open_ff dchan2-cmu 'https://www.overleaf.com/project'
   ;;
+  
+  # linkedin (yikes)
+  "li")
+    open_ff dchan-personal 'https://www.linkedin.com/feed/' 
+  ;;
 
   # messaging stuff
   
