@@ -164,7 +164,7 @@
         "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
         "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
+        # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Tasks and Schedule)(.*)"
         "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Carnegie Mellon University Mail)(.*)$"
         "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(davidlechan@gmail.com)(.*)$"
@@ -210,7 +210,7 @@
         "$mod SHIFT, L, resizeactive, 20 0"
         "$mod SHIFT, H, resizeactive, -20 0"
         "$mod SHIFT, K, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
-        "$mod SHIFT, J, resizeactive, 0, 20"  # this doesn't do anything in 'master' layout
+        "$mod SHIFT, J, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
 
         # moving active window
         "$mod CTRL, H, movewindow, l"

@@ -140,6 +140,7 @@
       ".." = "cd ..";
       "gitac" = "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
       "ssh" = "kitten ssh";
+      "rmv" = "rm -v"
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";

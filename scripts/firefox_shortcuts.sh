@@ -101,6 +101,11 @@ case $SHORTCUT in
     open_ff dchan2-cmu 'github.com'
   ;;
 
+  # github-resume-pdf
+  "res")
+    open_ff dchan-personal ~/Documents/resume/DavidChan_Resume.pdf
+  ;;
+
   # notion
   "no")
     open_ff dchan-personal 'www.notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566'
@@ -109,6 +114,11 @@ case $SHORTCUT in
   # overleaf-personal
   "olp")
     open_ff dchan-personal 'https://www.overleaf.com/project'
+  ;;
+
+  # overleaf-resume
+  "olr")
+    open_ff dchan-personal 'https://www.overleaf.com/project/688a6610cecbb603397bf8ff'
   ;;
 
   # overleaf-cmu
