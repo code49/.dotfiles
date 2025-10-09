@@ -138,9 +138,10 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "gitac" = "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
+      "gitac" =
+        "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
       "ssh" = "kitten ssh";
-      "rmv" = "rm -v"
+      "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
@@ -151,10 +152,10 @@
       eval "$(zoxide init --cmd cd zsh)"
 
       ff() {
-   
+
       	# run script
          	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
-      
+
       	# case on script exit code to decide whether to kill terminal
       	if [ $? -eq 0 ]; then
       		exit
@@ -163,7 +164,7 @@
       	fi
       		
       }
-      
+
     '';
   };
 
