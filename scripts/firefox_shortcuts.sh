@@ -199,7 +199,7 @@ case $SHORTCUT in
 
   # monkeytype
   "mt")
-    open_ff dchan-perosnal 'monkeytype.com'
+    open_ff dchan-personal 'monkeytype.com'
   ;;
 
   # sfg espn page
