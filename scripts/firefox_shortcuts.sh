@@ -197,6 +197,11 @@ case $SHORTCUT in
     open_ff dchan-personal 'photos.google.com'
   ;;
 
+  # monkeytype
+  "mt")
+    open_ff dchan-perosnal 'monkeytype.com'
+  ;;
+
   # sfg espn page
   "sfg")
     open_ff dchan-personal 'espn.com/mlb/team/_/name/sf/san-francisco-giants'
