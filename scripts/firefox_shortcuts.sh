@@ -73,6 +73,11 @@ case $SHORTCUT in
     open_ff dchan-personal 'mail.google.com/mail/u/0/#inbox'
   ;;
 
+  # personal-alt email
+  "gmaila")
+    open_ff dchan-personal 'mail.google.com/mail/u/1/#inbox'
+  ;; 
+
   # cmu email
   "cmail")
     open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
