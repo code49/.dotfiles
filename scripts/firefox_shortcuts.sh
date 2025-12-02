@@ -83,6 +83,11 @@ case $SHORTCUT in
     open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
   ;;
 
+  # cmu s3 portal
+  "s3")
+    open_ff dchan2-cmu 'https://s3.andrew.cmu.edu/sio/mpa/'
+  ;;
+
   # desmos (scientific, grapher, 3d)
   "dss")
     open_ff dchan2-cmu 'desmos.com/scientific'
