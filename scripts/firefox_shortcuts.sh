@@ -88,6 +88,11 @@ case $SHORTCUT in
     open_ff dchan2-cmu 'https://s3.andrew.cmu.edu/sio/mpa/'
   ;;
 
+  # cmu printer
+  "cprint")
+    open_ff dchan2-cmu 'https://printing.andrew.cmu.edu/app?service=page/UserSummary'
+  ;;
+
   # desmos (scientific, grapher, 3d)
   "dss")
     open_ff dchan2-cmu 'desmos.com/scientific'
