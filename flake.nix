@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs = { url = "nixpkgs/nixos-unstable"; };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
 
@@ -19,7 +21,7 @@
     # };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs:
     let
       lib = nixpkgs.lib;
       pkgs = nixpkgs.legacyPackages.${system};
@@ -27,6 +29,8 @@
       # ---------- SYSTEM SETTINGS ---------- # 
       system = "x86_64-linux";
       systemSettings = { timezone = "America/New_York"; };
+
+      modules = [ nixos-hardware.nixosModules.framework-13-amd-ai-300-series ];
 
       # ----------- USER SETTINGS ----------- #
       userSettings = {
