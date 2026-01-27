@@ -1,0 +1,28 @@
+# --- Global Defaults for your CMU hosts ---
+# Applies to cmu, cmu-linux, and any machine matching the patterns below
+Host cmu cmu-linux ece0* hh-1305*
+    User dchan2
+    ForwardX11 yes
+    ForwardX11Trusted yes
+    ServerAliveInterval 60
+
+# --- Standard Entry Points ---
+Host cmu
+    HostName unix.andrew.cmu.edu
+
+Host cmu-linux
+    HostName linux.andrew.cmu.edu
+
+# --- ECE Clusters (Jump via cmu-linux) ---
+# Usage: ssh ece030
+# Auto-expands to: ece030.ece.local.cmu.edu
+Host ece0*
+    HostName %h.ece.local.cmu.edu
+    ProxyJump cmu-linux
+
+# --- Hamerschlag Hall / Lab Machines (Jump via cmu-linux) ---
+# Usage: ssh hh-1305-10
+# Auto-expands to: hh-1305-10.lan.local.cmu.edu
+Host hh-1305*
+    HostName %h.lan.local.cmu.edu
+    ProxyJump cmu-linux
