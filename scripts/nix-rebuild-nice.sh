@@ -4,7 +4,7 @@
 #
 
 # NUMBER OF GENERATIONS TO SAVE
-SAVE_GENERATIONS=5
+SAVE_GENERATIONS=10
 
 # do initial rebuild
 sudo nixos-rebuild switch --flake ~/.dotfiles --upgrade-all
