@@ -3,16 +3,16 @@
 {
   imports = [ ../../modules/monitors.nix ];
 
-  # monitors = [
-  #   {
-  #     name = "eDP-1";
-  #     primary = true;
-  #     width = 2560;
-  #     height = 1440;
-  #     refreshRate = 165;
-  #     position = "0x0";
-  #     scale = "1.25";
-  #   }
+  monitors = [
+    {
+      name = "eDP-1";
+      primary = true;
+      width = 2880;
+      height = 1920;
+      refreshRate = 120;
+      position = "0x0";
+      scale = "1.666667";
+    }
   #   {
   #     name = "DP-7";
   #     primary = false;
@@ -21,7 +21,7 @@
   #     refreshRate = 165;
   #     position = "auto-right";
   #   }
-  # ];
+  ];
 
   networking.hostName = "dchan-laptop";
 
