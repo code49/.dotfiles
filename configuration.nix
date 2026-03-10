@@ -114,6 +114,7 @@
     POLKIT_AUTH_AGENT =
       "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
     # LIBVA_DRIVER_NAME = "nvidia";
+    MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
 
     # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
