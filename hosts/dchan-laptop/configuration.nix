@@ -16,7 +16,8 @@
       primary = true;
       width = 2880;
       height = 1920;
-      refreshRate = 120;
+      # refreshRate = 120;
+      refreshRate = 60;
       position = "0x0";
       scale = "1.67";
     }
