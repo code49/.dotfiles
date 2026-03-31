@@ -56,12 +56,10 @@
 
       env = [
         # force reasonable cursor sizes 
-        "GDK_SCALE, 2"
         "XCURSOR_SIZE,12"
         "XCURSOR_THEME,GoogleDot-Violet"
         "HYPRCURSOR_THEME,hypr_GoogleDot-Violet"
         "HYPRCURSOR_SIZE,18"
-        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
       ];
 
       "general" = {
@@ -150,7 +148,8 @@
         "minsize 100 100,class:^(Dve.exe)$"
 
         "opacity 1.0 0.6,class:^(kitty)$"
-        "opacity 0.7 0.7,class:^(code-oss)$"
+        # Keep VSCode opaque while debugging post-suspend blur.
+        "opacity 1.0 1.0,class:^(code-oss)$"
 
         "noanim,class:^(wofi)$"
 
@@ -176,7 +175,7 @@
       # turning off laptop screen on lid close
       bindl = [
         ''
-          ,switch:off:Lid Switch,exec,hyprctl keyword monitor "eDP-1,preferred,auto,auto"''
+          ,switch:off:Lid Switch,exec,hyprctl reload''
         '',switch:on:Lid Switch,exec,hyprctl keyword monitor "eDP-1,disable"''
       ];
 
