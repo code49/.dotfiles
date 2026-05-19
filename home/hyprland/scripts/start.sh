@@ -12,6 +12,8 @@ blueman-applet &
 
 waybar & 
 
-swayidle -w before-sleep 'swaylock -f'
+swayidle -w \
+  before-sleep 'swaylock -f' \
+  after-resume '~/.dotfiles/home/hyprland/scripts/refresh-graphics.sh' &
 
-mako 
+mako &

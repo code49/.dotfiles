@@ -93,6 +93,11 @@ case $SHORTCUT in
     open_ff dchan2-cmu 'https://printing.andrew.cmu.edu/app?service=page/UserSummary'
   ;;
 
+  # cmu calendar
+  "ccal")
+    open_ff dchan2-cmu 'calendar.google.com'
+  ;;
+
   # desmos (scientific, grapher, 3d)
   "dss")
     open_ff dchan2-cmu 'desmos.com/scientific'
@@ -118,7 +123,7 @@ case $SHORTCUT in
 
   # github-resume-pdf
   "res")
-    open_ff dchan-personal ~/Documents/resume/DavidChan_Resume.pdf
+    open_ff dchan-personal ~/personal-work/resume/DavidChan_Resume.pdf
   ;;
 
   # notion
@@ -215,6 +220,11 @@ case $SHORTCUT in
   # monkeytype
   "mt")
     open_ff dchan-personal 'monkeytype.com'
+  ;;
+
+  # vlr
+  "vlr")
+    open_ff dchan-personal 'https://www.vlr.gg/'
   ;;
 
   # sfg espn page

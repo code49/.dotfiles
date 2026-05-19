@@ -5,13 +5,15 @@
     settings = {
       # include = "~/.dotfiles/home/kitty/custom_theme.conf";
       font_family = "jetbrains mono nerd font";
-      font_size = 12;
+      font_size = 9;
       bold_font = "auto";
       italic_font = "auto";
       bold_italic_font = "auto";
       mouse_hide_wait = "2.0";
       cursor_shape = "block";
       url_style = "dotted";
+
+      disable_ligatures = "always"; # rip systemverilog without it
 
       confirm_os_window_close = 0;
       background_opacity = "0.6";

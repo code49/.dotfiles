@@ -33,8 +33,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.kernelModules = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  # # NVIDIA GPU SETTINGS
+  # boot.initrd.kernelModules = [ "nvidia" ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+
+  # AMD GPU SETTINGS
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   # networking.hostName = systemSettings.hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -110,10 +114,10 @@
     POLKIT_AUTH_AGENT =
       "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
     # LIBVA_DRIVER_NAME = "nvidia";
+    MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
 
-    VK_DRIVER_FILES =
-      "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
   };
 
@@ -134,21 +138,21 @@
     #   extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiVdpau libvdpau-va-gl ];
     # };
 
-    nvidia = {
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable; # .beta
-      nvidiaSettings = true; # Nvidia settings menu. Run: nvidia-settings
-      powerManagement.enable = false; # experimental
-      powerManagement.finegrained = false; # experimental, might be bad
-      open = false; # use NVidia open source drivers (still alpha)
-
-      # # make sure correct Bus ID for system! Can run: lspci
-      # prime = {
-      #   # sync.enable = true; # might be good when plugged into external monitor? 
-      #   nvidiaBusId = "PCI:1:0:0";
-      #   intelBusId = "PCI:0:2:0";
-      # };
-    };
+    # nvidia = {
+    #   modesetting.enable = true;
+    #   package = config.boot.kernelPackages.nvidiaPackages.stable; # .beta
+    #   nvidiaSettings = true; # Nvidia settings menu. Run: nvidia-settings
+    #   powerManagement.enable = false; # experimental
+    #   powerManagement.finegrained = false; # experimental, might be bad
+    #   open = false; # use NVidia open source drivers (still alpha)
+    #
+    #   # # make sure correct Bus ID for system! Can run: lspci
+    #   # prime = {
+    #   #   # sync.enable = true; # might be good when plugged into external monitor? 
+    #   #   nvidiaBusId = "PCI:1:0:0";
+    #   #   intelBusId = "PCI:0:2:0";
+    #   # };
+    # };
   };
 
   xdg = {
@@ -176,7 +180,8 @@
       xkb.layout = "us";
       xkb.variant = "";
       excludePackages = [ pkgs.xterm ];
-      videoDrivers = [ "nvidia" ];
+      # videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "amdgpu" ];
     };
     displayManager.gdm = {
       enable = true;
@@ -270,6 +275,11 @@
 
     wireplumber
     pipewire
+
+    gemini-cli
+
+    tree
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
