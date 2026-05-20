@@ -13,13 +13,23 @@
   monitors = [
     {
       name = "eDP-1";
-      primary = true;
+      primary = false;
       width = 2880;
       height = 1920;
       # refreshRate = 120;
       refreshRate = 60;
       position = "0x0";
       scale = "1.67";
+    }
+    { # austin desk monitor
+       name = "DP-1";
+       primary = true;
+       width = 2560;
+       height = 1440;
+       refreshRate = 144;
+       # refreshRate = 60;
+       # position = "0x0";
+       scale = "1.00";
     }
   ];
 
