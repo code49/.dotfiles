@@ -3,6 +3,9 @@
 # File for rebuilding + clearing older than +5 generations of nix builds.
 #
 
+# stop script on command failure
+set -euo pipefail
+
 # NUMBER OF GENERATIONS TO SAVE
 SAVE_GENERATIONS=30
 

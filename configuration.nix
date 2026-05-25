@@ -187,7 +187,6 @@
     };
     displayManager.gdm = {
       enable = true;
-      # wayland = true;
     };
     libinput.enable = true;
     dbus.enable = true;
@@ -195,7 +194,10 @@
     gnome = { gnome-keyring.enable = true; };
   };
 
-  # Allow unfree packages
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   nixpkgs.config.allowUnfree = true;
 
   fonts.packages = with pkgs; [

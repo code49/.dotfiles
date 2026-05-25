@@ -87,7 +87,7 @@
               border_size = 2,
               ["col.active_border"] = "rgba(${theme.base0B}ee)",
               ["col.inactive_border"] = "rgba(${theme.dark_background_primary}aa)",
-              layout = "scrolling",
+              layout = "master",
               allow_tearing = false,
           },
 

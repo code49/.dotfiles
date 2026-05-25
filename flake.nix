@@ -117,6 +117,7 @@
         dchan-laptop = lib.nixosSystem {
           inherit system;
           modules = [
+            nixos-hardware.nixosModules.framework-13-amd-ai-300-series
             ./hosts/dchan-laptop/configuration.nix
             ./configuration.nix
             ./hosts/dchan-laptop/hardware-configuration.nix
