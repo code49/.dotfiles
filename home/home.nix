@@ -174,15 +174,6 @@
     userEmail = "davidlechan@gmail.com";
     extraConfig = {
       init.defaultBranch = "master";
-      # safe.directory = [
-      #  "/home/theo/Documents/Obsidian_Vault"
-      #  "/home/theo/Documents/HMC/HMC_MATH019_Answer_Keys"
-      #  "/home/theo/Documents/HMC/HMC_Semester_2"
-      #  "/home/theo/Documents/HMC/HMC_Semester_3"
-      #  "/home/theo/Documents/HMC/HMC_Semester_4"
-      #  "/home/theo/Documents/Resume"
-      #  "/home/theo/Documents/CalTech/julia_retrieval/Retrieval"
-      # ];
     };
   };
 

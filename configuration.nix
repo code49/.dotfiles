@@ -159,7 +159,7 @@
     autostart.enable = true;
     portal = {
       enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
   };
 
@@ -231,7 +231,7 @@
     # hyprlock
     # hypridle
 
-    swww
+    awww
     kitty
     wofi
     firefox
@@ -244,10 +244,10 @@
     wl-clipboard
     swayidle
     swaylock
-    xdg-desktop-portal-hyprland
-    xdg-utils
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
+    # xdg-desktop-portal-hyprland
+    # xdg-utils
+    # xdg-desktop-portal
+    # xdg-desktop-portal-gtk
     qt5.qtwayland
     qt6.qmake
     pciutils
