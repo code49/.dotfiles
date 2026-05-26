@@ -277,7 +277,7 @@
     wireplumber
     pipewire
 
-    gemini-cli
+    # gemini-cli
 
     tree
 

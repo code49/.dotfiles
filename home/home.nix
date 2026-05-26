@@ -169,10 +169,10 @@
   };
 
   programs.git = {
-    enable = true;
-    userName = "David Chan";
-    userEmail = "davidlechan@gmail.com";
-    extraConfig = {
+    settings = {
+      enable = true;
+      user.name = "David Chan";
+      user.email = "davidlechan@gmail.com";
       init.defaultBranch = "master";
     };
   };
