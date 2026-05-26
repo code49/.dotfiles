@@ -231,8 +231,8 @@
     # hyprlock
     # hypridle
 
-    swww
-    # awww
+    # swww
+    awww
     kitty
     wofi
     firefox
