@@ -48,6 +48,9 @@
 
     google-cursor
 
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
+    # inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-ide
+
     # google-chrome
     # google-cursor
     # obsidian
