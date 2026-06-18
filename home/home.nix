@@ -21,8 +21,6 @@
   home.stateVersion = "23.11"; # DONT CHANGE
 
   # set config for nix-shell and home-manager nixpkgs
-  # nixpkgs.config.allowUnfree = true;
-  nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
   xdg.configFile."electron-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."electron32-flags.conf".source = ./electron-flags.conf;
