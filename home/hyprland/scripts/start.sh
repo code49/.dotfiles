@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-swww-daemon & 
-# swww img ~/Wallpapers/jwst_1.png & 
-swww img ~/.dotfiles/wallpapers/backgroundblend.png &
+awww-daemon & 
+sleep 1
+# awww img ~/Wallpapers/jwst_1.png & 
+awww img ~/.dotfiles/wallpapers/backgroundblend.png &
 
 # networking applet
 nm-applet --indicator &

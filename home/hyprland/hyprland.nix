@@ -84,7 +84,6 @@
           enabled = true;
           size = 5;
           passes = 2;
-          new_optimizations = true;
         };
 
         # drop_shadow = "no";
@@ -126,8 +125,6 @@
         orientation = "right";
       };
 
-      gestures = { workspace_swipe = "off"; };
-
       misc = { force_default_wallpaper = 0; };
 
       # device = [
@@ -142,32 +139,32 @@
       #   }
       # ];
 
-      windowrulev2 = [
-        "suppressevent maximize, class:.*" # apparently this is nice
+      windowrule = [
+        "match:class .*, suppress_event maximize" # apparently this is nice
 
-        "minsize 100 100,class:^(Dve.exe)$"
+        "match:class ^(Dve.exe)$, min_size 100 100"
 
-        "opacity 1.0 0.6,class:^(kitty)$"
+        "match:class ^(kitty)$, opacity 1.0 0.6"
         # Keep VSCode opaque while debugging post-suspend blur.
-        "opacity 1.0 1.0,class:^(code-oss)$"
+        "match:class ^(code-oss)$, opacity 1.0 1.0"
 
-        "noanim,class:^(wofi)$"
+        "match:class ^(wofi)$, no_anim on"
 
-        "opacity 0.7 0.5,class:^(obsidian)$ "
-        "tile,class:^(obsidian)$ # force obsidian to tile "
+        "match:class ^(obsidian)$, opacity 0.7 0.5"
+        "match:class ^(obsidian)$, tile on # force obsidian to tile "
 
-        "opacity 0.7 0.7,class:^(discord)$"
-        "opacity 0.7 0.7,class:^(Spotify)$"
+        "match:class ^(discord)$, opacity 0.7 0.7"
+        "match:class ^(Spotify)$, opacity 0.7 0.7"
 
-        "opacity 0.8 0.8,class:^(firefox)$,title:(Gradescope)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(Google Calendar)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:^((?!GitHub))(Dashboard — )(.*)$"
+        "match:class ^(firefox)$, match:title (Gradescope)(.*)$, opacity 0.8 0.8"
+        "match:class ^(firefox)$, match:title (Google Calendar)(.*)$, opacity 0.7 0.7"
+        "match:class ^(firefox)$, match:title ^((?!GitHub))(Dashboard — )(.*)$, opacity 0.7 0.7"
         # "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
         # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
-        "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Tasks and Schedule)(.*)"
+        "match:class ^(firefox)$, match:title (.*)(Tasks and Schedule)(.*), opacity 0.7 0.7"
         # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Carnegie Mellon University Mail)(.*)$"
         # "opacity 0.7 0.7,class:^(firefox)$,title:(Inbox )(.*)(davidlechan@gmail.com)(.*)$"
-        "opacity 0.7 0.7,class:^(rstudio)$"
+        "match:class ^(rstudio)$, opacity 0.7 0.7"
       ];
 
       "$mod" = "SUPER";
