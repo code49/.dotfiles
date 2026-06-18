@@ -7,7 +7,7 @@ set -e # Exit immediately if a command exits with a non-zero status.
 
 # Default values
 ACTION="switch"
-SAVE_GENERATIONS=10
+SAVE_GENERATIONS=25
 
 show_help() {
     echo "Usage: $(basename "$0") [action] [generations]"
