@@ -28,8 +28,7 @@
 
       "exec-once" = [
         "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
-        # "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'notion.so/davidlechan/Tasks-and-Schedule-d03cd6231ead496e808bdf0fe03f8566'"
-        # "[workspace 1 silent] nohup firefox -p dchan-personal -new-window 'calendar.google.com'"
+        "python3 ~/.dotfiles/home/hyprland/scripts/startup_apps.py"
       ];
 
       "$terminal" = "kitty";
@@ -128,7 +127,7 @@
 
       scrolling = {
         fullscreen_on_one_column = true;
-        column_width = 0.5;
+        column_width = 1.0;
         explicit_column_widths = "0.5, 1.0";
         direction = "right";
         focus_fit_method = 1;
@@ -167,6 +166,7 @@
         "match:class ^(Spotify)$, opacity 0.7 0.7"
 
         "match:class ^(firefox)$, match:title (Gradescope)(.*)$, opacity 0.8 0.8"
+        "match:class ^(firefox)$, match:title (.*)(Instagram)(.*), opacity 0.7 0.7"
         "match:class ^(firefox)$, match:title (Google Calendar)(.*)$, opacity 0.7 0.7"
         "match:class ^(firefox)$, match:title ^((?!GitHub))(Dashboard — )(.*)$, opacity 0.7 0.7"
         # "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
