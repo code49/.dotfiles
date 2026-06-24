@@ -212,6 +212,11 @@ case $SHORTCUT in
     open_ff dchan-personal 'tv.youtube.com'
   ;;
 
+  # mlb TV
+  "mlbtv")
+    open_ff dchan-personal 'https://www.mlb.com/tv'
+  ;;
+
   # photos
   "ph")
     open_ff dchan-personal 'photos.google.com'
