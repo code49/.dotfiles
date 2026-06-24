@@ -73,6 +73,7 @@
         layout = "scrolling";
 
         allow_tearing = false;
+        no_focus_fallback = true;
       };
 
       "misc" = { disable_hyprland_logo = "yes"; };
@@ -195,11 +196,12 @@
         "$mod, W, killactive,"
         "$mod, F, togglefloating"
         "$mod, Q, exec, $terminal"
-        "$mod, F1, layoutmsg, swapcol r"
-        "$mod SHIFT, F1, layoutmsg, swapcol l"
-        "$mod, F3, layoutmsg, consume"
-        "$mod SHIFT, F3, layoutmsg, expel"
-        # "$mod, F4, layoutmsg, addmaster"
+        # NOTE: In Hyprland v0.55+, swapcol wrapping can be disabled natively by setting 
+        # `scrolling.wrap_swapcol = false;` in configuration. For v0.54.x, we use a custom script instead.
+        "$mod, F1, exec, ~/.dotfiles/home/hyprland/scripts/swapcol_nowrap.py l"
+        "$mod, F2, exec, ~/.dotfiles/home/hyprland/scripts/swapcol_nowrap.py r"
+        "$mod, F3, layoutmsg, expel"
+        "$mod SHIFT, F3, layoutmsg, consume"
         # "$mod, F5, layoutmsg, removemaster"
 
         # suspend/hibernate
@@ -265,6 +267,10 @@
         ", xf86MonBrightnessDown, exec, brightnessctl set 5%-"
         ", xf86MonBrightnessUp, exec, brightnessctl set 5%+"
       ];
+
+      binds = {
+        window_direction_monitor_fallback = false;
+      };
 
     };
   };
