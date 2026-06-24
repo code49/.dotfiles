@@ -147,6 +147,7 @@
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
+      "lss" = "~/.dotfiles/scripts/sls.sh";
     };
 
     envExtra = ''

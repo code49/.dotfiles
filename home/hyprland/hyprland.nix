@@ -70,7 +70,7 @@
           "rgba(${theme.base0B}ee) rgba(${theme.base09}ee) 45deg";
         "col.inactive_border" = "rgba(${theme.dark_background_primary}aa)";
 
-        layout = "master";
+        layout = "scrolling";
 
         allow_tearing = false;
       };
@@ -123,6 +123,15 @@
         new_status = "inherit";
         new_on_top = true;
         orientation = "right";
+      };
+
+      scrolling = {
+        fullscreen_on_one_column = true;
+        column_width = 0.5;
+        explicit_column_widths = "0.5, 1.0";
+        direction = "right";
+        focus_fit_method = 1;
+        follow_focus = true;
       };
 
       misc = { force_default_wallpaper = 0; };
@@ -186,11 +195,12 @@
         "$mod, W, killactive,"
         "$mod, F, togglefloating"
         "$mod, Q, exec, $terminal"
-        "$mod, F1, layoutmsg, swapnext"
-        "$mod, F2, layoutmsg, swapwithmaster master"
-        "$mod, F3, layoutmsg, orientationcycle left right center"
-        "$mod, F4, layoutmsg, addmaster"
-        "$mod, F5, layoutmsg, removemaster"
+        "$mod, F1, layoutmsg, swapcol r"
+        "$mod SHIFT, F1, layoutmsg, swapcol l"
+        "$mod, F3, layoutmsg, consume"
+        "$mod SHIFT, F3, layoutmsg, expel"
+        # "$mod, F4, layoutmsg, addmaster"
+        # "$mod, F5, layoutmsg, removemaster"
 
         # suspend/hibernate
         "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
@@ -202,11 +212,15 @@
         "$mod, K, movefocus, u"
         "$mod, J, movefocus, d"
 
+        # scrolling layout navigation
+        "$mod SHIFT, N, layoutmsg, move -col"
+        "$mod SHIFT, M, layoutmsg, move +col"
+
         # resizing active window 
-        "$mod SHIFT, L, resizeactive, 20 0"
-        "$mod SHIFT, H, resizeactive, -20 0"
-        "$mod SHIFT, K, resizeactive, 0, -20" # this doesn't do anything in 'master' layout
-        "$mod SHIFT, J, resizeactive, 0, 20" # this doesn't do anything in 'master' layout
+        "$mod SHIFT, L, layoutmsg, colresize +0.05"
+        "$mod SHIFT, H, layoutmsg, colresize -0.05"
+        "$mod SHIFT, K, resizeactive, 0 -20"
+        "$mod SHIFT, J, resizeactive, 0 20"
 
         # moving active window
         "$mod CTRL, H, movewindow, l"
