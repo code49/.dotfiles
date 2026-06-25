@@ -254,6 +254,18 @@
         "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
 
+        # moving entire workspace's windows to another workspace (preserving order)
+        "$mod CTRL SHIFT, 1, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 1"
+        "$mod CTRL SHIFT, 2, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 2"
+        "$mod CTRL SHIFT, 3, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 3"
+        "$mod CTRL SHIFT, 4, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 4"
+        "$mod CTRL SHIFT, 5, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 5"
+        "$mod CTRL SHIFT, 6, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 6"
+        "$mod CTRL SHIFT, 7, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 7"
+        "$mod CTRL SHIFT, 8, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 8"
+        "$mod CTRL SHIFT, 9, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 9"
+        "$mod CTRL SHIFT, 0, exec, python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py 10"
+
         # media keybinds
         ", xf86audioraisevolume, exec, pamixer -i 5"
         ", xf86audiolowervolume, exec, pamixer -d 5"
