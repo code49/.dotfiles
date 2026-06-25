@@ -74,33 +74,33 @@ def main():
     log("Launching Workspace 10 apps...")
     log("Launching Instagram...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://www.instagram.com"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     log("Launching Instagram Direct...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://www.instagram.com/direct/inbox"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     log("Launching WhatsApp...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://web.whatsapp.com/"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     log("Launching Google Messages...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://messages.google.com/web/conversations"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     # 3. Workspace 9 apps (left-to-right: Calendar -> Notion -> Spotify)
     log("Launching Workspace 9 apps...")
     log("Launching Google Calendar...")
-    subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://calendar.google.com/calendar/u/0/r"])
-    time.sleep(1.2)
+    subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://calendar.google.com/calendar/u/0/r/customday"])
+    time.sleep(0.2)
 
     log("Launching Notion...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://www.notion.so/davidlechan/d03cd6231ead496e808bdf0fe03f8566"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     log("Launching Spotify...")
     subprocess.Popen(["spotify"])
-    time.sleep(1.2)
+    time.sleep(0.2)
 
     # Lambda-based target definitions for precise matching
     targets = [
@@ -129,12 +129,14 @@ def main():
         {
             "id": "calendar",
             "match": lambda c: c.get("class") == "firefox" and "calendar" in c.get("title", "").lower(),
-            "workspace": 9
+            "workspace": 9,
+            "resize": 0.4
         },
         {
             "id": "notion",
             "match": lambda c: c.get("class") == "firefox" and "notion" in c.get("title", "").lower(),
-            "workspace": 9
+            "workspace": 9,
+            "resize": 0.6
         },
         {
             "id": "spotify",
@@ -143,51 +145,105 @@ def main():
         }
     ]
 
-    placed_targets = set()
-    resized_targets = set()
+    ws10_ids = ["instagram_main", "instagram_direct", "whatsapp", "messages"]
+    ws9_ids = ["calendar", "notion", "spotify"]
+
+    ws10_moved = False
+    ws9_moved = False
 
     # Poll for up to 120 seconds (240 iterations * 0.5s)
     log("Starting polling loop for window placement...")
     for step in range(240):
         clients = get_clients()
-        pending_resizes = []
 
-        for target in targets:
-            tid = target["id"]
-            if tid in placed_targets and (target.get("resize") is None or tid in resized_targets):
-                continue
+        # 1. Check Workspace 10
+        if not ws10_moved:
+            found = {}
+            for target in targets:
+                if target["workspace"] == 10:
+                    c = next((client for client in clients if target["match"](client)), None)
+                    if c:
+                        found[target["id"]] = c
 
-            # Find matching client
-            c = next((client for client in clients if target["match"](client)), None)
-            if c:
-                addr = c["address"]
-                ws = target["workspace"]
-                current_ws = c.get("workspace", {}).get("id")
+            # If all 4 Workspace 10 targets are found, or if we have timed out (e.g. after step 100/50 seconds)
+            # we move whatever we have found to guarantee they get moved.
+            if len(found) == 4 or (step >= 100 and found):
+                pending_resizes = []
+                for tid in ws10_ids:
+                    if tid in found:
+                        c = found[tid]
+                        addr = c["address"]
+                        current_ws = c.get("workspace", {}).get("id")
+                        if current_ws != 10:
+                            log(f"Found Workspace 10 target '{tid}'. Moving silent to Workspace 10...")
+                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"10,address:{addr}"])
+                        
+                        target_obj = next(t for t in targets if t["id"] == tid)
+                        if "resize" in target_obj:
+                            pending_resizes.append((addr, 10, target_obj["resize"]))
 
-                # Move if not on target workspace
-                if current_ws != ws:
-                    log(f"Found {tid} window ('{c.get('title')}'). Moving silent from workspace {current_ws} to {ws}...")
-                    run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{addr}"])
-                
-                placed_targets.add(tid)
+                if pending_resizes:
+                    time.sleep(0.2)
+                    resize_multiple_windows(pending_resizes)
 
-                # Queue resize if target requires it
-                if "resize" in target and tid not in resized_targets:
-                    pending_resizes.append((addr, ws, target["resize"]))
-                    resized_targets.add(tid)
+                if len(found) == 4 or step >= 100:
+                    ws10_moved = True
+                    log(f"Workspace 10 windows successfully moved. Total found: {len(found)}")
 
-        if pending_resizes:
-            resize_multiple_windows(pending_resizes)
+        # 2. Check Workspace 9
+        if not ws9_moved:
+            found = {}
+            for target in targets:
+                if target["workspace"] == 9:
+                    c = next((client for client in clients if target["match"](client)), None)
+                    if c:
+                        found[target["id"]] = c
 
-        # Check exit condition
-        if len(placed_targets) == len(targets):
-            log(f"All {len(targets)} targets successfully placed and resized! Exiting loop early at step {step}.")
+            if len(found) == 3 or (step >= 100 and found):
+                pending_resizes = []
+                for tid in ws9_ids:
+                    if tid in found:
+                        c = found[tid]
+                        addr = c["address"]
+                        current_ws = c.get("workspace", {}).get("id")
+                        if current_ws != 9:
+                            log(f"Found Workspace 9 target '{tid}'. Moving silent to Workspace 9...")
+                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"9,address:{addr}"])
+                        
+                        target_obj = next(t for t in targets if t["id"] == tid)
+                        if "resize" in target_obj:
+                            pending_resizes.append((addr, 9, target_obj["resize"]))
+
+                if pending_resizes:
+                    time.sleep(0.2)
+                    resize_multiple_windows(pending_resizes)
+
+                if len(found) == 3 or step >= 100:
+                    ws9_moved = True
+                    log(f"Workspace 9 windows successfully moved. Total found: {len(found)}")
+
+        # Exit loop if both are moved
+        if ws10_moved and ws9_moved:
+            log("All workspace targets successfully placed and resized! Exiting loop early.")
             break
 
         time.sleep(0.5)
     else:
-        missing = [t["id"] for t in targets if t["id"] not in placed_targets]
-        log(f"Polling loop finished. Missing targets: {missing}")
+        log("Polling loop timed out.")
+
+    # Close the landing page splash screen at the end
+    log("Attempting to close the landing page window...")
+    for _ in range(10): # Try for up to 5 seconds
+        clients = get_clients()
+        landing_window = next((c for c in clients if c.get("class") == "firefox" and "david le chan" in c.get("title", "").lower()), None)
+        if landing_window:
+            addr = landing_window["address"]
+            log(f"Closing startup landing page window ({addr})...")
+            run_cmd(["hyprctl", "dispatch", "closewindow", f"address:{addr}"])
+            break
+        time.sleep(0.5)
+    else:
+        log("Landing page window not found or title did not load.")
 
 if __name__ == "__main__":
     main()
