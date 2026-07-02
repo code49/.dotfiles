@@ -161,8 +161,13 @@
          	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
 
       	# case on script exit code to decide whether to kill terminal
-      	if [ $? -eq 0 ]; then
+      	local exit_code=$?
+      	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+      		return 0
+      	elif [ $exit_code -eq 0 ]; then
       		exit
+      	elif [ $exit_code -eq 130 ]; then
+      		return 0
       	else 
       		echo "firefox shortcut script failed."
       	fi

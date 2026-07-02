@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Script for interpreting (and subsequently opening) firefox windows via shortcuts.
 #
@@ -6,22 +6,135 @@
 # stop execution if we reach a non-zero exit code
 set -e
 
+# Path to firefox binary
+FIREFOX_BIN="/run/current-system/sw/bin/firefox"
+if [ ! -f "$FIREFOX_BIN" ]; then
+  FIREFOX_BIN=$(command -v firefox || echo "firefox")
+fi
+
 # grab shortcut string as a variable
 SHORTCUT=$1
 
+# Show help message if requested
+if [ "$SHORTCUT" = "-h" ] || [ "$SHORTCUT" = "--help" ]; then
+  cat <<EOF
+Firefox Shortcut Opener (ff)
+
+Usage:
+  ff <shortcut>     Launch a site/profile directly
+  ff                Open interactive fuzzy selector (fzf)
+  ff -h | --help    Show this help message
+
+Categories & Shortcuts:
+  [CMU] Academic / Slack / Tools:
+    c               CMU profile, Canvas
+    gs              Gradescope
+    pz              Piazza (legacy)
+    cmail           CMU Gmail Inbox
+    ccal            CMU Google Calendar
+    s3              CMU S3 Portal (SIO)
+    cprint          CMU Printing user summary
+    ghc             CMU GitHub
+    olc             CMU Overleaf projects
+    dss/dsc/ds3d    Desmos (Scientific / Calculator / 3D)
+    cia/io          Academic Slack Workspaces (CIA Buggy, IO Harness)
+
+  [Personal] Personal / Social / Media:
+    p               Personal profile default, davidlechan.dev
+    drive           Google Drive
+    cal             Google Calendar week view
+    gmail/gmaila    Gmail Inbox (Primary / Alt)
+    ghp             Personal GitHub
+    res             Resume PDF (local)
+    no              Notion workspace
+    olp/olr         Personal Overleaf (Projects / Resume)
+    li              LinkedIn Feed
+    msg/ig/wa       Messaging (Messages, Instagram, WhatsApp)
+    sfy/yt/yttv     Media (Spotify, YouTube, YouTube TV)
+    mlbtv/cl/ph/mt  Hobbies (MLB.TV, Caught Looking, Photos, Monkeytype)
+    vlr/sfg         Sports (VLR.gg, SF Giants ESPN)
+    gpt/gem/gns     AI & News (ChatGPT, Gemini, Google News)
+
+  [General] Global Utilities:
+    pri             Launch personal profile in private window
+    mails           Open all three email inboxes (personal x2, CMU)
+EOF
+  exit 0
+fi
+
+# If no shortcut was provided, use fzf to select one
+if [ -z "$SHORTCUT" ]; then
+  if ! command -v fzf >/dev/null 2>&1; then
+    echo "Error: fzf is not installed, and no shortcut was specified." >&2
+    exit 127
+  fi
+
+  CHOICE=$(cat <<EOF | grep -v '^[[:space:]]*#' | fzf --prompt="Select Firefox Shortcut: " --header="Press [Enter] to open, [Esc] to cancel." --height=40% --layout=reverse --border
+[CMU]      c - CMU (Canvas)
+[CMU]      gs - Gradescope (CMU)
+[CMU]      pz - Piazza (CMU)
+[CMU]      cmail - Gmail (CMU)
+[CMU]      ccal - Google Calendar (CMU)
+[CMU]      s3 - CMU S3 Portal (SIO)
+[CMU]      cprint - CMU Printer Summary
+[CMU]      ghc - GitHub (CMU)
+[CMU]      olc - Overleaf (CMU)
+[CMU]      dss - Desmos Scientific Calculator
+[CMU]      dsc - Desmos Graphing Calculator
+[CMU]      ds3d - Desmos 3D Calculator
+[CMU]      cia - Slack (CIA Buggy)
+# [CMU]      100 - Slack (18-100)
+[CMU]      io - Slack (IO Harness)
+[Personal] p - Personal Profile Default (davidlechan.dev)
+[Personal] drive - Google Drive (Personal)
+[Personal] cal - Google Calendar (Personal)
+[Personal] gmail - Gmail (Personal)
+[Personal] gmaila - Gmail (Personal Alt)
+[Personal] ghp - GitHub (Personal)
+[Personal] res - Resume PDF
+[Personal] no - Notion Workspace
+[Personal] olp - Overleaf (Personal)
+[Personal] olr - Overleaf Resume Project
+[Personal] li - LinkedIn Feed
+[Personal] msg - Google Messages for Web
+[Personal] ig - Instagram Direct Inbox
+[Personal] wa - WhatsApp Web
+# [Personal] tg - Telegram Web
+# [Personal] dd - Discord Client
+[Personal] sfy - Spotify Web Player
+[Personal] yt - YouTube
+[Personal] yttv - YouTube TV
+[Personal] mlbtv - MLB.TV
+[Personal] cl - Caught Looking App
+[Personal] ph - Google Photos
+[Personal] mt - Monkeytype
+[Personal] vlr - VLR.gg
+[Personal] sfg - SF Giants ESPN Page
+[Personal] gpt - ChatGPT
+[Personal] gem - Gemini
+[Personal] gns - Google News
+[General]  pri - Private Window
+[General]  mails - All Email Accounts (Personal & CMU)
+EOF
+  )
+
+  # If user canceled fzf selection, exit 130 (SIGINT standard) to keep terminal open
+  if [ -z "$CHOICE" ]; then
+    echo "Cancelled selection."
+    exit 130
+  fi
+
+  # Extract shortcut (second word after the category tag)
+  SHORTCUT=$(echo "$CHOICE" | awk '{print $2}')
+fi
+
 # function for opening firefox with a given profile + URL combo
 open_ff() {
+  local profile="$1"
+  local url="$2"
 
-  # grab desired profile, url as arguments
-  PROFILE=$1
-  URL=$2
-
-  # open firefox (detached) with given profile and arguments
-  nohup /run/current-system/sw/bin/firefox -p $PROFILE -new-window $URL &!
-
-  # finished with script
-  exit 0
-  
+  # open firefox (detached) with given profile and arguments, redirect output to prevent nohup.out
+  nohup "$FIREFOX_BIN" -p "$profile" -new-window "$url" >/dev/null 2>&1 &
 }
 
 # cases for mapping shortcuts to sites
@@ -41,7 +154,7 @@ case $SHORTCUT in
 
   # private window (personal profile) ; 
   "pri")
-    nohup /run/current-system/sw/bin/firefox -private-window & disown ; exit
+    nohup "$FIREFOX_BIN" -private-window >/dev/null 2>&1 &
   ;;
 
   # --- url-specific shortcuts ---
@@ -176,14 +289,14 @@ case $SHORTCUT in
   ;;
 
   # telegram
-  "tg")
-    open_ff dchan-personal 'web.telegram.org'
-  ;;
+  # "tg")
+  #   open_ff dchan-personal 'web.telegram.org'
+  # ;;
 
   # discord
-  "dd")
-    open_ff dchan-personal 'discord.com/channels/@me'
-  ;;
+  # "dd")
+  #   open_ff dchan-personal 'discord.com/channels/@me'
+  # ;;
 
   # slack (slack is *exceptionally* annoying)
 
@@ -193,9 +306,9 @@ case $SHORTCUT in
   ;;
 
   # 18-100
-  "100")
-    open_ff dchan2-cmu 'app.slack.com/client/T0992RLKWCX/C0992RM15RD'
-  ;;
+  # "100")
+  #   open_ff dchan2-cmu 'app.slack.com/client/T0992RLKWCX/C0992RM15RD'
+  # ;;
 
   # IO harness group
   "io")
@@ -273,5 +386,5 @@ case $SHORTCUT in
 
 esac
 
-
-
+# exit with status 0 upon successfully matching a case and spawning the processes
+exit 0
