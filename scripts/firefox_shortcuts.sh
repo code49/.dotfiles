@@ -65,7 +65,7 @@ case $SHORTCUT in
 
   # personal calendar
   "cal")
-    open_ff dchan-personal 'calendar.google.com'
+    open_ff dchan-personal 'https://calendar.google.com/calendar/u/0/r/week'
   ;;
 
   # personal email
@@ -81,6 +81,13 @@ case $SHORTCUT in
   # cmu email
   "cmail")
     open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
+  ;;
+
+  # all (relevant) emails
+  "mails")
+    open_ff dchan-personal 'mail.google.com/mail/u/0/#inbox'
+    open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
+    open_ff dchan-personal 'mail.google.com/mail/u/1/#inbox'
   ;;
 
   # cmu s3 portal
