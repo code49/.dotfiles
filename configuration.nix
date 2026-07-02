@@ -8,7 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./applications/steam/steam.nix
     inputs.home-manager.nixosModules.default
-  ];
+  ] ++ (if builtins.pathExists ./local.nix then [ ./local.nix ] else []);
 
   # Define a user account.
   users.users.${userSettings.username} = {
@@ -57,10 +57,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  # time.timeZone = "America/New_York";
-  time.timeZone = "America/Chicago";
-  # time.timeZone = "America/Los_Angeles";
+  # Set your time zone in local.nix (git-ignored)
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
