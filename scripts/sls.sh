@@ -150,6 +150,15 @@ if [ "$SPLIT" = true ]; then
         fi
     done
 
+    # Check if one-file-per-line is requested
+    HAS_1=false
+    for p in "${PARAMS[@]}"; do
+        if [[ "$p" =~ ^-[^-]*1 ]]; then
+            HAS_1=true
+            break
+        fi
+    done
+
     # Helper function to print a section of the directory listing
     print_section() {
         local title="$1"
@@ -224,7 +233,7 @@ if [ "$SPLIT" = true ]; then
 
     COLS=$(tput cols 2>/dev/null || echo 80)
 
-    if command -v python3 >/dev/null 2>&1; then
+    if command -v python3 >/dev/null 2>&1 && [ "$HAS_L" = false ] && [ "$HAS_1" = false ]; then
         {
             print_section "directories" -type d -not -name ".*"
             echo "---SLS-SECTION-SEPARATOR---"
@@ -382,7 +391,7 @@ if __name__ == "__main__":
                         echo -e "$colored_link -> $colored_target"
                     done
                 else
-                    if [ "$HAS_L" = false ]; then
+                    if [ "$HAS_L" = false ] && [ "$HAS_1" = false ]; then
                         ls_params+=(-C)
                     fi
                     echo "$items" | xargs -d '\n' ls "${ls_params[@]}" 2>/dev/null
