@@ -198,9 +198,9 @@ case $SHORTCUT in
 
   # all (relevant) emails
   "mails")
-    open_ff dchan-personal 'mail.google.com/mail/u/0/#inbox'
-    open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
     open_ff dchan-personal 'mail.google.com/mail/u/1/#inbox'
+    open_ff dchan2-cmu 'mail.google.com/mail/u/0/#inbox'
+    open_ff dchan-personal 'mail.google.com/mail/u/0/#inbox'
   ;;
 
   # cmu s3 portal
