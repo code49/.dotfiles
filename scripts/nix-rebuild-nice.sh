@@ -36,36 +36,73 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
     exit 0
 fi
 
-# Parse Action
-if [ -n "$1" ]; then
-    case "$1" in
-        switch|boot)
-            ACTION="$1"
-            ;;
-        both)
-            # 'switch' already covers 'boot' (updates bootloader and activates)
-            ACTION="switch"
-            ;;
-        [0-9]*)
-            # If first arg is a number, assume it's generations and keep default action
-            SAVE_GENERATIONS="$1"
-            ;;
-        *)
-            echo "Error: Invalid action '$1'. Must be 'switch', 'boot', or 'both'."
+# Parse Action and Generations
+if [ -z "$1" ] && [ -t 0 ]; then
+    # Interactive mode: prompt the user
+    echo "--- Interactive NixOS Rebuild Setup ---"
+    echo "1) switch (activate configuration immediately)"
+    echo "2) boot (set as default for next boot)"
+    while true; do
+        printf "Select action [1-2] (default: switch): "
+        read -r choice
+        case "$choice" in
+            1|""|"switch")
+                ACTION="switch"
+                break
+                ;;
+            2|"boot")
+                ACTION="boot"
+                break
+                ;;
+            *)
+                echo "Invalid option. Please choose 1, 2, 'switch', or 'boot'."
+                ;;
+        esac
+    done
+
+    printf "Enter number of generations to keep (default: %s): " "$SAVE_GENERATIONS"
+    read -r gen_input
+    if [ -n "$gen_input" ]; then
+        if echo "$gen_input" | grep -qE '^[0-9]+$'; then
+            SAVE_GENERATIONS="$gen_input"
+        else
+            echo "Error: Generations must be a number. Received: '$gen_input'"
+            exit 1
+        fi
+    fi
+else
+    # Non-interactive / Argument mode
+    # Parse Action
+    if [ -n "$1" ]; then
+        case "$1" in
+            switch|boot)
+                ACTION="$1"
+                ;;
+            both)
+                # 'switch' already covers 'boot' (updates bootloader and activates)
+                ACTION="switch"
+                ;;
+            [0-9]*)
+                # If first arg is a number, assume it's generations and keep default action
+                SAVE_GENERATIONS="$1"
+                ;;
+            *)
+                echo "Error: Invalid action '$1'. Must be 'switch', 'boot', or 'both'."
+                show_help
+                exit 1
+                ;;
+        esac
+    fi
+
+    # Parse Generations (if second arg provided)
+    if [ -n "$2" ]; then
+        if echo "$2" | grep -qE '^[0-9]+$'; then
+            SAVE_GENERATIONS="$2"
+        else
+            echo "Error: Generations must be a number. Received: '$2'"
             show_help
             exit 1
-            ;;
-    esac
-fi
-
-# Parse Generations (if second arg provided)
-if [ -n "$2" ]; then
-    if echo "$2" | grep -qE '^[0-9]+$'; then
-        SAVE_GENERATIONS="$2"
-    else
-        echo "Error: Generations must be a number. Received: '$2'"
-        show_help
-        exit 1
+        fi
     fi
 fi
 
