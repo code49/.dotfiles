@@ -16,6 +16,7 @@ Options:
   -s, --split    Enable split view (default)
   -t, -T, --tree Enable recursive tree view (defaults to depth 3)
                  You can optionally specify depth: -t [depth] (e.g., -t 2)
+  -g, --git      Show 'git status' at the bottom of the output if in a git repository
   --help         Show this help message
 
 All other flags (e.g., -l, -S, -h) are passed directly to the underlying commands.
@@ -25,6 +26,7 @@ EOF
 
 MODE="split"
 TREE_DEPTH=3
+GIT_STATUS=false
 PARAMS=()
 TARGET=""
 
@@ -50,6 +52,10 @@ while [ "$#" -gt 0 ]; do
                 TREE_DEPTH="$1"
                 shift
             fi
+            ;;
+        -g|--git)
+            GIT_STATUS=true
+            shift
             ;;
         -*)
             PARAMS+=("$1")
@@ -122,12 +128,34 @@ if [ "$MODE" = "tree" ]; then
             echo "$line"
         fi
     done
-    exit ${PIPESTATUS[0]}
+    EXIT_CODE=${PIPESTATUS[0]}
+
+    if [ "$GIT_STATUS" = true ]; then
+        if git -C "$TARGET" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            COLOR_TITLE="\e[1;34m"
+            COLOR_RESET="\e[0m"
+            echo
+            echo -e "${COLOR_TITLE}== git status ==${COLOR_RESET}"
+            git -C "$TARGET" -c color.status=always status
+        fi
+    fi
+    exit $EXIT_CODE
 fi
 
 # Fallback: if split view is requested but target is not a directory
 if [ "$MODE" = "split" ] && [ ! -d "$TARGET" ]; then
-    exec ls -A --color=auto -F "${PARAMS[@]}" "$TARGET"
+    ls -A --color=auto -F "${PARAMS[@]}" "$TARGET"
+    EXIT_CODE=$?
+    if [ "$GIT_STATUS" = true ]; then
+        if git -C "$TARGET" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            COLOR_TITLE="\e[1;34m"
+            COLOR_RESET="\e[0m"
+            echo
+            echo -e "${COLOR_TITLE}== git status ==${COLOR_RESET}"
+            git -C "$TARGET" -c color.status=always status
+        fi
+    fi
+    exit $EXIT_CODE
 fi
 
 # Determine SPLIT boolean for compatibility with split rendering logic below
@@ -409,5 +437,22 @@ if __name__ == "__main__":
     fi
 else
     # Default behavior: always show hidden (-A), group directories first
-    exec ls -A --group-directories-first --color=auto -F "${PARAMS[@]}" "$TARGET"
+    ls -A --group-directories-first --color=auto -F "${PARAMS[@]}" "$TARGET"
+    EXIT_CODE=$?
+fi
+
+# Print git status if requested and target is in a git repository
+if [ "$GIT_STATUS" = true ]; then
+    if git -C "$TARGET" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        # Default to blue title color if not already defined (flat mode / tree mode)
+        COLOR_TITLE="${COLOR_TITLE:-\e[1;34m}"
+        COLOR_RESET="${COLOR_RESET:-\e[0m}"
+        echo
+        echo -e "${COLOR_TITLE}== git status ==${COLOR_RESET}"
+        git -C "$TARGET" -c color.status=always status
+    fi
+fi
+
+if [ -n "$EXIT_CODE" ]; then
+    exit $EXIT_CODE
 fi

@@ -56,6 +56,7 @@ Categories & Shortcuts:
     gpt/gem/gns     AI & News (ChatGPT, Gemini, Google News)
 
   [General] Global Utilities:
+    start           Run startup apps script manually
     pri             Launch personal profile in private window
     mails           Open all three email inboxes (personal x2, CMU)
 EOF
@@ -113,6 +114,7 @@ if [ -z "$SHORTCUT" ]; then
 [Personal] gpt - ChatGPT
 [Personal] gem - Gemini
 [Personal] gns - Google News
+[General]  start - Run Startup Apps Script
 [General]  pri - Private Window
 [General]  mails - All Email Accounts (Personal & CMU)
 EOF
@@ -126,6 +128,19 @@ EOF
 
   # Extract shortcut (second word after the category tag)
   SHORTCUT=$(echo "$CHOICE" | awk '{print $2}')
+fi
+
+# Check internet connectivity for online shortcuts
+if [ "$SHORTCUT" != "-h" ] && [ "$SHORTCUT" != "--help" ] && [ "$SHORTCUT" != "res" ] && [ "$SHORTCUT" != "pri" ]; then
+  # Ping Cloudflare DNS and Google DNS with a short timeout to check connection
+  if ! ping -c 1 -W 2 1.1.1.1 >/dev/null 2>&1 && ! ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
+    if command -v notify-send >/dev/null 2>&1; then
+      notify-send -i firefox "Firefox Shortcuts" "Auto-start failed: No internet connection."
+    else
+      echo "Error: Auto-start failed due to lack of internet connectivity." >&2
+    fi
+    exit 126
+  fi
 fi
 
 # function for opening firefox with a given profile + URL combo
@@ -377,10 +392,17 @@ case $SHORTCUT in
     open_ff dchan-personal 'news.google.com'
   ;;
 
+  # run startup apps script
+  "start")
+    python3 /home/dchan/.dotfiles/home/hyprland/scripts/startup_apps.py &
+  ;;
+
   # --- default (no match) case ---
 
   # default ; shortcut not found, error
   *)
+    echo "Error: could not find match for input '$SHORTCUT'" >&2
+    echo "Run 'ff' or the script without arguments to use the interactive selector." >&2
     exit 127
   ;;
 

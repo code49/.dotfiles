@@ -3,6 +3,7 @@ import json
 import subprocess
 import time
 import os
+import socket
 
 def log(msg):
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -32,6 +33,13 @@ def get_active_workspace():
     except Exception:
         return 1
 
+def get_monitors():
+    try:
+        return json.loads(run_cmd(["hyprctl", "monitors", "-j"]))
+    except Exception as e:
+        log(f"Error getting monitors: {e}")
+        return []
+
 def resize_multiple_windows(resize_targets):
     if not resize_targets:
         return
@@ -56,6 +64,15 @@ def resize_multiple_windows(resize_targets):
     log(f"Switching back to original workspace {orig_ws}...")
     run_cmd(["hyprctl", "dispatch", "workspace", str(orig_ws)])
 
+def check_internet():
+    for host in ["1.1.1.1", "8.8.8.8"]:
+        try:
+            socket.create_connection((host, 53), timeout=2.0)
+            return True
+        except OSError:
+            pass
+    return False
+
 def main():
     if os.path.exists("/tmp/startup_apps.log"):
         try:
@@ -64,6 +81,34 @@ def main():
             pass
 
     log("Starting startup_apps.py script...")
+
+    # Check internet connectivity before opening external sites
+    if not check_internet():
+        log("Auto-start failed: No internet connection.")
+        try:
+            subprocess.run(["notify-send", "-i", "firefox", "Firefox Shortcuts", "Auto-start failed: No internet connection."])
+        except Exception as e:
+            log(f"Failed to send notification: {e}")
+        return
+
+    # Determine the primary monitor (prefer external monitor over eDP-1, prioritizing DP-2 if connected)
+    monitors = get_monitors()
+    external = [m["name"] for m in monitors if m.get("name") != "eDP-1"]
+    if "DP-2" in external:
+        primary_monitor = "DP-2"
+    else:
+        primary_monitor = external[0] if external else "eDP-1"
+    log(f"Primary monitor identified as: {primary_monitor}")
+
+    # Ensure workspaces 1, 9, and 10 are on the primary monitor
+    log(f"Moving workspaces 1, 9, 10 to monitor {primary_monitor}...")
+    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"1 {primary_monitor}"])
+    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"9 {primary_monitor}"])
+    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"10 {primary_monitor}"])
+
+    # Focus the primary monitor and workspace 1 before launching apps
+    run_cmd(["hyprctl", "dispatch", "focusmonitor", primary_monitor])
+    run_cmd(["hyprctl", "dispatch", "workspace", "1"])
 
     # 1. Start Firefox main process with landing page on Workspace 1
     log("Launching landing page on Workspace 1...")
