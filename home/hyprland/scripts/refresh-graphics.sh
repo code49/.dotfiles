@@ -6,4 +6,3 @@ set -eu
 sleep 1
 
 hyprctl dispatch dpms on || true
-hyprctl reload || true

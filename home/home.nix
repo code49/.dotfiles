@@ -164,7 +164,7 @@
       	local exit_code=$?
       	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
       		return 0
-      	elif [ $exit_code -eq 0 ]; then
+      	elif [ $exit_code -eq 0 ] || [ $exit_code -eq 126 ]; then
       		exit
       	elif [ $exit_code -eq 130 ]; then
       		return 0
