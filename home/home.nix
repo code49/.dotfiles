@@ -25,6 +25,7 @@
   xdg.configFile."electron-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."electron32-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."code-flags.conf".source = ./electron-flags.conf;
+  xdg.configFile."ff/ff.conf".source = ../terminalTools/tools/ff/ff.conf;
 
   home.pointerCursor = {
     enable = true;
@@ -141,15 +142,14 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "gitac" =
-        "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
+      "gitac" = "~/.dotfiles/terminalTools/tools/gitac/gitac";
       "ssh" = "kitten ssh";
       "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
-      "lss" = "~/.dotfiles/scripts/sls.sh";
+      "lss" = "~/.dotfiles/terminalTools/tools/sls/sls";
     };
 
     envExtra = ''
@@ -158,7 +158,7 @@
       ff() {
 
       	# run script
-         	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
+         	~/.dotfiles/terminalTools/tools/ff/ff "$1"
 
       	# case on script exit code to decide whether to kill terminal
       	local exit_code=$?
