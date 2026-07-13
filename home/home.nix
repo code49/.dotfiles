@@ -25,7 +25,7 @@
   xdg.configFile."electron-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."electron32-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."code-flags.conf".source = ./electron-flags.conf;
-  xdg.configFile."ff/ff.conf".source = ../terminalTools/tools/ff/ff.conf;
+  xdg.configFile."ff/ff.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/terminalTools/tools/ff/ff.conf";
 
   home.pointerCursor = {
     enable = true;
