@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 awww-daemon & 
+sleep 1
 # awww img ~/Wallpapers/jwst_1.png & 
 awww img ~/.dotfiles/wallpapers/backgroundblend.png &
 
@@ -13,7 +14,7 @@ blueman-applet &
 waybar & 
 
 swayidle -w \
-  before-sleep 'swaylock -f' \
+  before-sleep 'swaylock -f && (while pgrep -u "$USER" swaylock >/dev/null; do sleep 1; done; hyprctl reload) &' \
   after-resume '~/.dotfiles/home/hyprland/scripts/refresh-graphics.sh' &
 
 mako &

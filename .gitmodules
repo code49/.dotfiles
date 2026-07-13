@@ -1,0 +1,3 @@
+[submodule "terminalTools"]
+	path = terminalTools
+	url = ../terminalTools.git

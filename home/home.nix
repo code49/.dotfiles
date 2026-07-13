@@ -21,12 +21,11 @@
   home.stateVersion = "23.11"; # DONT CHANGE
 
   # set config for nix-shell and home-manager nixpkgs
-  # nixpkgs.config.allowUnfree = true;
-  nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
   xdg.configFile."electron-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."electron32-flags.conf".source = ./electron-flags.conf;
   xdg.configFile."code-flags.conf".source = ./electron-flags.conf;
+  xdg.configFile."ff/ff.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/terminalTools/tools/ff/ff.conf";
 
   home.pointerCursor = {
     enable = true;
@@ -49,6 +48,9 @@
     zoom-us
 
     google-cursor
+
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
+    # inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-ide
 
     # google-chrome
     # google-cursor
@@ -95,6 +97,7 @@
     # EDITOR = "emacs";
     DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
     # DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
+    TERMINAL_TOOLS_PATH = "${config.home.homeDirectory}/.dotfiles/terminalTools/tools";
   };
 
   dconf.settings = {
@@ -140,14 +143,14 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "gitac" =
-        "git status; echo 'adding all changes + committing them for:' ; pwd;  git add -A; git commit -m";
+      "gitac" = "$TERMINAL_TOOLS_PATH/gitac/gitac";
       "ssh" = "kitten ssh";
       "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
+      "lss" = "$TERMINAL_TOOLS_PATH/sls/sls";
     };
 
     envExtra = ''
@@ -156,11 +159,16 @@
       ff() {
 
       	# run script
-         	~/.dotfiles/scripts/firefox_shortcuts.sh "$1"
+         	$TERMINAL_TOOLS_PATH/ff/ff "$1"
 
       	# case on script exit code to decide whether to kill terminal
-      	if [ $? -eq 0 ]; then
+      	local exit_code=$?
+      	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+      		return 0
+      	elif [ $exit_code -eq 0 ] || [ $exit_code -eq 126 ]; then
       		exit
+      	elif [ $exit_code -eq 130 ]; then
+      		return 0
       	else 
       		echo "firefox shortcut script failed."
       	fi

@@ -31,6 +31,16 @@
        # position = "0x0";
        scale = "1.00";
     }
+    {
+      # Home desktop monitor (Dell G2724D)
+      name = "DP-2";
+      primary = true;
+      width = 2560;
+      height = 1440;
+      refreshRate = 165;
+      position = "auto";
+      scale = "1";
+    }
   ];
 
   networking.hostName = "dchan-laptop";
@@ -45,4 +55,10 @@
   #     };
   #   };
   # };
+
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-label/windows";
+    fsType = "ntfs3";
+    options = [ "rw" "uid=1000" "gid=100" "fmask=0022" "dmask=0022" "nofail" ];
+  };
 }

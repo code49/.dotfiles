@@ -8,7 +8,7 @@
   imports = [ # Include the results of the hardware scan.
     ./applications/steam/steam.nix
     inputs.home-manager.nixosModules.default
-  ];
+  ] ++ (if builtins.pathExists ./local.nix then [ ./local.nix ] else []);
 
   # Define a user account.
   users.users.${userSettings.username} = {
@@ -20,6 +20,8 @@
 
   home-manager = {
     backupFileExtension = "backup";
+    useGlobalPkgs = true;
+    useUserPackages = true;
     extraSpecialArgs = {
       inherit inputs;
       inherit userSettings;
@@ -56,9 +58,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "America/New_York";
-  # time.timeZone = "America/Los_Angeles";
+  # Set your time zone in local.nix (git-ignored)
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -160,6 +160,7 @@
     autostart.enable = true;
     portal = {
       enable = true;
+      # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     };
   };
 
@@ -185,7 +186,7 @@
     };
     displayManager.gdm = {
       enable = true;
-      wayland = true;
+      # wayland = true;
     };
     libinput.enable = true;
     dbus.enable = true;
@@ -231,6 +232,7 @@
     # hyprlock
     # hypridle
 
+    # swww
     awww
     kitty
     wofi
@@ -244,6 +246,10 @@
     wl-clipboard
     swayidle
     swaylock
+    # xdg-desktop-portal-hyprland
+    # xdg-utils
+    # xdg-desktop-portal
+    # xdg-desktop-portal-gtk
     qt5.qtwayland
     qt6.qmake
     pciutils
@@ -272,7 +278,7 @@
     wireplumber
     pipewire
 
-    gemini-cli
+    # gemini-cli
 
     tree
 
