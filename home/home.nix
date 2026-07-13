@@ -97,6 +97,7 @@
     # EDITOR = "emacs";
     DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
     # DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
+    TERMINAL_TOOLS_PATH = "${config.home.homeDirectory}/.dotfiles/terminalTools/tools";
   };
 
   dconf.settings = {
@@ -142,14 +143,14 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "gitac" = "~/.dotfiles/terminalTools/tools/gitac/gitac";
+      "gitac" = "$TERMINAL_TOOLS_PATH/gitac/gitac";
       "ssh" = "kitten ssh";
       "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
-      "lss" = "~/.dotfiles/terminalTools/tools/sls/sls";
+      "lss" = "$TERMINAL_TOOLS_PATH/sls/sls";
     };
 
     envExtra = ''
@@ -158,7 +159,7 @@
       ff() {
 
       	# run script
-         	~/.dotfiles/terminalTools/tools/ff/ff "$1"
+         	$TERMINAL_TOOLS_PATH/ff/ff "$1"
 
       	# case on script exit code to decide whether to kill terminal
       	local exit_code=$?
