@@ -29,6 +29,7 @@
       "exec-once" = [
         "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
         "python3 ~/.dotfiles/home/hyprland/scripts/startup_apps.py"
+        "fcitx5 -d"
       ];
 
       "$terminal" = "kitty";

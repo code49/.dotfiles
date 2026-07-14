@@ -2,3 +2,5 @@ nohup.out
 flake.lock
 home/hyprland/scripts/__pycache__
 local.nix
+result
+result*

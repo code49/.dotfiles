@@ -75,6 +75,22 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  # Enable Fcitx5 for CJK input method support
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        qt6Packages.fcitx5-chinese-addons  # Simplified and Traditional Chinese (Pinyin, Table, etc.)
+        fcitx5-mozc            # Japanese (Google Japanese Input Engine)
+        fcitx5-hangul          # Korean
+        fcitx5-gtk             # GTK IM module for Fcitx5 support in GTK apps
+        kdePackages.fcitx5-configtool # Qt-based configuration utility (run fcitx5-config-qt)
+      ];
+    };
+  };
+
   # Enable CUPS to print documents
   services.printing.enable = true;
 
@@ -120,9 +136,24 @@
 
     # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
+    # Input method environment variables for CJK input
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
+    GLFW_IM_MODULE = "fcitx";
   };
 
   hardware = {
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        Policy = {
+          AutoEnable = true;
+        };
+      };
+    };
     # opengl = {
     #   enable = true;
     #   driSupport = true;
@@ -192,6 +223,7 @@
     dbus.enable = true;
     gvfs.enable = true;
     gnome = { gnome-keyring.enable = true; };
+    blueman.enable = true;
   };
 
   # Allow unfree packages
@@ -205,6 +237,11 @@
     # (nerdfonts.override {
     #   fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
     # })
+
+    # CJK (Chinese, Japanese, Korean) Font Support
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    wqy_zenhei
   ];
 
   # enabling flakes 

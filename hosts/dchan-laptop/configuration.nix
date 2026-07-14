@@ -34,7 +34,7 @@
     {
       # Home desktop monitor (Dell G2724D)
       name = "DP-2";
-      primary = true;
+      primary = false;
       width = 2560;
       height = 1440;
       refreshRate = 165;
@@ -56,9 +56,9 @@
   #   };
   # };
 
-  fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-label/windows";
-    fsType = "ntfs3";
-    options = [ "rw" "uid=1000" "gid=100" "fmask=0022" "dmask=0022" "nofail" ];
-  };
+  # fileSystems."/mnt/windows" = {
+  #   device = "/dev/disk/by-label/windows";
+  #   fsType = "ntfs3";
+  #   options = [ "rw" "uid=1000" "gid=100" "fmask=0022" "dmask=0022" "nofail" ];
+  # };
 }
