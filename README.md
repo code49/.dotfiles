@@ -66,9 +66,12 @@ Tracked at [terminalTools/](terminalTools/), this submodule points to [terminalT
 ├── configuration.nix          # System-level configurations, services, default packages, inputs
 ├── INSTALLATION.md            # Walkthrough guide for setting up this configuration
 ├── hosts/
-│   └── dchan-laptop/          # Host-specific settings for Framework 13 AMD
-│       ├── configuration.nix  # Host monitor scaling and networking overrides
-│       └── hardware-configuration.nix # Local hardware layout & kernel modules (generated)
+│   ├── dchan-laptop/          # Host-specific settings for Framework 13 AMD
+│   │   ├── configuration.nix  # Host monitor scaling and networking overrides
+│   │   └── hardware-configuration.nix # Local hardware layout & kernel modules (generated)
+│   └── nvidia-intel-template/ # Template configuration for Intel CPU + NVIDIA GPU systems
+│       ├── configuration.nix  # Pre-configured proprietary drivers, Prime, and graphics overrides
+│       └── hardware-configuration.nix # Template hardware-configuration file
 ├── home/                      # User-level packages and configurations (Home Manager)
 │   ├── home.nix               # Main Home Manager entry point (packages, environment, aliases)
 │   └── [apps]/                # App configs (hyprland, waybar, kitty, helix, vscode, etc.)

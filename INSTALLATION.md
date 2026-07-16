@@ -1,6 +1,11 @@
 # ❄️ NixOS Installation & Setup Guide
 
-This guide walks you through installing and applying this dotfiles configuration. It is tailored for the **Framework Laptop 13 (AMD Ryzen AI 9)** under the host profile `dchan-laptop`, but can be adapted for similar AMD-based configurations by replacing the `hardware-configuration.nix` file.
+This guide walks you through installing and applying this dotfiles configuration. 
+
+> [!NOTE]
+> This repository is structured to be hardware-agnostic. Global system configurations are kept in [configuration.nix](configuration.nix), while hardware-specific configs, kernel modules, and device drivers are isolated inside host profiles under the `hosts/` directory.
+> 
+> The default host profile is `dchan-laptop` (configured for a **Framework Laptop 13 AMD Ryzen AI 9**), but you can easily adapt this for other hardware platforms (such as Intel CPU + Nvidia GPU) by defining a custom host profile.
 
 ---
 
@@ -23,7 +28,7 @@ This guide walks you through installing and applying this dotfiles configuration
 
 ## 💿 Step 2: Install NixOS on the Device
 
-1. Boot your Framework 13 from the USB installer.
+1. Boot your machine from the USB installer.
 2. Connect to Wi-Fi using the system tray/settings menu.
 3. Open the graphical installer and follow the instructions. Pay attention to the following recommendations:
     *   **Desktop Environment:** Choose **"No Desktop"** (we will install and run Hyprland directly from our flake config).
@@ -77,15 +82,21 @@ Now we can pull down our custom dotfiles and apply them.
    ```bash
    git submodule update --init --recursive
    ```
-3. Copy the hardware configuration file generated during your specific install to replace the default profile:
-   ```bash
-   cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hosts/dchan-laptop/hardware-configuration.nix
-   ```
+3. **Configure Your Host Profile:**
+   * **If using the default `dchan-laptop` profile (AMD framework):** Copy your generated hardware configuration over:
+     ```bash
+     cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hosts/dchan-laptop/hardware-configuration.nix
+     ```
+   * **If setting up a new/different hardware profile (e.g., Intel/Nvidia):**
+     1. Create a new host folder under `hosts/` (e.g., `hosts/my-new-host/`).
+     2. Copy your `/etc/nixos/hardware-configuration.nix` to `~/.dotfiles/hosts/my-new-host/hardware-configuration.nix`.
+     3. Create a `configuration.nix` inside `hosts/my-new-host/`. You can copy and customize the pre-configured Intel/NVIDIA template provided at [hosts/nvidia-intel-template/configuration.nix](hosts/nvidia-intel-template/configuration.nix) as a starting point.
+     4. Register your new host profile under `nixosConfigurations` inside [flake.nix](flake.nix).
 4. **Luks Encryption Support:** If you chose to encrypt your disk in Step 2, look at your generated `/etc/nixos/configuration.nix` file. Look for lines resembling:
    ```nix
    boot.initrd.luks.devices."luks-UUID".device = "/dev/disk/by-uuid/UUID";
    ```
-   Copy these lines and paste them inside the configuration block of your new `~/.dotfiles/hosts/dchan-laptop/hardware-configuration.nix` file.
+   Copy these lines and paste them inside the configuration block of your host's `hardware-configuration.nix` file.
 
 ---
 
@@ -112,7 +123,7 @@ Before rebuilding, make sure to customize the configuration for your own details
 
 ## 🚀 Step 6: Build & Switch to the Flake
 
-1. Apply the configuration (make sure you are in `~/.dotfiles`):
+1. Apply the configuration (replace `dchan-laptop` with your custom host name if you defined one in `flake.nix`):
    ```bash
    sudo nixos-rebuild switch --flake .#dchan-laptop --upgrade-all
    ```

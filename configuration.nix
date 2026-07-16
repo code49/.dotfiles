@@ -36,12 +36,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # # NVIDIA GPU SETTINGS
-  # boot.initrd.kernelModules = [ "nvidia" ];
-  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
-  # AMD GPU SETTINGS
-  boot.initrd.kernelModules = [ "amdgpu" ];
 
   # networking.hostName = systemSettings.hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -154,37 +149,7 @@
         };
       };
     };
-    # opengl = {
-    #   enable = true;
-    #   driSupport = true;
-    #   driSupport32Bit = true;
-    # };
 
-    # this might be needed to replace above? 
-    # graphics = {
-    #   enable32Bit = true;
-    #   enable = true;
-
-    #   extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-
-    #   extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiVdpau libvdpau-va-gl ];
-    # };
-
-    # nvidia = {
-    #   modesetting.enable = true;
-    #   package = config.boot.kernelPackages.nvidiaPackages.stable; # .beta
-    #   nvidiaSettings = true; # Nvidia settings menu. Run: nvidia-settings
-    #   powerManagement.enable = false; # experimental
-    #   powerManagement.finegrained = false; # experimental, might be bad
-    #   open = false; # use NVidia open source drivers (still alpha)
-    #
-    #   # # make sure correct Bus ID for system! Can run: lspci
-    #   # prime = {
-    #   #   # sync.enable = true; # might be good when plugged into external monitor? 
-    #   #   nvidiaBusId = "PCI:1:0:0";
-    #   #   intelBusId = "PCI:0:2:0";
-    #   # };
-    # };
   };
 
   xdg = {
@@ -212,8 +177,7 @@
       xkb.layout = "us";
       xkb.variant = "";
       excludePackages = [ pkgs.xterm ];
-      # videoDrivers = [ "nvidia" ];
-      videoDrivers = [ "amdgpu" ];
+
     };
     displayManager.gdm = {
       enable = true;

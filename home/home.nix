@@ -185,6 +185,9 @@
       user.email = "davidlechan@gmail.com";
       init.defaultBranch = "master";
     };
+    signing = {
+      format = null;
+    };
   };
 
   # Let Home Manager install and manage itself.

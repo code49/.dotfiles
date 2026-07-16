@@ -8,7 +8,21 @@
 }:
 
 {
-  imports = [ ../../modules/monitors.nix ];
+  imports = [
+    ../../modules/monitors.nix
+    inputs.nixos-hardware.nixosModules.framework-amd-ai-300-series
+  ];
+
+  # AMD GPU/SoC specific hardware configurations
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # Workaround for AMDGPU MES (Micro Engine Scheduler) hang on Ryzen AI 300 series (Strix Point).
+  # If you experience random freezes, disabling the MES scheduler or CWSR stabilizes the graphics driver.
+  boot.kernelParams = [
+    "amdgpu.mes=0"
+    # "amdgpu.cwsr_enable=0" # Alternative workaround if mes=0 causes issues
+  ];
 
   monitors = [
     {

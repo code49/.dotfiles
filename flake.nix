@@ -35,7 +35,6 @@
       system = "x86_64-linux";
       systemSettings = { timezone = "America/New_York"; };
 
-      modules = [ nixos-hardware.nixosModules.framework-13-amd-ai-300-series ];
 
       # ----------- USER SETTINGS ----------- #
       userSettings = {
