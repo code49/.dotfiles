@@ -48,7 +48,7 @@
         format = "{}°";
         tooltip = true;
         interval = 900;
-        exec = "wttrbar";
+        exec = "~/.dotfiles/home/waybar/scripts/weather.py";
         return-type = "json";
       };
       "custom/playerctl#backward" = {
