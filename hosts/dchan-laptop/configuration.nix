@@ -74,5 +74,14 @@
   #   device = "/dev/disk/by-label/windows";
   #   fsType = "ntfs3";
   #   options = [ "rw" "uid=1000" "gid=100" "fmask=0022" "dmask=0022" "nofail" ];
-  # };
+  # Enable USB autosuspend for the Framework Storage Expansion Card to reduce heat and power draw
+  services.udev.extraRules = ''
+    # Enable autosuspend on the parent Framework Storage Expansion USB device
+    ACTION=="add|change", SUBSYSTEM=="usb", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0005", ATTR{power/control}="auto"
+
+    # Configure power management for the SCSI disk backing the USB device
+    ACTION=="add|change", SUBSYSTEM=="scsi", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0005", ATTR{power/control}="auto", ATTR{power/autosuspend_delay_ms}="2000"
+    ACTION=="add|change", SUBSYSTEM=="scsi_disk", ATTRS{idVendor}=="32ac", ATTRS{idProduct}=="0005", ATTR{manage_runtime_start_stop}="1", ATTR{manage_system_start_stop}="1"
+  '';
 }
+
