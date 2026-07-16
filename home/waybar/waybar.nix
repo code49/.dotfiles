@@ -12,8 +12,9 @@
       margin-left = 5;
       margin-right = 5;
       modules-left = [
-        "cpu"
-        "memory"
+        # "cpu"
+        # "memory"
+        "custom/hw"
         "custom/playerctl#backward"
         "custom/playerctl#play"
         "custom/playerctl#forward"
@@ -61,7 +62,7 @@
         format = "{icon}";
         return-type = "json";
         exec = ''
-          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
+          playerctl -a metadata --format '{"text": "{{markup_escape(title)}} - {{artist}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
         on-click = "playerctl play-pause";
         on-scroll-up = "playerctl volume .05+";
         on-scroll-down = "playerctl volume .05-";
@@ -78,11 +79,11 @@
         on-scroll-down = "playerctl volume .05-";
       };
       "custom/playerlabel" = {
-        format = "<span>󰎈 {} 󰎈</span>";
+        format = "<span>{}</span>";
         return-type = "json";
         max-length = 40;
         exec = ''
-          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
+          playerctl -a metadata --format '{"text": "{{markup_escape(title)}} - {{artist}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
         on-click = "";
       };
       battery = {
@@ -105,16 +106,23 @@
         format-icons = [ "󰃞 " "󰃟 " "󰃠 " ];
       };
 
-      cpu = {
-        interval = 15;
-        format = "  {}%";
-        max-length = 10;
-      };
+      # cpu = {
+      #   interval = 15;
+      #   format = "  {}%";
+      #   max-length = 10;
+      # };
 
-      memory = {
-        interval = 30;
-        format = "  {}%";
-        max-length = 10;
+      # memory = {
+      #   interval = 30;
+      #   format = "  {}%";
+      #   max-length = 10;
+      # };
+
+      "custom/hw" = {
+        exec = "~/.dotfiles/home/waybar/scripts/hw.py";
+        interval = 5;
+        return-type = "json";
+        tooltip = true;
       };
 
       disk = {
@@ -212,7 +220,7 @@
         color: #${theme.base09};
         border-radius: 24px 24px 24px 24px;
         padding: 0 20px;
-        margin-left: 7px;
+        margin: 5px 4px;
       }
 
       #pulseaudio, #battery, #backlight {
@@ -225,12 +233,13 @@
 
       #battery {
         border-radius: 24px 0 0 24px;
-        margin-left: 7px;
+        margin: 5px 0px 5px 4px;
         padding: 0 20px; 
       }
 
       #backlight {
         border-radius: 0 24px 24px 0;
+        margin: 5px 4px 5px 0px;
         padding: 0 20px; 
       }
 
@@ -238,6 +247,7 @@
         color: #${theme.base09};
       }
 
+      /*
       #cpu {
         margin-left: 7px; 
         padding: 0 0 0 20px; 
@@ -248,13 +258,23 @@
         padding: 0 20px 0 20px; 
         border-radius: 0 24px 24px 0;
       }
+      */
+
+      #custom-hw {
+        color: #${theme.base09};
+        background: #${theme.dark_background_primary};
+        border-radius: 24px 24px 24px 24px;
+        padding: 0 20px;
+        margin: 5px 4px;
+        font-weight: bold;
+      }
 
       #clock, #custom-clock, #custom-weather {
         color: #${theme.base0B};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
         padding: 0 20px;
-        margin: 5px 7px 5px 7px;
+        margin: 5px 4px;
         font-weight: bold;
         font-size: 10px;
       }
@@ -263,7 +283,7 @@
         color: #${theme.base0B};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
-        margin: 5px 1px 5px 7px;
+        margin: 5px 4px;
         padding: 0px 7px 0px 10px;
         font-size: 14px;
       }
@@ -281,7 +301,7 @@
         color: #${theme.base0B};
         border-radius: 24px 0px 0px 24px;
         padding-left: 16px;
-        margin-left: 7px;
+        margin: 5px 0px 5px 4px;
       }
 
       #custom-playerctl.play {
@@ -293,7 +313,7 @@
         color: #${theme.base0B};
         border-radius: 0px 24px 24px 0px;
         padding-right: 12px;
-        margin-right: 7px;
+        margin: 5px 4px 5px 0px;
       }
 
       #custom-playerlabel {
@@ -301,7 +321,7 @@
         color: #${theme.base09};
         padding: 0 20px;
         border-radius: 24px 24px 24px 24px;
-        margin: 5px 0;
+        margin: 5px 4px;
         font-weight: bold;
       }
 
