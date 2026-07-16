@@ -1,145 +1,137 @@
-# Outline of installation process using existing config 
-(from memory so hopefully I didn't forget anything)
-NOTE: this assumes your system is an nvidia gpu and an intel cpu! 
-## Install
-### On another machine 
-I first downloaded the Graphical ISO image (GNOME) from [here](https://nixos.org/download/#nixos-iso). Then followed instructions [here](https://nixos.org/manual/nixos/stable/#sec-booting-from-usb). 
+# ❄️ NixOS Installation & Setup Guide
 
-With a USB stick plugged in, I first ran `lsblk`, which on my system gave: 
-```
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-sda           8:0    1  28.7G  0 disk 
-├─sda1        8:1    1   966M  0 part 
-└─sda2        8:2    1     3M  0 part 
-nvme1n1     259:0    0 953.9G  0 disk 
-├─nvme1n1p1 259:1    0   240M  0 part 
-├─nvme1n1p2 259:2    0   128M  0 part 
-├─nvme1n1p3 259:3    0 929.5G  0 part 
-├─nvme1n1p4 259:4    0   990M  0 part 
-├─nvme1n1p5 259:5    0  21.5G  0 part 
-└─nvme1n1p6 259:6    0   1.5G  0 part 
-nvme0n1     259:7    0 931.5G  0 disk 
-├─nvme0n1p1 259:8    0  1000M  0 part /efi
-├─nvme0n1p2 259:9    0 896.4G  0 part /
-└─nvme0n1p3 259:10   0  34.1G  0 part [SWAP]
-```
-where we see that `sda` is the USB drive here. 
-We need to ensure the drive is unmounted, so we can run: `sudo umount /dev/sda` (where replace `sda` with whatever its name is). 
-We then run: 
+This guide walks you through installing and applying this dotfiles configuration. It is tailored for the **Framework Laptop 13 (AMD Ryzen AI 9)** under the host profile `dchan-laptop`, but can be adapted for similar AMD-based configurations by replacing the `hardware-configuration.nix` file.
+
+---
+
+## 💾 Step 1: Create the Installer USB
+
+### On another machine:
+1. Download the Graphical ISO image (GNOME version) from the [NixOS Download Page](https://nixos.org/download/#nixos-iso).
+2. Insert your USB drive and identify its device path using `lsblk` (e.g., `/dev/sda` or `/dev/nvmeX`).
+3. Ensure the drive is unmounted:
+   ```bash
+   sudo umount /dev/sdX*
+   ```
+4. Flash the ISO to the USB drive:
+   ```bash
+   sudo dd if=path-to-nixos-image.iso of=/dev/sdX bs=4M conv=fsync status=progress
+   ```
+   *(Replace `/dev/sdX` with your actual USB device, e.g. `/dev/sda`—do not target a partition like `/dev/sda1`)*
+
+---
+
+## 💿 Step 2: Install NixOS on the Device
+
+1. Boot your Framework 13 from the USB installer.
+2. Connect to Wi-Fi using the system tray/settings menu.
+3. Open the graphical installer and follow the instructions. Pay attention to the following recommendations:
+    *   **Desktop Environment:** Choose **"No Desktop"** (we will install and run Hyprland directly from our flake config).
+    *   **Unfree Software:** Check the box to allow unfree packages.
+    *   **Partitioning:** Choose **"Erase disk"** and create a swap partition (ideally with hibernation support).
+    *   **Encryption:** Check the box to **"Encrypt disk"** (highly recommended for portable laptops).
+
+---
+
+## ⚙️ Step 3: Bootstrap the Initial System
+
+Once the installation completes and you reboot into the fresh NixOS install:
+
+1. Connect to the internet using the NetworkManager interactive CLI:
+   ```bash
+   nmtui
+   ```
+2. Open the default configuration file for editing:
+   ```bash
+   sudoedit /etc/nixos/configuration.nix
+   ```
+3. Add `vim` and `git` to your system profile packages so we can clone and edit the dotfiles:
+   ```nix
+   environment.systemPackages = with pkgs; [
+     vim
+     git
+   ];
+   ```
+4. Save and exit, then rebuild your system to apply these packages:
+   ```bash
+   sudo nixos-rebuild switch
+   ```
+5. Upgrade your system channel to track unstable:
+   ```bash
+   sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+   sudo nixos-rebuild switch --upgrade-all
+   ```
+
+---
+
+## ❄️ Step 4: Clone and Setup the Configuration
+
+Now we can pull down our custom dotfiles and apply them.
+
+1. Clone this repository to your home directory at `~/.dotfiles`:
+   ```bash
+   git clone https://github.com/code49/.dotfiles.git ~/.dotfiles
+   cd ~/.dotfiles
+   ```
+2. Initialize and download all Git submodules (this is required to fetch `terminalTools`):
+   ```bash
+   git submodule update --init --recursive
+   ```
+3. Copy the hardware configuration file generated during your specific install to replace the default profile:
+   ```bash
+   cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hosts/dchan-laptop/hardware-configuration.nix
+   ```
+4. **Luks Encryption Support:** If you chose to encrypt your disk in Step 2, look at your generated `/etc/nixos/configuration.nix` file. Look for lines resembling:
+   ```nix
+   boot.initrd.luks.devices."luks-UUID".device = "/dev/disk/by-uuid/UUID";
+   ```
+   Copy these lines and paste them inside the configuration block of your new `~/.dotfiles/hosts/dchan-laptop/hardware-configuration.nix` file.
+
+---
+
+## ✏️ Step 5: Customize Your Settings
+
+Before rebuilding, make sure to customize the configuration for your own details:
+
+1. **System Preferences:** In [flake.nix](flake.nix):
+    *   Change `systemSettings.timezone` if you live in a different timezone.
+    *   Update `userSettings.username` and `userSettings.name` to match your account.
+2. **Git Credentials:** Near the bottom of [home/home.nix](home/home.nix), update your Git name and email address:
+   ```nix
+   programs.git = {
+     enable = true;
+     settings = {
+       user.name = "Your Name";
+       user.email = "your.email@example.com";
+       init.defaultBranch = "master";
+     };
+   };
+   ```
+
+---
+
+## 🚀 Step 6: Build & Switch to the Flake
+
+1. Apply the configuration (make sure you are in `~/.dotfiles`):
+   ```bash
+   sudo nixos-rebuild switch --flake .#dchan-laptop --upgrade-all
+   ```
+2. Reboot your laptop.
+3. You will boot into GDM (Gnome Display Manager). Select your user account and log in.
+4. You will boot straight into Hyprland!
+    *   Press `SUPER + Q` to open the Kitty terminal.
+    *   Press `SUPER + M` to exit Hyprland.
+
+---
+
+## 🛠️ Step 7: Post-Install Configuration & Maintenance
+
+### Changing Themes
+All colors are configured globally in [flake.nix](flake.nix) under the `theme` variable inside the outputs block. We utilize a Base16 structure (`base00` to `base0F`). Changing these colors will automatically propagate to Kitty, Waybar, Wofi, Swaylock, and Hyprland upon the next system rebuild.
+
+### System Updates
+To rebuild and update your configurations in the future, use the nice rebuilder script:
 ```bash
-sudo dd if=<path-to-image> of=/dev/sdX bs=4M conv=fsync
+nix-reb
 ```
-### On the device to install on
-I then booted from this usb drive into the installer. 
-Needed to connect to wifi using settings
-Through the graphical installer, I mostly followed the instructions and picked reasonable options. Some stand outs: 
-- I chose "no desktop" environment (I plan to install hyprland)
-- I allowed unfree software (NVIDIA!!)
-- chose to "erase disk" when partitioning
-	- also chose to have a swap with hibernate 
-- also picked to "encrypt disk"
-
-## Configuration 
-We need to do some basic configuration before we can fully proceed. This involves editing the configuration file.
-
-We can use `sudoedit` for editing the configuration file (`/etc/nixos/configuration.nix`) (i.e. `sudoedit /etc/nixos/configuration.nix`) 
-
-I edited the environment packages to add `vim` and `git` (at least initially): 
-```nix
-environment.systemPackages = with pkgs; [
-  vim
-  git
-]
-```
-You could use any text editor other than `vim`, like `nano` would work or `helix` or `nvim`.
-
-In order to rebuild nixos, you need internet (because we are installing packages here), which you can connect to by running `nmtui` and then connecting to a wifi network through the UI. This is pretty self-explanatory.
-
-I can then run the following: 
-```bash
-sudo nixos-rebuild switch
-```
-to apply changes.
-
-We also want to move to the unstable branch of nixos (scary I know, but this is still far less unstable than arch's "stable" branch):
-```bash
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos 
-sudo nixos-rebuild switch --upgrade-all
-```
-
-## Switching to actual configuration 
-Now we can switch to the pre-made configuration we actually want to use. To do so, go to your home directory (`cd ~`) and run: 
-```sh
-git clone https://github.com/TheSharkhead2/.dotfiles.git
-```
-Make sure that this is cloned to the path `~/.dotfiles`. From now on, I will assume this is your path. 
-
-We now need to choose which of the two configurations we want to use:
-- `conceivably-a-shark`: A configuration assuming you have an intel CPU (for integrated graphics) and an nvidia gpu (i.e. a laptop)
-- `plausibly-a-shark`: A configuration assuming you only have an nvidia GPU (i.e. a tower)
-
-We can enter the directory (`cd .dotfiles`). There are a few things we need to change, for starters, we want to use the `hardware-configuration.nix` that was generated when we first installed nix, not the one that is currently included in the configuration we just downloaded. Therefore, given the hostname you chose above, we want to copy the file at `/etc/nixos/hardware-configuration.nix` to `.dotfiles/hosts/HOSTNAME/hardware-configuration.nix`.
-
-Additionally, if you picked encryption, if you look at your original generated `configuration.nix` (`vim /etc/nixos/configuration.nix`), you may see lines that look like: 
-```nix
-  boot.initrd.luks.devices."luks-c63f4f2f-e6cc-4cbf-80d2-b734d6e08c7b".device = "/dev/disk/by-uuid/c63f4f2f-e6cc-4cbf-80d2-b734d6e08c7b";
-```
-Copy all of these lines into your `hardware-configruation.nix` file you just copied into your host directory. You can put them anywhere within the "body" of the script: 
-```nix
-{ config, lib, pkgs, modulesPath, ... }: 
-
-{
-  # ...
-  # this is the body
-  # ... 
-}
-```
-Note that you will likely see other almost identical lines in the `hardware-configuration.nix` already. DO NOT REMOVE THESE. If you look closely, they are slightly different. 
-
-#### If you picked `conceivably-a-shark`
-Now in your `~/.dotfiles/hosts/conceivably-a-shark/configuration.nix` file (which will from now on be referred to as your `configuration.nix` file), on (or around) line 112 you will see an `nvidia` section. In particular, you will see: 
-```nix
-# make sure correct Bus ID for system! Can run: lspci
-prime = {
-  # sync.enable = true; # might be good when plugged into external monitor? 
-  nvidiaBusId = "PCI:1:0:0";
-  intelBusId = "PCI:0:2:0";
-};
-```
-We need to ensure that the `nvidiaBusId` and `intelBusId` correspond to the correct devices. We can do this by running `lspci`, where we should see a line that is similar to: 
-```
-00:02.0 VGA compatible controller: Intel Corporation Raptor Lake-P [Iris Xe Graphics] (rev 04)
-```
-(we are looking for the `Iris Xe Graphics`) 
-and a line that is similar to: 
-```
-01:00.0 3D controller: NVIDIA Corporation AD107M [GeForce RTX 4060 Max-Q / Mobile] (rev a1)
-```
-(we are looking for our nvidia gpu)
-In particular, our config expects our intel gpu at bus id `0:2:0`, or when translated to `lspci` language `00:02.0`, and our nvidia gpu at bus id `1:0:0` (or `01:00.0`). If these are not what you see in `lspci`, you need to update your config to match. In particular, every id will be similar to the form `01:00.0`. To convert to the id you will put in your config file, replace the `.` with a `:`, and remove the leading zero (if there is one) on the first and second numbers (separated by the colon). For example, `00:15.3` would become `0:15:3`. 
-
-#### Continue from here for all installs
-
-Once you made these changes, you are actually okay to move on, but there might be some other things you will want to change. In particular, you may want to change values seen in `~/.dotfiles/flake.nix`. Here, near the top (after `outputs = {}`) you will see values like `systemSettings.hostname` which you can change to be the desired name of your device (like on your internet or when bluetooth devices see it). You may want to change your `timezone` (here as well). You name also want to change your `username` and `name` under `userSettings` which will be the username and name, respectively, of your (single) user account. 
-
-You probably also want to change your `git` username and email, which are set at the end of your `home/home.nix` file. 
-
-From here, we can rebuild the system with (ensure you are in the directory `~/.dotfiles`): 
-```sh
-sudo nixos-rebuild switch --flake .#HOSTNAME --upgrade-all
-```
-(Here `HOSTNAME` is the host system you chose)
-Reboot your system after this and you should be set! In particular, you should boot into a screen where you will see a could NixOS builds ("generations"), just pick the latest one. If you selected to encrypt your disk, it will ask you for that password next, and then will boot into your OS. You should see a pretty basic gnome-style screen where you can select your account and log in. This should then boot you straight into Hyprland! Note that `SUPER + Q` is bound to opening the terminal. 
-
-From now on, every time you change your configuration, you can rebuild your system with: 
-```sh
-sudo nixos-rebuild switch --flake . # make sure you are in ~/.dotfiles
-```
-
-### Further Configuration
-The first thing you may want to do is change the color scheme of the entire system. All of the colors are controlled in `flake.nix` under the `theme` variable set in the `outputs = {}` section. 
-Under `theme` is all of the colors for your operating system. The `base00` through `base07` colors are grayscale going from dark to light (for dark mode) and light to dark (for light mode). If you change these, make sure to update the `base0x_rgb` to be the corresponding `rgb` values for the hex-codes you changed.
-For `base08` through `base0F`, these are the accent colors for your system. In my config, `base0B` is a 'primary accent' and `base09` is a 'secondary accent', with `base0D` appearing quite often as an 'third accent'. Again make sure to update the `base0x_rgb` values. The `base0xalt` colors should be either slightly darker or slightly lighter across the board as compared to the corresponding `base0x` color. But you can do whatever you want with them, but not following this advice may result in some strange color schemes (also remember to update `base0xalt_rgb` accordingly). For `base0D`, you also need to specify a gradient to be used in a couple of places. This is done through the `base0Dalt2`, `base0Dalt3`, and `base0Dalt4` variables. This will look best if it is a gradient from lighter (`base0Dalt`) to darker `base0Dalt4` (also update the `base0Dalty_rgb` values!). 
-Finally, `dark_background_primary` and `dark_background_primary_rgb` (remember to set to same color!) are used as backgrounds for certain ui elements/areas. For dark mode this should be pretty dark, and inverse for light mode. Ideally, this is almost black with a slight shift towards your accent color of choice. But up to you.
-
-Configuration of all applications are done with `home-manager`. With the exception of your shell and git, which are configured in `home/home.nix` near the end, all apps that have configuration are configured within the `home` directory with the path `home/applicationname/applicationname.nix`. In here, you can change the configuration for all these applications. If you want to learn about what configuration is available, go to [mynixos.com](https://mynixos.com) and search for "home-manager [applicationname]" to see all the options. You may want to start with the `home/hyprland/hyprland.nix` file and change settings like monitor settings, transparency, and bindings. 
+*(This is an alias for `~/.dotfiles/scripts/nix-rebuild-nice.sh` which activates changes, cleans system generations keeping the last 25, and refreshes the GDM bootloader).*
