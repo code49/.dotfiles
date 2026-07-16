@@ -28,15 +28,13 @@
         "backlight"
         "pulseaudio"
         # "network" 
-        "clock"
+        "custom/clock"
       ];
-      clock = {
-        format = "{:%a, %d %b, %H:%M}";
-        tooltip = "true";
-        tooltip-format = ''
-          <big>{:%Y %B}</big>
-          <tt><small>{calendar}</small></tt>'';
-        format-alt = " {:%d/%m}";
+      "custom/clock" = {
+        exec = "~/.dotfiles/home/waybar/scripts/clock.py";
+        interval = 1;
+        return-type = "json";
+        tooltip = true;
       };
       "wlr/workspaces" = {
         active-only = false;
@@ -63,7 +61,7 @@
         format = "{icon}";
         return-type = "json";
         exec = ''
-          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F'';
+          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
         on-click = "playerctl play-pause";
         on-scroll-up = "playerctl volume .05+";
         on-scroll-down = "playerctl volume .05-";
@@ -84,7 +82,7 @@
         return-type = "json";
         max-length = 40;
         exec = ''
-          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F'';
+          playerctl -a metadata --format '{"text": "{{artist}} - {{markup_escape(title)}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
         on-click = "";
       };
       battery = {
@@ -250,7 +248,7 @@
         border-radius: 0 24px 24px 0;
       }
 
-      #clock {
+      #clock, #custom-clock {
         color: #${theme.base0B};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
