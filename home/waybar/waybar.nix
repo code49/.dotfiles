@@ -62,7 +62,7 @@
         format = "{icon}";
         return-type = "json";
         exec = ''
-          playerctl -a metadata --format '{"text": "{{markup_escape(title)}} - {{artist}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
+          playerctl -a metadata --format '{{markup_escape(title)}}	{{artist}}	{{playerName}}	{{status}}' -F | ~/.dotfiles/home/waybar/scripts/media.py'';
         on-click = "playerctl play-pause";
         on-scroll-up = "playerctl volume .05+";
         on-scroll-down = "playerctl volume .05-";
@@ -83,7 +83,7 @@
         return-type = "json";
         max-length = 40;
         exec = ''
-          playerctl -a metadata --format '{"text": "{{markup_escape(title)}} - {{artist}}", "tooltip": "{{playerName}} : {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F | python3 -c "import sys, json; [print(json.dumps({**d, 'text': d.get('text', str()).lower(), 'tooltip': d.get('tooltip', str()).lower()}), flush=True) for line in sys.stdin if (d := json.loads(line))]"'';
+          playerctl -a metadata --format '{{markup_escape(title)}}	{{artist}}	{{playerName}}	{{status}}' -F | ~/.dotfiles/home/waybar/scripts/media.py'';
         on-click = "";
       };
       battery = {
