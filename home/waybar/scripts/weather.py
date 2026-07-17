@@ -3,6 +3,8 @@ import datetime
 import json
 import re
 import urllib.request
+import urllib.error
+
 
 def get_weather():
     # 1. Parse active timezone, city, and optional code comment from local.nix
@@ -99,9 +101,34 @@ def get_weather():
                 
         tooltip = "\n".join(tooltip_lines)
         
+    except urllib.error.HTTPError as e:
+        text = "󰖙  --"
+        if e.code == 429:
+            tooltip = "offline: wttr.in rate limit exceeded (too many requests)"
+        elif e.code in (502, 503, 504):
+            tooltip = "offline: wttr.in server is overloaded or down"
+        elif e.code == 404:
+            tooltip = f"offline: location '{query_location}' not found"
+        else:
+            tooltip = f"offline: HTTP error {e.code} ({e.reason.lower() if e.reason else 'unknown'})"
+    except urllib.error.URLError as e:
+        text = "󰖙  --"
+        reason_str = str(e.reason).lower()
+        if "temporary failure in name resolution" in reason_str or "name or service not known" in reason_str:
+            tooltip = "offline: network offline or DNS resolution failed"
+        elif "timed out" in reason_str:
+            tooltip = "offline: connection to wttr.in timed out"
+        else:
+            tooltip = f"offline: network error ({reason_str})"
+    except json.JSONDecodeError:
+        text = "󰖙  --"
+        tooltip = "offline: received invalid response from wttr.in (server may be down or returning html)"
+    except (KeyError, IndexError, ValueError) as e:
+        text = "󰖙  --"
+        tooltip = f"offline: failed to parse weather data ({str(e).lower()})"
     except Exception as e:
         text = "󰖙  --"
-        tooltip = f"offline: {str(e).lower()}"
+        tooltip = f"offline: unexpected error ({str(e).lower()})"
         
     return json.dumps({"text": text, "tooltip": tooltip})
 
