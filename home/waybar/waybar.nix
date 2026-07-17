@@ -54,6 +54,9 @@
       };
       "custom/playerctl#backward" = {
         format = "󰙣 ";
+        return-type = "json";
+        exec = ''
+          playerctl -a metadata --format '{{markup_escape(title)}}	{{artist}}	{{playerName}}	{{status}}' -F | ~/.dotfiles/home/waybar/scripts/media.py'';
         on-click = "playerctl previous";
         on-scroll-up = "playerctl volume .05+";
         on-scroll-down = "playerctl volume .05-";
@@ -74,6 +77,9 @@
       };
       "custom/playerctl#forward" = {
         format = "󰙡 ";
+        return-type = "json";
+        exec = ''
+          playerctl -a metadata --format '{{markup_escape(title)}}	{{artist}}	{{playerName}}	{{status}}' -F | ~/.dotfiles/home/waybar/scripts/media.py'';
         on-click = "playerctl next";
         on-scroll-up = "playerctl volume .05+";
         on-scroll-down = "playerctl volume .05-";

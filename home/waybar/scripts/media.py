@@ -44,7 +44,7 @@ def main():
             
             # Formulate text and tooltip in lowercase
             text = f"{title_cleaned} - {artist}".lower()
-            tooltip = f"{player} : {title_cleaned}".lower()
+            tooltip = player.lower()
             
             # Output in JSON format expected by Waybar
             out = {
