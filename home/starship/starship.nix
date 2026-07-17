@@ -19,30 +19,29 @@
       settings = {
         format = lib.concatStrings [
           "[░▒▓](${color1})"
-          # "[ 🦈 ](bg:#a3aed2 fg:#090c0c)"
-          "[ 󱢺 ](bg:${color1} fg:${color3})"
-          "[](bg:${color3} fg:${color1})"
+          "[  ](bg:${color1} fg:${color2})"
+          "[](bg:${color3} fg:${color1})"
           "$directory"
-          "[](fg:${color3} bg:${color4})"
+          "[](fg:${color3} bg:${color4})"
           "$git_branch"
           "$git_status"
-          "[](fg:${color4} bg:${color5})"
+          "[](fg:${color4} bg:${color5})"
           "$nodejs"
           "$rust"
           "$julia"
           "$golang"
           "$php"
           "$python"
-          "[](fg:${color5} bg:${color6})"
+          "[](fg:${color5} bg:${color6})"
           "$time"
-          "[ ](fg:${color6})"
+          "[ ](fg:${color6})"
           ''
 
             $character''
         ];
 
         directory = {
-          style = "fg:#e3e5e5 bg:${color3}";
+          style = "fg:${color2} bg:${color3}";
           format = "[ $path ]($style)";
           truncation_length = 3;
           truncation_symbol = "…/";
@@ -58,20 +57,20 @@
         git_branch = {
           symbol = "";
           style = "bg:${color4}";
-          format = "[[ $symbol $branch ](fg:${color3} bg:${color4})]($style)";
+          format = "[[ $symbol $branch ](fg:${color2} bg:${color4})]($style)";
         };
 
         git_status = {
           style = "bg:${color4}";
           format =
-            "[[($all_status$ahead_behind )](fg:${color3} bg:${color4})]($style)";
+            "[[($all_status$ahead_behind )](fg:${color2} bg:${color4})]($style)";
         };
 
         nodejs = {
           symbol = " ";
           style = "bg:${color5}";
           format =
-            "[[ $symbol ($version) ](fg:${color3} bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         rust = {
@@ -99,14 +98,14 @@
           symbol = "󰟓 ";
           style = "bg:#212736";
           format =
-            "[[ $symbol ($version) ](fg:${color3} bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         php = {
           symbol = " ";
           style = "bg:#212736";
           format =
-            "[[ $symbol ($version) ](fg:${color3} bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         time = {
