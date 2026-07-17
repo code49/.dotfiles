@@ -93,11 +93,12 @@
           warning = 30;
           critical = 15;
         };
-        format = "{icon}  {capacity}% ({time} remaining)";
+        format = "{icon}  {capacity}% ({time})";
         format-charging = "  {capacity}%";
         format-plugged = " {capacity}% ";
-        format-alt = "{icon} {capacity}% ({time} remaining)";
+        format-alt = "{icon} {capacity}% ({time})";
         format-icons = [ "" "" "" "" "" ];
+        format-time = "{H} h {M} m";
       };
 
       backlight = {
@@ -311,17 +312,16 @@
 
       #custom-playerctl.forward {
         color: #${theme.base0B};
-        border-radius: 0px 24px 24px 0px;
-        padding-right: 12px;
-        margin: 5px 4px 5px 0px;
+        padding: 0 5px;
+        margin: 5px 0px;
       }
 
       #custom-playerlabel {
         background: #${theme.dark_background_primary};
         color: #${theme.base09};
-        padding: 0 20px;
-        border-radius: 24px 24px 24px 24px;
-        margin: 5px 4px;
+        padding: 0 20px 0 5px;
+        border-radius: 0px 24px 24px 0px;
+        margin: 5px 4px 5px 0px;
         font-weight: bold;
       }
 

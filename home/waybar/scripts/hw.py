@@ -44,11 +44,45 @@ def get_mem_percent():
     except Exception:
         return 0
 
+def get_cpu_temp():
+    import glob
+    import os
+    # 1. Try hwmon (Ryzen/Intel Core sensors)
+    for path in glob.glob('/sys/class/hwmon/hwmon*'):
+        try:
+            with open(os.path.join(path, 'name'), 'r') as f:
+                name = f.read().strip()
+            if name in ('k10temp', 'coretemp'):
+                temp_files = sorted(glob.glob(os.path.join(path, 'temp*_input')))
+                if temp_files:
+                    with open(temp_files[0], 'r') as f:
+                        return round(int(f.read().strip()) / 1000.0)
+        except Exception:
+            pass
+    # 2. Try ACPI fallback
+    for path in glob.glob('/sys/class/thermal/thermal_zone*'):
+        try:
+            with open(os.path.join(path, 'type'), 'r') as f:
+                t = f.read().strip()
+            if t in ('acpitz', 'x86_pkg_temp'):
+                with open(os.path.join(path, 'temp'), 'r') as f:
+                    return round(int(f.read().strip()) / 1000.0)
+        except Exception:
+            pass
+    return None
+
 def main():
     cpu = get_cpu_percent()
     mem = get_mem_percent()
-    text = f"  {cpu}% |   {mem}%"
-    tooltip = f"cpu usage: {cpu}%\nmemory usage: {mem}%"
+    temp = get_cpu_temp()
+    
+    if temp is not None:
+        text = f"  {cpu}% |   {mem}% |  {temp}°"
+        tooltip = f"cpu usage: {cpu}%\nmemory usage: {mem}%\ncpu temp: {temp}°c"
+    else:
+        text = f"  {cpu}% |   {mem}%"
+        tooltip = f"cpu usage: {cpu}%\nmemory usage: {mem}%"
+        
     print(json.dumps({"text": text, "tooltip": tooltip}))
 
 if __name__ == '__main__':
