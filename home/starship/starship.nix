@@ -75,23 +75,23 @@
 
         rust = {
           symbol = "";
-          style = "bg:#212736";
+          style = "bg:${color5}";
           format =
-            "[[ $symbol ($version) ](bold fg:#b05c2c bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         julia = {
           symbol = " ";
-          style = "bg:#212736";
+          style = "bg:${color5}";
           format =
-            "[[ $symbol ($version) ](bold fg:purple bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         python = {
           symbol = " ";
-          style = "bg:#212736";
+          style = "bg:${color5}";
           format =
-            "[[ $symbol ($version) ](bold fg:yellow bg:${color5})]($style)";
+            "[[ $symbol ($version) ](fg:${color2} bg:${color5})]($style)";
         };
 
         golang = {
