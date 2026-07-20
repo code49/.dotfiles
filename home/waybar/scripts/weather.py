@@ -82,11 +82,19 @@ def get_weather():
         # Tooltip title: show either city/code or code (city)
         display_name = f"{code.lower()} ({city.lower()})" if code and code.lower() != city.lower() else city.lower()
         
+        def fmt(val):
+            try:
+                v = int(val)
+                return f"{v:02d}"
+            except Exception:
+                return str(val)
+
         tooltip_lines = [
             f"{display_name} weather:",
-            f"{desc}, {temp}°{unit} (feels like {feels}°{unit})",
-            f"humidity: {humidity}%",
-            f"wind: {wind} {wind_unit}"
+            f"  {'condition:':<12} {desc.strip()}",
+            f"  {'temperature:':<12} {fmt(temp)}°{unit} (feels like {fmt(feels)}°{unit})",
+            f"  {'humidity:':<12} {fmt(humidity)}%",
+            f"  {'wind:':<12} {fmt(wind)} {wind_unit}"
         ]
         
         # Forecast
@@ -97,7 +105,8 @@ def get_weather():
                 day_name = days[i] if i < len(days) else day_data['date']
                 max_t = day_data['maxtempC']
                 min_t = day_data['mintempC']
-                tooltip_lines.append(f"  {day_name}: {min_t}°{unit} - {max_t}°{unit}")
+                day_label = f"{day_name}:"
+                tooltip_lines.append(f"  {day_label:<10} {fmt(min_t)}°{unit} - {fmt(max_t)}°{unit}")
                 
         tooltip = "\n".join(tooltip_lines)
         

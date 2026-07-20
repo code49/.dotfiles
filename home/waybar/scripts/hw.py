@@ -78,10 +78,10 @@ def main():
     
     if temp is not None:
         text = f"  {cpu}% |   {mem}% |  {temp}°"
-        tooltip = f"cpu usage: {cpu}%\nmemory usage: {mem}%\ncpu temp: {temp}°c"
+        tooltip = f"{'cpu usage:':<13} {cpu:02d}%\n{'memory usage:':<13} {mem:02d}%\n{'cpu temp:':<13} {temp:02d}°c"
     else:
         text = f"  {cpu}% |   {mem}%"
-        tooltip = f"cpu usage: {cpu}%\nmemory usage: {mem}%"
+        tooltip = f"{'cpu usage:':<13} {cpu:02d}%\n{'memory usage:':<13} {mem:02d}%"
         
     print(json.dumps({"text": text, "tooltip": tooltip}))
 
