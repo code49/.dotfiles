@@ -267,23 +267,13 @@
       }
       */
 
-      #custom-hw {
+      #custom-hw, #custom-weather, #clock, #custom-clock {
         color: #${theme.base09};
         background: #${theme.dark_background_primary};
         border-radius: 24px 24px 24px 24px;
         padding: 0 20px;
         margin: 5px 4px;
         font-weight: bold;
-      }
-
-      #clock, #custom-clock, #custom-weather {
-        color: #${theme.base0B};
-        background: #${theme.dark_background_primary};
-        border-radius: 24px 24px 24px 24px;
-        padding: 0 20px;
-        margin: 5px 4px;
-        font-weight: bold;
-        font-size: 10px;
       }
 
       #custom-launcher {

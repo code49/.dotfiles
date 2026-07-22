@@ -40,9 +40,10 @@ def get_weather():
             
         current = data['current_condition'][0]
         
-        # Force Celsius for temperature
-        temp = current['temp_C']
-        feels = current['FeelsLikeC']
+        temp_c = current['temp_C']
+        feels_c = current['FeelsLikeC']
+        temp_f = current['temp_F']
+        feels_f = current['FeelsLikeF']
         unit = 'c'
         
         desc = current['weatherDesc'][0]['value'].lower()
@@ -77,7 +78,7 @@ def get_weather():
                 icon = val
                 break
                 
-        text = f"{icon}  {temp}"
+        text = f"{icon}  {temp_c}"
         
         # Tooltip title: show either city/code or code (city)
         display_name = f"{code.lower()} ({city.lower()})" if code and code.lower() != city.lower() else city.lower()
@@ -92,7 +93,7 @@ def get_weather():
         tooltip_lines = [
             f"{display_name} weather:",
             f"  {'condition:':<12} {desc.strip()}",
-            f"  {'temperature:':<12} {fmt(temp)}°{unit} (feels like {fmt(feels)}°{unit})",
+            f"  {'temperature:':<12} {fmt(temp_c)}°{unit} / {fmt(temp_f)}°f (feels like {fmt(feels_c)}°{unit} / {fmt(feels_f)}°f)",
             f"  {'humidity:':<12} {fmt(humidity)}%",
             f"  {'wind:':<12} {fmt(wind)} {wind_unit}"
         ]
@@ -103,10 +104,12 @@ def get_weather():
             days = ["today", "tomorrow", "day after"]
             for i, day_data in enumerate(data['weather'][:3]):
                 day_name = days[i] if i < len(days) else day_data['date']
-                max_t = day_data['maxtempC']
-                min_t = day_data['mintempC']
+                max_c = day_data['maxtempC']
+                min_c = day_data['mintempC']
+                max_f = day_data['maxtempF']
+                min_f = day_data['mintempF']
                 day_label = f"{day_name}:"
-                tooltip_lines.append(f"  {day_label:<10} {fmt(min_t)}°{unit} - {fmt(max_t)}°{unit}")
+                tooltip_lines.append(f"  {day_label:<10} {fmt(min_c)}°{unit} / {fmt(min_f)}°f - {fmt(max_c)}°{unit} / {fmt(max_f)}°f")
                 
         tooltip = "\n".join(tooltip_lines)
         
