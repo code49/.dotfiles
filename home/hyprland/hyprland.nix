@@ -271,6 +271,10 @@
         ", xf86audioraisevolume, exec, pamixer -i 5"
         ", xf86audiolowervolume, exec, pamixer -d 5"
         ", xf86audioMute, exec, pamixer -t"
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPause, exec, playerctl play-pause"
+        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPrev, exec, playerctl previous"
 
         # keyboard brightness control 
         ", xf86KbdBrightnessDown, exec, brightnessctl -d dell::kbd_backlight set 33%-"
