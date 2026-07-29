@@ -115,7 +115,7 @@ def main():
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://davidlechan.dev"])
     time.sleep(3.0)
 
-    # 2. Workspace 10 apps (launching in the desired left-to-right order: Instagram -> Direct -> WhatsApp -> Messages)
+    # 2. Workspace 10 apps (launching in the desired left-to-right order: Instagram -> Direct -> WhatsApp -> Messages -> Discord)
     log("Launching Workspace 10 apps...")
     log("Launching Instagram...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://www.instagram.com"])
@@ -131,6 +131,10 @@ def main():
 
     log("Launching Google Messages...")
     subprocess.Popen(["firefox", "-p", "dchan-personal", "-new-window", "https://messages.google.com/web/conversations"])
+    time.sleep(0.2)
+
+    log("Launching Discord...")
+    subprocess.Popen(["discord"])
     time.sleep(0.2)
 
     # 3. Workspace 9 apps (left-to-right: Calendar -> Notion -> Spotify)
@@ -172,6 +176,11 @@ def main():
             "workspace": 10
         },
         {
+            "id": "discord",
+            "match": lambda c: c.get("class", "").lower() == "discord" or c.get("initialClass", "").lower() == "discord",
+            "workspace": 10
+        },
+        {
             "id": "calendar",
             "match": lambda c: c.get("class") == "firefox" and "calendar" in c.get("title", "").lower(),
             "workspace": 9,
@@ -190,7 +199,7 @@ def main():
         }
     ]
 
-    ws10_ids = ["instagram_main", "instagram_direct", "whatsapp", "messages"]
+    ws10_ids = ["instagram_main", "instagram_direct", "whatsapp", "messages", "discord"]
     ws9_ids = ["calendar", "notion", "spotify"]
 
     ws10_moved = False
@@ -210,9 +219,9 @@ def main():
                     if c:
                         found[target["id"]] = c
 
-            # If all 4 Workspace 10 targets are found, or if we have timed out (e.g. after step 100/50 seconds)
+            # If all Workspace 10 targets are found, or if we have timed out (e.g. after step 100/50 seconds)
             # we move whatever we have found to guarantee they get moved.
-            if len(found) == 4 or (step >= 100 and found):
+            if len(found) == len(ws10_ids) or (step >= 100 and found):
                 pending_resizes = []
                 for tid in ws10_ids:
                     if tid in found:
@@ -231,7 +240,7 @@ def main():
                     time.sleep(0.2)
                     resize_multiple_windows(pending_resizes)
 
-                if len(found) == 4 or step >= 100:
+                if len(found) == len(ws10_ids) or step >= 100:
                     ws10_moved = True
                     log(f"Workspace 10 windows successfully moved. Total found: {len(found)}")
 
