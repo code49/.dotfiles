@@ -222,6 +222,7 @@
     curl
     helix
     git
+    tmux
 
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
