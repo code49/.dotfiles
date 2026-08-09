@@ -143,38 +143,21 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "gitac" = "$TERMINAL_TOOLS_PATH/gitac/gitac";
       "ssh" = "kitten ssh";
       "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
-      "lss" = "$TERMINAL_TOOLS_PATH/sls/sls";
     };
 
     envExtra = ''
       eval "$(zoxide init --cmd cd zsh)"
 
-      ff() {
-
-      	# run script
-         	$TERMINAL_TOOLS_PATH/ff/ff "$1"
-
-      	# case on script exit code to decide whether to kill terminal
-      	local exit_code=$?
-      	if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-      		return 0
-      	elif [ $exit_code -eq 0 ] || [ $exit_code -eq 126 ]; then
-      		exit
-      	elif [ $exit_code -eq 130 ]; then
-      		return 0
-      	else 
-      		echo "firefox shortcut script failed."
-      	fi
-      		
-      }
-
+      # Load terminalTools aliases and functions
+      if [ -f "$HOME/.dotfiles/terminalTools/aliases.sh" ]; then
+        source "$HOME/.dotfiles/terminalTools/aliases.sh"
+      fi
     '';
   };
 
