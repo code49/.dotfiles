@@ -20,7 +20,6 @@ def get_weather():
             city = timezone.split('/')[-1] if '/' in timezone else timezone
             city = city.replace('_', ' ')
             code = match.group(2).strip() if match.group(2) else ""
-            # Remove any trailing semicolon or comments formatting from the code
             code = code.rstrip(';')
     except Exception:
         pass
@@ -28,7 +27,6 @@ def get_weather():
     if not city:
         city = "Chicago" # fallback default
 
-    # Location to query: use code if provided (e.g. San Francisco, LAX), otherwise city
     query_location = code if code else city
 
     # 2. Fetch data from wttr.in
@@ -49,11 +47,9 @@ def get_weather():
         desc = current['weatherDesc'][0]['value'].lower()
         humidity = current['humidity']
         
-        # Use metric wind speed (km/h) for consistency with Celsius
         wind = current['windspeedKmph']
         wind_unit = 'km/h'
         
-        # Weather icons mapping
         weather_icons = {
             "sunny": "󰖙",
             "clear": "󰖙",
@@ -80,7 +76,6 @@ def get_weather():
                 
         text = f"{icon}  {temp_c}"
         
-        # Tooltip title: show either city/code or code (city)
         display_name = f"{code.lower()} ({city.lower()})" if code and code.lower() != city.lower() else city.lower()
         
         def fmt(val):
@@ -93,7 +88,8 @@ def get_weather():
         tooltip_lines = [
             f"{display_name} weather:",
             f"  {'condition:':<12} {desc.strip()}",
-            f"  {'temperature:':<12} {fmt(temp_c)}°{unit} / {fmt(temp_f)}°f (feels like {fmt(feels_c)}°{unit} / {fmt(feels_f)}°f)",
+            f"  {'temperature:':<12} {fmt(temp_c)}°{unit} ({fmt(temp_f)}°f)",
+            f"  {'feels like:':<12} {fmt(feels_c)}°{unit} ({fmt(feels_f)}°f)",
             f"  {'humidity:':<12} {fmt(humidity)}%",
             f"  {'wind:':<12} {fmt(wind)} {wind_unit}"
         ]
@@ -109,9 +105,9 @@ def get_weather():
                 max_f = day_data['maxtempF']
                 min_f = day_data['mintempF']
                 day_label = f"{day_name}:"
-                tooltip_lines.append(f"  {day_label:<10} {fmt(min_c)}°{unit} / {fmt(min_f)}°f - {fmt(max_c)}°{unit} / {fmt(max_f)}°f")
+                tooltip_lines.append(f"  {day_label:<10} {fmt(min_c)}°{unit} - {fmt(max_c)}°{unit} ({fmt(min_f)}°f - {fmt(max_f)}°f)")
                 
-        tooltip = "\n".join(tooltip_lines)
+        tooltip = "<tt>" + "\n".join(tooltip_lines) + "</tt>"
         
     except urllib.error.HTTPError as e:
         text = "󰖙  --"
