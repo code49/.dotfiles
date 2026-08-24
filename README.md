@@ -45,7 +45,7 @@ This configuration uses a sleek, customized theme based on a grayscale palette w
 
 ### `terminalTools` Submodule
 Tracked at [terminalTools/](terminalTools/), this submodule points to [terminalTools](https://github.com/code49/terminalTools.git) and contains several lightweight, dependency-free utilities:
-*   **`sls` (Smart LS):** A terminal-based directory lister featuring split columns, recursive tree mode, and Git status support (aliased to `lss`).
+*   **`lss` (Smart LS):** A terminal-based directory lister featuring split columns, recursive tree mode, and Git status support.
 *   **`ff` (Firefox Launcher):** A script wrapper offering an interactive `fzf` prompt to search bookmarks, shortcuts, or history and launch Firefox containers directly.
 *   **`gitac`:** Quick wrapper to add all changes and commit with a message (`gitac "commit message"`).
 
@@ -75,7 +75,7 @@ Tracked at [terminalTools/](terminalTools/), this submodule points to [terminalT
 ├── home/                      # User-level packages and configurations (Home Manager)
 │   ├── home.nix               # Main Home Manager entry point (packages, environment, aliases)
 │   └── [apps]/                # App configs (hyprland, waybar, kitty, helix, vscode, etc.)
-├── terminalTools/             # Submodule containing custom portable utilities (sls, ff, gitac)
+├── terminalTools/             # Submodule containing custom portable utilities (lss, ff, gitac)
 └── scripts/                   # System helper scripts (e.g., nix-rebuild-nice.sh)
 ```
 
