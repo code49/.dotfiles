@@ -205,9 +205,10 @@
         "$mod SHIFT, F3, layoutmsg, consume"
         # "$mod, F5, layoutmsg, removemaster"
 
-        # suspend/hibernate
+        # lock/suspend/hibernate
         "$mod CTRL SHIFT ALT, H, exec, systemctl hibernate"
         "$mod CTRL SHIFT, S, exec, systemctl suspend"
+        "$mod CTRL SHIFT, L, exec, swaylock -f"
 
         # moving focus
         "$mod, H, movefocus, l"
