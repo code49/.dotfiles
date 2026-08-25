@@ -1,8 +1,12 @@
 # initial configuration from: https://github.com/justinlime/dotfiles
-{ pkgs, theme, ... }: {
+{ pkgs, lib, theme, ... }: {
   home.packages = with pkgs; [ playerctl pavucontrol ];
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+      targets = [ "graphical-session.target" ];
+    };
     settings.mainBar = {
       position = "top";
       layer = "top";
@@ -332,6 +336,11 @@
         font-style: normal;
       }
     '';
+  };
+
+  systemd.user.services.waybar.Service = {
+    Restart = lib.mkForce "always";
+    RestartSec = "1s";
   };
 }
 # border-radius: 24px 24px 24px 24px;

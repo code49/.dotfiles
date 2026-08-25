@@ -11,7 +11,7 @@ nm-applet --indicator &
 # bluetooth 
 blueman-applet &
 
-waybar & 
+systemctl --user restart waybar & 
 
 swayidle -w \
   before-sleep 'swaylock -f && (while pgrep -u "$USER" swaylock >/dev/null; do sleep 1; done; hyprctl reload) &' \
