@@ -14,7 +14,7 @@ blueman-applet &
 systemctl --user restart waybar & 
 
 swayidle -w \
-  before-sleep 'swaylock -f && (while pgrep -u "$USER" swaylock >/dev/null; do sleep 1; done; hyprctl reload) &' \
+  before-sleep 'swaylock -f' \
   after-resume '~/.dotfiles/home/hyprland/scripts/refresh-graphics.sh' &
 
 mako &
