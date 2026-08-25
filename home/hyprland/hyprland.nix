@@ -169,7 +169,7 @@
         "match:class ^(firefox)$, match:title (Gradescope)(.*)$, opacity 0.8 0.8"
         "match:class ^(firefox)$, match:title (.*)(Instagram)(.*), opacity 0.7 0.7"
         "match:class ^(firefox)$, match:title (Google Calendar)(.*)$, opacity 0.7 0.7"
-        "match:class ^(firefox)$, match:title ^((?!GitHub))(Dashboard — )(.*)$, opacity 0.7 0.7"
+        "match:class ^(firefox)$, match:title ^(Dashboard — )(.*)$, opacity 0.7 0.7"
         # "opacity 0.8 0.8,class:^(firefox)$,title:(Wikipedia)(.*)$"
         # "opacity 0.7 0.7,class:^(firefox)$,title:(.*)(Online LaTeX Editor Overleaf)(.*)$"
         "match:class ^(firefox)$, match:title (.*)(Tasks and Schedule)(.*), opacity 0.7 0.7"
