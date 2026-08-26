@@ -46,6 +46,8 @@
     zip
     unzip
     zoom-us
+    krb5
+    (openssh.override { withKerberos = true; })
 
     google-cursor
 
@@ -143,13 +145,24 @@
     shellAliases = {
       ls = "ls -a1";
       ".." = "cd ..";
-      "ssh" = "kitten ssh";
       "rmv" = "rm -v";
       "b" = "btop";
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
     };
+
+    initContent = ''
+      export KRB5_CONFIG="$HOME/.krb5.conf"
+
+      if [[ "$TERM" == "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
+        alias ssh="kitten ssh"
+      else
+        alias ssh="/etc/profiles/per-user/dchan/bin/ssh"
+      fi
+
+      export GPG_TTY=$(tty)
+    '';
 
     envExtra = ''
       eval "$(zoxide init --cmd cd zsh)"

@@ -1,7 +1,14 @@
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 10m
+
 # --- Global Defaults for your CMU hosts ---
 # Applies to cmu, cmu-linux, and any machine matching the patterns below
 Host cmu ece-linux ece-ssh ece0* hh-1305*
     User dchan2
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
     ForwardX11 yes
     ForwardX11Trusted yes
     ServerAliveInterval 60

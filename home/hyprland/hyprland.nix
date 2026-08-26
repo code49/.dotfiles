@@ -15,6 +15,10 @@
     #   }
     # '';
 
+    extraConfig = ''
+      source = ~/.config/hypr/monitors.conf
+    '';
+
     settings = {
       monitor = [ ",preferred,auto,auto" ] ++ (map (m:
         "${m.name},${
@@ -192,6 +196,7 @@
 
         # desktop/windows management
         "$mod, SPACE, exec, wofi"
+        "$mod SHIFT, M, exec, nwg-displays"
         # ''$mod, S, exec, grim -l 2 -g "$(slurp)" - | swappy -f''
         ''$mod, S, exec, grim -l 2 -g "$(slurp -d)" - | wl-copy''
         "$mod, W, killactive,"

@@ -53,6 +53,40 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Kerberos configuration for CMU Andrew & ECE domains
+  security.krb5 = {
+    enable = true;
+    settings = {
+      libdefaults = {
+        default_realm = "ANDREW.CMU.EDU";
+        dns_lookup_kdc = true;
+        dns_lookup_realm = true;
+      };
+      realms = {
+        "ANDREW.CMU.EDU" = {
+          kdc = [
+            "kdc-11.andrew.cmu.edu:88"
+            "kdc-12.andrew.cmu.edu:88"
+            "kdc-13.andrew.cmu.edu:88"
+            "kdc-14.andrew.cmu.edu:88"
+          ];
+          admin_server = "kdc-11.andrew.cmu.edu";
+        };
+      };
+      domain_realm = {
+        ".andrew.cmu.edu" = "ANDREW.CMU.EDU";
+        "andrew.cmu.edu" = "ANDREW.CMU.EDU";
+        ".ece.cmu.edu" = "ANDREW.CMU.EDU";
+        "ece.cmu.edu" = "ANDREW.CMU.EDU";
+        ".ece.local.cmu.edu" = "ANDREW.CMU.EDU";
+        "ece.local.cmu.edu" = "ANDREW.CMU.EDU";
+      };
+    };
+  };
+
+  # Use Kerberos-enabled OpenSSH system-wide
+  programs.ssh.package = pkgs.openssh.override { withKerberos = true; };
+
   # Set your time zone in local.nix (git-ignored)
 
   # Select internationalisation properties.
@@ -245,6 +279,7 @@
 
     swaynotificationcenter
     wlr-randr
+    nwg-displays
     wl-clipboard
     swayidle
     swaylock
