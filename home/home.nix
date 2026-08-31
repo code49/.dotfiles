@@ -37,6 +37,9 @@
     source = ../icons;
     recursive = true;
   };
+  home.file.".gemini/config/skills" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/agents/skills";
+  };
 
   home.packages = with pkgs; [
     cargo
