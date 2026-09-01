@@ -33,6 +33,7 @@
       "exec-once" = [
         "bash ~/.dotfiles/home/hyprland/scripts/start.sh"
         "python3 ~/.dotfiles/home/hyprland/scripts/startup_apps.py"
+        "python3 ~/.dotfiles/home/hyprland/scripts/monitor_fallback.py --daemon"
         "fcitx5 -d --disable notificationitem"
       ];
 

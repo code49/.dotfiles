@@ -18,3 +18,5 @@ swayidle -w \
   after-resume '~/.dotfiles/home/hyprland/scripts/refresh-graphics.sh' &
 
 mako &
+
+python3 ~/.dotfiles/home/hyprland/scripts/monitor_fallback.py --daemon &

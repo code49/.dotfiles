@@ -6,3 +6,4 @@ set -eu
 sleep 1
 
 hyprctl dispatch dpms on || true
+python3 ~/.dotfiles/home/hyprland/scripts/monitor_fallback.py || true
