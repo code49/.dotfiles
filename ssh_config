@@ -1,16 +1,12 @@
-Host *
-    ControlMaster auto
-    ControlPath ~/.ssh/cm-%r@%h:%p
-    ControlPersist 10m
-
-# --- Global Defaults for your CMU hosts ---
-# Applies to cmu, cmu-linux, and any machine matching the patterns below
-Host cmu ece-linux ece-ssh ece0* hh-1305*
+# --- Global Defaults for CMU hosts ---
+Host cmu ece-linux ece-ssh ece* hh-1305* *.cmu.edu *.andrew.cmu.edu *.ece.cmu.edu *.ece.local.cmu.edu *.lan.local.cmu.edu
     User dchan2
+    ControlMaster no
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials yes
     ForwardX11 yes
     ForwardX11Trusted yes
+    ForwardX11Timeout 0
     ServerAliveInterval 60
 
 # --- Standard Entry Points ---
@@ -24,16 +20,20 @@ Host ece-ssh
     HostName ece001.ece.local.cmu.edu
     ProxyJump ece-linux
 
-# --- ECE Clusters (Jump via cmu-linux) ---
-# Usage: ssh ece030
-# Auto-expands to: ece030.ece.local.cmu.edu
-Host ece0*
+# --- ECE Clusters (Jump via ece-linux) ---
+# Usage: ssh ece030 or ssh ece005
+Host ece* !ece-linux !ece-ssh
     HostName %h.ece.local.cmu.edu
     ProxyJump ece-linux
 
-# --- Hamerschlag Hall / Lab Machines (Jump via cmu-linux) ---
+# --- Hamerschlag Hall / Lab Machines (Jump via ece-linux) ---
 # Usage: ssh hh-1305-10
-# Auto-expands to: hh-1305-10.lan.local.cmu.edu
 Host hh-1305*
     HostName %h.lan.local.cmu.edu
     ProxyJump ece-linux
+
+# --- General Defaults ---
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/cm-%r@%h:%p
+    ControlPersist 10m

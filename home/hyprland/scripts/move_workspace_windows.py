@@ -22,7 +22,7 @@ def main():
         print(f"Error getting active workspace: {e}")
         sys.exit(1)
         
-    if not active_ws:
+    if active_ws is None:
         print("Could not determine active workspace.")
         sys.exit(1)
         
@@ -43,16 +43,37 @@ def main():
         sys.exit(0)
         
     # Sort current clients by their horizontal coordinate (at[0])
-    # This preserves the left-to-right ordering of columns in the scrolling layout
+    # This preserves the left-to-right ordering of columns in scrolling/tiled layouts
     current_clients.sort(key=lambda c: c.get("at", [0, 0])[0])
     
-    # Move each window silently in sorted order
+    # Build batch commands to move each window and restore its exact pixel dimensions
+    batch_cmds = []
     for c in current_clients:
         addr = c["address"]
-        run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{target_ws},address:{addr}"])
+        batch_cmds.append(f"dispatch movetoworkspacesilent {target_ws},address:{addr}")
         
+        size = c.get("size", [])
+        if len(size) == 2 and size[0] > 0 and size[1] > 0:
+            w, h = size[0], size[1]
+            batch_cmds.append(f"dispatch resizewindowpixel exact {w} {h},address:{addr}")
+
     # Switch focus to the target workspace so the user follows the windows
-    run_cmd(["hyprctl", "dispatch", "workspace", target_ws])
+    batch_cmds.append(f"dispatch workspace {target_ws}")
+
+    # Execute all operations atomically in a single hyprctl batch call
+    try:
+        run_cmd(["hyprctl", "--batch", " ; ".join(batch_cmds)])
+    except Exception as e:
+        print(f"Error executing batch workspace move: {e}")
+        # Fallback to individual command dispatches
+        for c in current_clients:
+            addr = c["address"]
+            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{target_ws},address:{addr}"])
+            size = c.get("size", [])
+            if len(size) == 2 and size[0] > 0 and size[1] > 0:
+                run_cmd(["hyprctl", "dispatch", "resizewindowpixel", f"exact {size[0]} {size[1]},address:{addr}"])
+        run_cmd(["hyprctl", "dispatch", "workspace", target_ws])
 
 if __name__ == "__main__":
     main()
+

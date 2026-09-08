@@ -40,6 +40,9 @@
   home.file.".gemini/config/skills" = {
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/agents/skills";
   };
+  home.file.".ssh/config" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/ssh_config";
+  };
 
   home.packages = with pkgs; [
     cargo
@@ -158,11 +161,7 @@
     initContent = ''
       export KRB5_CONFIG="$HOME/.krb5.conf"
 
-      if [[ "$TERM" == "xterm-kitty" || -n "$KITTY_WINDOW_ID" ]]; then
-        alias ssh="kitten ssh"
-      else
-        alias ssh="/etc/profiles/per-user/dchan/bin/ssh"
-      fi
+      alias ssh="command ssh"
 
       export GPG_TTY=$(tty)
     '';
