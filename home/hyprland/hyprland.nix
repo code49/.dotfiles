@@ -228,6 +228,7 @@
 
         # resizing active window 
         "$mod, E, layoutmsg, colresize 0.5"
+        "$mod, R, layoutmsg, colresize 1.0"
         "$mod SHIFT, L, layoutmsg, colresize +0.05"
         "$mod SHIFT, H, layoutmsg, colresize -0.05"
         "$mod SHIFT, K, resizeactive, 0 -20"
