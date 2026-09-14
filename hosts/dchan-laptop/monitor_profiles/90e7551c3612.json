@@ -1,0 +1,37 @@
+{
+  "hostname": "dchan-laptop",
+  "hash": "90e7551c3612",
+  "updated_at": "2026-09-14 11:45:21",
+  "monitors": [
+    {
+      "name": "eDP-1",
+      "make": "BOE",
+      "model": "NE135A1M-NY1",
+      "serial": "",
+      "description": "BOE NE135A1M-NY1",
+      "width": 2880,
+      "height": 1920,
+      "refreshRate": 60.001
+    },
+    {
+      "name": "DP-4",
+      "make": "NZXT (PNP same EDID)_",
+      "model": "NZXTCANVAS27Q",
+      "serial": "MN27Q22131232",
+      "description": "NZXT (PNP same EDID)_ NZXTCANVAS27Q MN27Q22131232",
+      "width": 2560,
+      "height": 1440,
+      "refreshRate": 59.951
+    },
+    {
+      "name": "DP-1",
+      "make": "NZXT (PNP same EDID)_",
+      "model": "NZXTCANVAS27Q",
+      "serial": "MN27Q22131370",
+      "description": "NZXT (PNP same EDID)_ NZXTCANVAS27Q MN27Q22131370",
+      "width": 2560,
+      "height": 1440,
+      "refreshRate": 143.855
+    }
+  ]
+}
