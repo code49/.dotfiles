@@ -17,11 +17,10 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Workaround for AMDGPU MES (Micro Engine Scheduler) hang on Ryzen AI 300 series (Strix Point).
-  # If you experience random freezes, disabling the MES scheduler or CWSR stabilizes the graphics driver.
+  # Workaround for AMDGPU MES / CWSR hang on Ryzen AI 300 series (Strix Point/Krackan).
+  # Note: amdgpu.mes=0 causes MES ring buffer lockup/deadlock on GFX1150; cwsr_enable=0 is preferred.
   boot.kernelParams = [
-    "amdgpu.mes=0"
-    # "amdgpu.cwsr_enable=0" # Alternative workaround if mes=0 causes issues
+    "amdgpu.cwsr_enable=0"
   ];
 
   monitors = [
