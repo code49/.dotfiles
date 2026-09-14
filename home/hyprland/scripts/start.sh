@@ -19,4 +19,4 @@ swayidle -w \
 
 mako &
 
-python3 ~/.dotfiles/home/hyprland/scripts/monitor_fallback.py --daemon &
+python3 ~/.dotfiles/home/hyprland/scripts/monitor_profile_manager.py daemon &
