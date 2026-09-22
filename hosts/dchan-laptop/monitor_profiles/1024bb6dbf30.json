@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
-  "hash": "90e7551c3612",
-  "updated_at": "2026-09-21 00:19:23",
+  "hash": "1024bb6dbf30",
+  "updated_at": "2026-09-20 00:14:56",
   "monitors": [
     {
       "name": "eDP-1",
@@ -12,16 +12,6 @@
       "width": 2880,
       "height": 1920,
       "refreshRate": 60.001
-    },
-    {
-      "name": "DP-4",
-      "make": "NZXT (PNP same EDID)_",
-      "model": "NZXTCANVAS27Q",
-      "serial": "MN27Q22131232",
-      "description": "NZXT (PNP same EDID)_ NZXTCANVAS27Q MN27Q22131232",
-      "width": 2560,
-      "height": 1440,
-      "refreshRate": 59.951
     },
     {
       "name": "DP-1",

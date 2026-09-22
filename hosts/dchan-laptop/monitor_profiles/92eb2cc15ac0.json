@@ -1,0 +1,27 @@
+{
+  "hostname": "dchan-laptop",
+  "hash": "92eb2cc15ac0",
+  "updated_at": "2026-09-21 22:24:42",
+  "monitors": [
+    {
+      "name": "DP-1",
+      "make": "ASUSTek COMPUTER INC",
+      "model": "VG27A",
+      "serial": "L6LMQS007242",
+      "description": "ASUSTek COMPUTER INC VG27A L6LMQS007242",
+      "width": 2560,
+      "height": 1440,
+      "refreshRate": 144.006
+    },
+    {
+      "name": "eDP-1",
+      "make": "BOE",
+      "model": "NE135A1M-NY1",
+      "serial": "",
+      "description": "BOE NE135A1M-NY1",
+      "width": 2880,
+      "height": 1920,
+      "refreshRate": 60.001
+    }
+  ]
+}
