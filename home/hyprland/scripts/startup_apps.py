@@ -205,41 +205,63 @@ def main():
     for step in range(240):
         clients = get_clients()
 
-        # 1. Detect and move any target window immediately as soon as it appears
-        for target in targets:
-            tid = target["id"]
-            if tid not in moved_targets:
-                c = next((client for client in clients if target["match"](client)), None)
+        # 1. Detect and move target windows in strict left-to-right order per workspace
+        for ws, t_ids in ws_targets.items():
+            for tid in t_ids:
+                if tid in moved_targets:
+                    continue
+
+                target_obj = next(t for t in targets if t["id"] == tid)
+                c = next((client for client in clients if target_obj["match"](client)), None)
+
                 if c:
                     addr = c["address"]
-                    target_ws = target["workspace"]
                     current_ws = c.get("workspace", {}).get("id")
-                    if current_ws != target_ws:
-                        log(f"Found target '{tid}' on workspace {current_ws}. Moving silent to workspace {target_ws}...")
-                        run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{target_ws},address:{addr}"])
+                    if current_ws != ws:
+                        log(f"Found target '{tid}' on workspace {current_ws}. Moving silent to workspace {ws}...")
+                        run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{addr}"])
+                        time.sleep(0.1)
                     else:
-                        log(f"Found target '{tid}' already on workspace {target_ws}.")
+                        log(f"Target '{tid}' already on workspace {ws}.")
                     moved_targets.add(tid)
+                else:
+                    # Target not ready yet. Pause processing subsequent targets for this workspace
+                    # to maintain strict left-to-right window ordering, unless timed out.
+                    if step < 60:  # 30 seconds grace period
+                        break
 
         # 2. Check per workspace if all targets for that workspace are moved and pending resize
         for ws, t_ids in ws_targets.items():
             if ws not in resized_workspaces:
                 if all(tid in moved_targets for tid in t_ids):
-                    log(f"All targets for Workspace {ws} moved. Applying resizes...")
+                    log(f"All targets for Workspace {ws} moved. Enforcing column order and applying resizes...")
+                    
+                    # Refresh clients
+                    current_clients = get_clients()
+
+                    # Re-dispatch in strict left-to-right sequence to guarantee column ordering
+                    for tid in t_ids:
+                        target_obj = next(t for t in targets if t["id"] == tid)
+                        c = next((client for client in current_clients if target_obj["match"](client)), None)
+                        if c:
+                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{c['address']}"])
+                            time.sleep(0.1)
+
                     pending_resizes = []
+                    current_clients = get_clients()
                     for tid in t_ids:
                         target_obj = next(t for t in targets if t["id"] == tid)
                         if "resize" in target_obj:
-                            c = next((client for client in clients if target_obj["match"](client)), None)
+                            c = next((client for client in current_clients if target_obj["match"](client)), None)
                             if c:
                                 pending_resizes.append((c["address"], ws, target_obj["resize"]))
-                    
+
                     if pending_resizes:
                         time.sleep(0.2)
                         resize_multiple_windows(pending_resizes)
-                    
+
                     resized_workspaces.add(ws)
-                    log(f"Workspace {ws} windows successfully moved and resized.")
+                    log(f"Workspace {ws} windows successfully ordered and resized.")
 
         # Exit loop early if all targets across all workspaces have been moved and resized
         all_target_ids = set(ws_targets[10] + ws_targets[9])
@@ -249,16 +271,19 @@ def main():
 
         time.sleep(0.5)
     else:
-        log("Polling loop timed out. Performing fallback resize for any moved targets...")
+        log("Polling loop timed out. Performing fallback order & resize for any moved targets...")
+        current_clients = get_clients()
         for ws, t_ids in ws_targets.items():
             if ws not in resized_workspaces:
                 pending_resizes = []
                 for tid in t_ids:
                     if tid in moved_targets:
                         target_obj = next(t for t in targets if t["id"] == tid)
-                        if "resize" in target_obj:
-                            c = next((client for client in clients if target_obj["match"](client)), None)
-                            if c:
+                        c = next((client for client in current_clients if target_obj["match"](client)), None)
+                        if c:
+                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{c['address']}"])
+                            time.sleep(0.1)
+                            if "resize" in target_obj:
                                 pending_resizes.append((c["address"], ws, target_obj["resize"]))
                 if pending_resizes:
                     resize_multiple_windows(pending_resizes)
