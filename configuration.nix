@@ -213,9 +213,12 @@
       excludePackages = [ pkgs.xterm ];
 
     };
-    displayManager.gdm = {
-      enable = true;
-      # wayland = true;
+    displayManager = {
+      defaultSession = "hyprland";
+      gdm = {
+        enable = true;
+        # wayland = true;
+      };
     };
     libinput.enable = true;
     dbus.enable = true;

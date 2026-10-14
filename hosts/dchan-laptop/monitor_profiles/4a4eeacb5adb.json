@@ -1,0 +1,27 @@
+{
+  "hostname": "dchan-laptop",
+  "hash": "4a4eeacb5adb",
+  "updated_at": "2026-10-01 14:02:36",
+  "monitors": [
+    {
+      "name": "eDP-1",
+      "make": "BOE",
+      "model": "NE135A1M-NY1",
+      "serial": "",
+      "description": "BOE NE135A1M-NY1",
+      "width": 2880,
+      "height": 1920,
+      "refreshRate": 60.001
+    },
+    {
+      "name": "DP-1",
+      "make": "MGW",
+      "model": "USB Capture",
+      "serial": "0x00BC614E",
+      "description": "MGW USB Capture 0x00BC614E",
+      "width": 2560,
+      "height": 1440,
+      "refreshRate": 144.0
+    }
+  ]
+}

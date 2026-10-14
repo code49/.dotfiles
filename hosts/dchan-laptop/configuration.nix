@@ -17,10 +17,11 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Workaround for AMDGPU MES / CWSR hang on Ryzen AI 300 series (Strix Point/Krackan).
-  # Note: amdgpu.mes=0 causes MES ring buffer lockup/deadlock on GFX1150; cwsr_enable=0 is preferred.
+  # AMDGPU configuration for Ryzen AI 300 series (Strix Point / GFX1150).
+  # Note: amdgpu.cwsr_enable=0 and amdgpu.mes=0 both break ring queue preemption and cause "AMD MES ring buffer full" deadlocks on GFX1150.
+  # Panel Self Refresh (PSR) power state transitions are the true cause of hangs; amdgpu.dcdebugmask=0x10 mitigates PSR issues while keeping MES/CWSR operational.
   boot.kernelParams = [
-    "amdgpu.cwsr_enable=0"
+    "amdgpu.dcdebugmask=0x10"
   ];
 
   monitors = [
