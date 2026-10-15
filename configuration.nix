@@ -150,7 +150,6 @@
   };
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL =
       "1"; # THIS WAS CAUSING PROBLEMS WITH (electron) APPS TAKING MINUTES TO LAUNCH
 
@@ -164,13 +163,6 @@
     XDG_SESSION_TYPE = "wayland";
 
     # VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-
-    # Input method environment variables for CJK input
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    SDL_IM_MODULE = "fcitx";
-    GLFW_IM_MODULE = "fcitx";
   };
 
   hardware = {

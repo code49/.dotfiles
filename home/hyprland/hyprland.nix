@@ -58,12 +58,21 @@
 
       xwayland = { force_zero_scaling = true; };
 
+      cursor = {
+        no_hardware_cursors = true;
+      };
+
       env = [
         # force reasonable cursor sizes 
         "XCURSOR_SIZE,12"
         "XCURSOR_THEME,GoogleDot-Violet"
         "HYPRCURSOR_THEME,hypr_GoogleDot-Violet"
         "HYPRCURSOR_SIZE,18"
+
+        # Input method for Wayland/Xwayland
+        "XMODIFIERS,@im=fcitx"
+        "SDL_IM_MODULE,fcitx"
+        "GLFW_IM_MODULE,fcitx"
       ];
 
       "general" = {
