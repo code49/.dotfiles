@@ -1,0 +1,16 @@
+{
+  "python-safety-gate": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /home/dchan/.gemini/config/scripts/python_safety_check.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
