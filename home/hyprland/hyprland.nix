@@ -7,6 +7,7 @@
     # package =
     #   inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
+    configType = "hyprlang";
 
     # extraConfig = ''
     #   device {
@@ -127,7 +128,6 @@
       };
 
       dwindle = {
-        pseudotile = "yes";
         preserve_split = "yes";
       };
 
