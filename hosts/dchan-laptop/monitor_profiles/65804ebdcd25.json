@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
   "hash": "65804ebdcd25",
-  "updated_at": "2026-10-06 09:58:59",
+  "updated_at": "2026-10-15 23:33:13",
   "monitors": [
     {
       "name": "eDP-1",
@@ -11,7 +11,7 @@
       "description": "BOE NE135A1M-NY1",
       "width": 2880,
       "height": 1920,
-      "refreshRate": 60.001
+      "refreshRate": 120.0
     }
   ]
 }
