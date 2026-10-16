@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
-  "hash": "6542c259bf3f",
-  "updated_at": "2026-09-24 10:50:13",
+  "hash": "c7082a9d7ed1",
+  "updated_at": "2026-10-01 14:06:38",
   "monitors": [
     {
       "name": "eDP-1",
@@ -14,11 +14,11 @@
       "refreshRate": 60.001
     },
     {
-      "name": "DP-4",
-      "make": "Dell Inc.",
-      "model": "DELL P2422H",
-      "serial": "22NN7N3",
-      "description": "Dell Inc. DELL P2422H 22NN7N3",
+      "name": "DP-2",
+      "make": "MGW",
+      "model": "USB Capture",
+      "serial": "0x00BC614E",
+      "description": "MGW USB Capture 0x00BC614E",
       "width": 1920,
       "height": 1080,
       "refreshRate": 60.0

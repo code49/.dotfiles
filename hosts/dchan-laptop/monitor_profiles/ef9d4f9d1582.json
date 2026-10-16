@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
-  "hash": "bc21cfb9d400",
-  "updated_at": "2026-09-25 15:10:20",
+  "hash": "ef9d4f9d1582",
+  "updated_at": "2026-09-24 10:50:13",
   "monitors": [
     {
       "name": "eDP-1",
@@ -17,8 +17,8 @@
       "name": "DP-4",
       "make": "Dell Inc.",
       "model": "DELL P2422H",
-      "serial": "69HN7N3",
-      "description": "Dell Inc. DELL P2422H 69HN7N3",
+      "serial": "22NN7N3",
+      "description": "Dell Inc. DELL P2422H 22NN7N3",
       "width": 1920,
       "height": 1080,
       "refreshRate": 60.0

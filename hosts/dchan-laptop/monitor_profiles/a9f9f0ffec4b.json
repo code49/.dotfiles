@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
-  "hash": "94ee332592f8",
-  "updated_at": "2026-09-25 15:09:28",
+  "hash": "a9f9f0ffec4b",
+  "updated_at": "2026-10-15 23:33:17",
   "monitors": [
     {
       "name": "eDP-1",
@@ -11,17 +11,17 @@
       "description": "BOE NE135A1M-NY1",
       "width": 2880,
       "height": 1920,
-      "refreshRate": 60.001
+      "refreshRate": 120.0
     },
     {
-      "name": "DP-1",
+      "name": "DP-2",
       "make": "Dell Inc.",
-      "model": "DELL P2422H",
-      "serial": "69HN7N3",
-      "description": "Dell Inc. DELL P2422H 69HN7N3",
+      "model": "DELL G2724D",
+      "serial": "CJYB4V3",
+      "description": "Dell Inc. DELL G2724D CJYB4V3",
       "width": 2560,
       "height": 1440,
-      "refreshRate": 144.0
+      "refreshRate": 59.951
     }
   ]
 }
