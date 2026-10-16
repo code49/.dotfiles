@@ -122,10 +122,35 @@ State the condition first, then the action:
 - ❌ *Incorrect:* Reboot the machine if the kernel panics.
 - ✅ *Correct:* If the kernel panics, reboot the machine.
 
-### 3.2 Vertical Lists
+### 3.2 Vertical Lists & Whitespace Formatting
 Use vertical lists for three or more items, conditions, or steps:
 - **Numbered lists (`1.`, `2.`):** For sequential instructions where order matters.
 - **Bullet lists (`-`):** For collections of items, options, or independent conditions.
+
+#### Whitespace and Indentation Rules for Lists:
+- **Surround list blocks with blank lines:** Always place an empty line before and after a list block, and between preceding headings and introductory text.
+- **Separate multi-line list items:** If list items contain explanations, multiple sentences, or code, insert a blank line between list items (loose list). Do not jam items together.
+- **Indent continuation text:** Indent explanatory text, sub-points, or code blocks under a numbered or bullet item by 3 or 4 spaces (or 1 tab) to nest cleanly under the item header.
+
+**Bad (jammed lines, no indentation, no blank lines between items):**
+```markdown
+1. Move core settings under settings.config:
+In Lua mode, Home Manager maps settings.config directly to hl.config({ ... }).
+Move your general, decoration, animations, input, scrolling, and misc sections into settings.config.
+2. Enable native swap column wrapping:
+Hyprland 0.56.2 supports scrolling.wrap_swapcol = false; natively.
+```
+
+**Good (blank line between items, continuation text indented under the item):**
+```markdown
+1. **Move core settings under `settings.config`:**
+   In Lua mode, Home Manager maps `settings.config` directly to `hl.config({ ... })`.
+   Move your general, decoration, animations, input, scrolling, and misc sections into `settings.config`.
+
+2. **Enable native swap column wrapping:**
+   Hyprland 0.56.2 supports `scrolling.wrap_swapcol = false;` natively.
+   You can delete `swapcol_nowrap.py` and use direct `layoutmsg` calls.
+```
 
 ### 3.3 Notes, Cautions, and Warnings
 Follow standard STE severity indicators:
