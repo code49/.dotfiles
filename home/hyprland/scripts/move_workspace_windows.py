@@ -7,6 +7,16 @@ def run_cmd(cmd):
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return result.stdout.strip()
 
+IS_LUA = None
+
+def is_lua_mode():
+    global IS_LUA
+    if IS_LUA is not None:
+        return IS_LUA
+    res = subprocess.run(["hyprctl", "dispatch", "hl.dsp.no_op()"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    IS_LUA = (res.returncode == 0)
+    return IS_LUA
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: move_workspace_windows.py <target_workspace>")
@@ -38,15 +48,30 @@ def main():
     
     if not current_clients:
         print(f"No windows on workspace {active_ws} to move.")
-        # Switch to the target workspace
-        run_cmd(["hyprctl", "dispatch", "workspace", target_ws])
+        if is_lua_mode():
+            run_cmd(["hyprctl", "dispatch", f'hl.dsp.focus({{ workspace = "{target_ws}" }})'])
+        else:
+            run_cmd(["hyprctl", "dispatch", "workspace", target_ws])
         sys.exit(0)
         
     # Sort current clients by their horizontal coordinate (at[0])
     # This preserves the left-to-right ordering of columns in scrolling/tiled layouts
     current_clients.sort(key=lambda c: c.get("at", [0, 0])[0])
     
-    # Build batch commands to move each window and restore its exact pixel dimensions
+    if is_lua_mode():
+        lua_lines = []
+        for c in current_clients:
+            addr = c["address"]
+            lua_lines.append(f'hl.dispatch(hl.dsp.window.move({{ workspace = "{target_ws}", follow = false, window = "address:{addr}" }}))')
+            size = c.get("size", [])
+            if len(size) == 2 and size[0] > 0 and size[1] > 0:
+                w, h = size[0], size[1]
+                lua_lines.append(f'hl.dispatch(hl.dsp.window.resize({{ x = {w}, y = {h}, relative = false, window = "address:{addr}" }}))')
+        lua_lines.append(f'hl.dispatch(hl.dsp.focus({{ workspace = "{target_ws}" }}))')
+        run_cmd(["hyprctl", "eval", "\n".join(lua_lines)])
+        sys.exit(0)
+
+    # Legacy batch commands to move each window and restore its exact pixel dimensions
     batch_cmds = []
     for c in current_clients:
         addr = c["address"]

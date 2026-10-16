@@ -19,6 +19,28 @@ def run_cmd(cmd):
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return result.stdout.strip()
 
+IS_LUA = None
+
+def is_lua_mode():
+    global IS_LUA
+    if IS_LUA is not None:
+        return IS_LUA
+    res = subprocess.run(["hyprctl", "dispatch", "hl.dsp.no_op()"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    IS_LUA = (res.returncode == 0)
+    return IS_LUA
+
+def dispatch_cmd(lua_expr, legacy_args):
+    """Execute a hyprctl dispatch command supporting both Lua and legacy syntax."""
+    if is_lua_mode():
+        cmd = ["hyprctl", "dispatch", lua_expr]
+    else:
+        cmd = ["hyprctl", "dispatch"] + legacy_args
+    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if res.returncode != 0:
+        err_msg = res.stderr.strip() or res.stdout.strip()
+        log(f"Dispatch error ({res.returncode}) running {cmd}: {err_msg}")
+    return res.stdout.strip()
+
 def get_clients():
     try:
         return json.loads(run_cmd(["hyprctl", "clients", "-j"]))
@@ -53,16 +75,16 @@ def resize_multiple_windows(resize_targets):
         
     for ws, items in by_ws.items():
         log(f"Switching to workspace {ws} for resizing...")
-        run_cmd(["hyprctl", "dispatch", "workspace", str(ws)])
+        dispatch_cmd(f'hl.dsp.focus({{ workspace = "{ws}" }})', ["workspace", str(ws)])
         for addr, width_val in items:
             log(f"Focusing window {addr} and resizing column to {width_val}...")
-            run_cmd(["hyprctl", "dispatch", "focuswindow", f"address:{addr}"])
+            dispatch_cmd(f'hl.dsp.focus({{ window = "address:{addr}" }})', ["focuswindow", f"address:{addr}"])
             time.sleep(0.15)
-            run_cmd(["hyprctl", "dispatch", "layoutmsg", f"colresize {width_val}"])
+            dispatch_cmd(f'hl.dsp.layout("colresize {width_val}")', ["layoutmsg", f"colresize {width_val}"])
             time.sleep(0.15)
             
     log(f"Switching back to original workspace {orig_ws}...")
-    run_cmd(["hyprctl", "dispatch", "workspace", str(orig_ws)])
+    dispatch_cmd(f'hl.dsp.focus({{ workspace = "{orig_ws}" }})', ["workspace", str(orig_ws)])
 
 def check_internet():
     for host in ["1.1.1.1", "8.8.8.8"]:
@@ -100,15 +122,11 @@ def main():
         primary_monitor = external[0] if external else "eDP-1"
     log(f"Primary monitor identified as: {primary_monitor}")
 
-    # Ensure workspaces 1, 9, and 10 are on the primary monitor
-    log(f"Moving workspaces 1, 9, 10 to monitor {primary_monitor}...")
-    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"1 {primary_monitor}"])
-    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"9 {primary_monitor}"])
-    run_cmd(["hyprctl", "dispatch", "moveworkspacetomonitor", f"10 {primary_monitor}"])
-
     # Focus the primary monitor and workspace 1 before launching apps
-    run_cmd(["hyprctl", "dispatch", "focusmonitor", primary_monitor])
-    run_cmd(["hyprctl", "dispatch", "workspace", "1"])
+    log(f"Focusing monitor {primary_monitor} and workspace 1...")
+    dispatch_cmd(f'hl.dsp.focus({{ monitor = "{primary_monitor}" }})', ["focusmonitor", primary_monitor])
+    dispatch_cmd(f'hl.dsp.focus({{ workspace = "1" }})', ["workspace", "1"])
+    dispatch_cmd(f'hl.dsp.workspace.move({{ workspace = "1", monitor = "{primary_monitor}" }})', ["moveworkspacetomonitor", f"1 {primary_monitor}"])
 
     # 1. Start Firefox main process with landing page on Workspace 1
     log("Launching landing page on Workspace 1...")
@@ -219,8 +237,10 @@ def main():
                     current_ws = c.get("workspace", {}).get("id")
                     if current_ws != ws:
                         log(f"Found target '{tid}' on workspace {current_ws}. Moving silent to workspace {ws}...")
-                        run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{addr}"])
+                        dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{addr}" }})', ["movetoworkspacesilent", f"{ws},address:{addr}"])
                         time.sleep(0.1)
+                        # Ensure workspace is located on primary monitor now that it exists
+                        dispatch_cmd(f'hl.dsp.workspace.move({{ workspace = "{ws}", monitor = "{primary_monitor}" }})', ["moveworkspacetomonitor", f"{ws} {primary_monitor}"])
                     else:
                         log(f"Target '{tid}' already on workspace {ws}.")
                     moved_targets.add(tid)
@@ -244,7 +264,8 @@ def main():
                         target_obj = next(t for t in targets if t["id"] == tid)
                         c = next((client for client in current_clients if target_obj["match"](client)), None)
                         if c:
-                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{c['address']}"])
+                            c_addr = c["address"]
+                            dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{c_addr}" }})', ["movetoworkspacesilent", f"{ws},address:{c_addr}"])
                             time.sleep(0.1)
 
                     pending_resizes = []
@@ -281,7 +302,8 @@ def main():
                         target_obj = next(t for t in targets if t["id"] == tid)
                         c = next((client for client in current_clients if target_obj["match"](client)), None)
                         if c:
-                            run_cmd(["hyprctl", "dispatch", "movetoworkspacesilent", f"{ws},address:{c['address']}"])
+                            c_addr = c["address"]
+                            dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{c_addr}" }})', ["movetoworkspacesilent", f"{ws},address:{c_addr}"])
                             time.sleep(0.1)
                             if "resize" in target_obj:
                                 pending_resizes.append((c["address"], ws, target_obj["resize"]))
@@ -296,7 +318,7 @@ def main():
         if landing_window:
             addr = landing_window["address"]
             log(f"Closing startup landing page window ({addr})...")
-            run_cmd(["hyprctl", "dispatch", "closewindow", f"address:{addr}"])
+            dispatch_cmd(f'hl.dsp.window.close({{ window = "address:{addr}" }})', ["closewindow", f"address:{addr}"])
             break
         time.sleep(0.5)
     else:

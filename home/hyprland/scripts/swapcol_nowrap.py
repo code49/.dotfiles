@@ -7,6 +7,16 @@ def run_cmd(cmd):
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return result.stdout.strip()
 
+IS_LUA = None
+
+def is_lua_mode():
+    global IS_LUA
+    if IS_LUA is not None:
+        return IS_LUA
+    res = subprocess.run(["hyprctl", "dispatch", "hl.dsp.no_op()"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    IS_LUA = (res.returncode == 0)
+    return IS_LUA
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: swapcol_nowrap.py <l|r>")
@@ -65,7 +75,10 @@ def main():
         return
 
     # 4. Dispatch native swapcol
-    run_cmd(["hyprctl", "dispatch", "layoutmsg", f"swapcol {direction}"])
+    if is_lua_mode():
+        run_cmd(["hyprctl", "dispatch", f'hl.dsp.layout("swapcol {direction}")'])
+    else:
+        run_cmd(["hyprctl", "dispatch", "layoutmsg", f"swapcol {direction}"])
 
 if __name__ == "__main__":
     main()
