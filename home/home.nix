@@ -13,6 +13,7 @@
     ./btop/btop.nix
     ./vscode/vscode.nix
     ./fastfetch/fastfetch.nix
+    ./firefox/firefox.nix
   ];
 
   home.username = userSettings.username;
