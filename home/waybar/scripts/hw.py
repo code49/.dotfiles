@@ -27,7 +27,7 @@ def get_cpu_percent(interval=0.2):
     except Exception:
         return 0
 
-def get_mem_percent():
+def get_mem_info():
     try:
         with open('/proc/meminfo', 'r') as f:
             meminfo = {}
@@ -43,9 +43,15 @@ def get_mem_percent():
             cached = meminfo.get('Cached', 0)
             available = free + buffers + cached
         used = total - available
-        return round((used / total) * 100)
+        percent = round((used / total) * 100)
+        used_gib = used / (1024 * 1024)
+        total_gib = total / (1024 * 1024)
+        return percent, used_gib, total_gib
     except Exception:
-        return 0
+        return 0, 0.0, 0.0
+
+def get_mem_percent():
+    return get_mem_info()[0]
 
 def get_cpu_temp():
     # 1. Try hwmon (Ryzen/Intel Core sensors)
@@ -97,21 +103,29 @@ def get_gpu_temp():
             pass
     return None
 
+def format_size(kb):
+    if kb >= 1024 * 1024:
+        return f"{kb / (1024 * 1024):.1f}g"
+    elif kb >= 1024:
+        return f"{kb / 1024:.0f}m"
+    else:
+        return f"{kb}k"
+
 def get_top_processes(sort_by="pcpu", count=5):
     try:
-        cmd = ["ps", "-eo", "pcpu,pmem,comm", f"--sort=-{sort_by}", "--no-headers"]
+        cmd = ["ps", "-eo", "pcpu,pmem,rss,comm", f"--sort=-{sort_by}", "--no-headers"]
         res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         lines = res.stdout.strip().split('\n')
         
         processes = []
         for line in lines[:count]:
-            parts = line.strip().split(None, 2)
-            if len(parts) >= 3:
-                pcpu, pmem, comm = parts[0], parts[1], parts[2]
+            parts = line.strip().split(None, 3)
+            if len(parts) >= 4:
+                pcpu, pmem, rss, comm = parts[0], parts[1], parts[2], parts[3]
                 comm = os.path.basename(comm).lstrip('.')
                 if len(comm) > 18:
                     comm = comm[:15] + "..."
-                processes.append((pcpu, pmem, comm))
+                processes.append((pcpu, pmem, int(rss) if rss.isdigit() else 0, comm))
         return processes
     except Exception:
         return []
@@ -135,7 +149,7 @@ def get_cpu_text(cpu, temp):
         return f"{cpu_label} {cpu_val} {temp_val}"
     return f"{cpu_label} {cpu_val}"
 
-def get_mem_text(mem):
+def get_mem_text(mem, mem_used=None):
     mem_label = "<span color='#caffbf'></span>"
     if mem >= 85:
         mem_val = f"<span color='#ffadad'>{mem}%</span>"
@@ -143,6 +157,15 @@ def get_mem_text(mem):
         mem_val = f"<span color='#fdffb6'>{mem}%</span>"
     else:
         mem_val = f"<span>{mem}%</span>"
+        
+    if mem_used is not None:
+        if mem >= 85:
+            used_val = f"<span color='#ffadad'>({mem_used:.1f}g)</span>"
+        elif mem >= 70:
+            used_val = f"<span color='#fdffb6'>({mem_used:.1f}g)</span>"
+        else:
+            used_val = f"<span color='#9bf6ff'>({mem_used:.1f}g)</span>"
+        return f"{mem_label} {mem_val} {used_val}"
     return f"{mem_label} {mem_val}"
 
 def get_gpu_text(gpu, temp):
@@ -168,15 +191,15 @@ def get_gpu_text(gpu, temp):
 
 def main():
     cpu = get_cpu_percent()
-    mem = get_mem_percent()
+    mem, mem_used, mem_total = get_mem_info()
     cpu_temp = get_cpu_temp()
     gpu = get_gpu_usage()
     gpu_temp = get_gpu_temp()
     
     top_cpu = get_top_processes("pcpu")
-    top_mem = get_top_processes("pmem")
+    top_mem = get_top_processes("rss")
     
-    text_parts = [get_cpu_text(cpu, cpu_temp), get_mem_text(mem)]
+    text_parts = [get_cpu_text(cpu, cpu_temp), get_mem_text(mem, mem_used)]
     gpu_text = get_gpu_text(gpu, gpu_temp)
     if gpu_text:
         text_parts.append(gpu_text)
@@ -190,7 +213,7 @@ def main():
     
     cpu_temp_str = f" ({cpu_temp}°c)" if cpu_temp is not None else ""
     lines.append(f"<span color='#bdb2ff'> cpu:</span>   {cpu:2d}%{cpu_temp_str}")
-    lines.append(f"<span color='#caffbf'> ram:</span>   {mem:2d}%")
+    lines.append(f"<span color='#caffbf'> ram:</span>   {mem:2d}% ({mem_used:.1f} / {mem_total:.1f}g)")
     
     if gpu is not None:
         gpu_temp_str = f" ({gpu_temp}°c)" if gpu_temp is not None else ""
@@ -199,16 +222,16 @@ def main():
     lines.append("")
     lines.append("<b>top cpu processes</b>")
     lines.append("─" * 35)
-    lines.append(f"{'process':<18} {'cpu':>6} {'mem':>6}")
-    for pcpu, pmem, comm in top_cpu:
-        lines.append(f"{comm.lower():<18} {pcpu:>5}% {pmem:>5}%")
+    lines.append(f"{'process':<18} {'cpu':>6} {'mem':>8}")
+    for pcpu, pmem, rss, comm in top_cpu:
+        lines.append(f"{comm.lower():<18} {pcpu:>5}% {format_size(rss):>8}")
         
     lines.append("")
     lines.append("<b>top memory processes</b>")
     lines.append("─" * 35)
-    lines.append(f"{'process':<18} {'cpu':>6} {'mem':>6}")
-    for pcpu, pmem, comm in top_mem:
-        lines.append(f"{comm.lower():<18} {pcpu:>5}% {pmem:>5}%")
+    lines.append(f"{'process':<18} {'cpu':>6} {'mem':>8}")
+    for pcpu, pmem, rss, comm in top_mem:
+        lines.append(f"{comm.lower():<18} {pcpu:>5}% {format_size(rss):>8}")
         
     tooltip = "<tt>" + "\n".join(lines) + "</tt>"
     
