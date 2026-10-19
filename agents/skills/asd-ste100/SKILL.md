@@ -77,6 +77,18 @@ Use only four verb forms:
   - ❌ *Incorrect:* It is important to back up the database.
   - ✅ *Correct:* Back up the database before the migration.
 
+### 1.8 Punctuation and Spacing Integrity (No Word-Count Compression)
+- **Always separate sentences with a space:** Place a standard space after every period, comma, colon, and semicolon.
+- **Never omit spaces to satisfy word count limits:** Do not concatenate words or merge sentences across punctuation.
+  - ❌ *Incorrect:* `...tables of size N.Successive groups differ...`
+  - ✅ *Correct:* `...tables of size N. Successive groups differ...`
+  - ❌ *Incorrect:* `...shift-and-add logic.This backend uses...`
+  - ✅ *Correct:* `...shift-and-add logic. This backend uses...`
+- **Split thoughts instead of compressing text:** If a sentence exceeds the word limit, split it into two short sentences.
+- **Separate bullet titles from descriptions:** Always bold bullet titles and separate them with a colon and a space, or an indented new line. Never run the title directly into the body text.
+  - ❌ *Incorrect:* `• On-the-Fly Twiddle GenerationThe architecture stores...`
+  - ✅ *Correct:* `• **On-the-Fly Twiddle Generation:** The architecture stores...`
+
 ---
 
 ## 📖 2. Vocabulary & Plain Language
@@ -127,29 +139,38 @@ Use vertical lists for three or more items, conditions, or steps:
 - **Numbered lists (`1.`, `2.`):** For sequential instructions where order matters.
 - **Bullet lists (`-`):** For collections of items, options, or independent conditions.
 
-#### Whitespace and Indentation Rules for Lists:
-- **Surround list blocks with blank lines:** Always place an empty line before and after a list block, and between preceding headings and introductory text.
-- **Separate multi-line list items:** If list items contain explanations, multiple sentences, or code, insert a blank line between list items (loose list). Do not jam items together.
-- **Indent continuation text:** Indent explanatory text, sub-points, or code blocks under a numbered or bullet item by 3 or 4 spaces (or 1 tab) to nest cleanly under the item header.
+#### Mandatory Whitespace and Indentation Rules for Lists:
+- **Always insert an empty line between list items:** Every numbered or bulleted item must have a blank line before the next item (`\n\n` between items). Never place consecutive items on adjacent lines without an empty line between them.
+- **Surround list blocks with blank lines:** Always place an empty line before and after a list block, and between preceding headings and text.
+- **Always indent continuation text:** Indent explanatory text, sub-points, or code blocks under a numbered or bullet item by 3 or 4 spaces (or 1 tab) so they nest cleanly under the item header. Never start continuation text at column 0.
+- **Bold list item titles:** Start items with a bold title followed by a colon and space: `1. **Title:** Text...`.
 
-**Bad (jammed lines, no indentation, no blank lines between items):**
+**Bad (missing vertical whitespace between items, unindented continuation text):**
 ```markdown
-1. Move core settings under settings.config:
-In Lua mode, Home Manager maps settings.config directly to hl.config({ ... }).
-Move your general, decoration, animations, input, scrolling, and misc sections into settings.config.
-2. Enable native swap column wrapping:
-Hyprland 0.56.2 supports scrolling.wrap_swapcol = false; natively.
+1. Maintain standard punctuation spacing:
+Always put a standard space after periods, colons, and commas.
+Never merge words across punctuation marks (e.g. size N.Successive).
+2. No whitespace removal for word-count limits:
+Never delete spaces to satisfy sentence length limits.
+If an explanation exceeds the limit, split the thought into two short sentences.
+3. Separate bullet titles from descriptions:
+Always bold the title and append a colon and a space (e.g. • **Title:** Text).
+Never run the title directly into the body text (e.g. • TitleText).
 ```
 
-**Good (blank line between items, continuation text indented under the item):**
+**Good (blank line between each item, bold titles with colons, continuation text indented):**
 ```markdown
-1. **Move core settings under `settings.config`:**
-   In Lua mode, Home Manager maps `settings.config` directly to `hl.config({ ... })`.
-   Move your general, decoration, animations, input, scrolling, and misc sections into `settings.config`.
+1. **Maintain standard punctuation spacing:**
+   Always put a standard space after periods, colons, and commas.
+   Never merge words across punctuation marks (e.g. `size N.Successive`).
 
-2. **Enable native swap column wrapping:**
-   Hyprland 0.56.2 supports `scrolling.wrap_swapcol = false;` natively.
-   You can delete `swapcol_nowrap.py` and use direct `layoutmsg` calls.
+2. **No whitespace removal for word-count limits:**
+   Never delete spaces to satisfy sentence length limits.
+   If an explanation exceeds the limit, split the thought into two short sentences.
+
+3. **Separate bullet titles from descriptions:**
+   Always bold the title and append a colon and a space (e.g. `• **Title:** Text`).
+   Never run the title directly into the body text (e.g. `• TitleText`).
 ```
 
 ### 3.3 Notes, Cautions, and Warnings
@@ -162,7 +183,7 @@ Follow standard STE severity indicators:
 
 ## 🔍 4. Self-Audit Checklist (The 80% Review)
 
-Before sending responses or writing documentation, check against these 6 questions:
+Before sending responses or writing documentation, check against these 7 questions:
 
 1. **Sentence length:** Is any procedural sentence over 20 words? Is any descriptive sentence over 25 words?
 2. **Action mood:** Are instructions written in the imperative mood without polite filler?
@@ -170,6 +191,7 @@ Before sending responses or writing documentation, check against these 6 questio
 4. **Noun chains:** Are there any noun clusters with more than 3 nouns?
 5. **Word choices:** Did you replace *utilize*, *ensure*, *initiate*, and *prior to*?
 6. **One idea:** Does each sentence express only one action or fact?
+7. **Punctuation & spacing:** Did you include spaces after every period, comma, and colon? Are bullet titles separated from body text?
 
 ---
 
