@@ -8,7 +8,7 @@
     configType = "lua";
 
     extraConfig = ''
-      pcall(require, "monitors")
+      pcall(dofile, os.getenv("HOME") .. "/.config/hypr/monitors.lua")
     '';
 
     settings = {
@@ -279,14 +279,14 @@
         {
           _args = [
             "switch:off:Lid Switch"
-            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("hyprctl keyword monitor \"eDP-1,preferred,auto,1.67\"")'')
+            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("python3 ~/.dotfiles/home/hyprland/scripts/monitor_profile_manager.py auto")'')
             { locked = true; }
           ];
         }
         {
           _args = [
             "switch:on:Lid Switch"
-            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("hyprctl keyword monitor \"eDP-1,disable\"")'')
+            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("hyprctl eval 'hl.monitor({ output = \"eDP-1\", disabled = true })'")'')
             { locked = true; }
           ];
         }

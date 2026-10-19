@@ -5,7 +5,7 @@ set -eu
 # Let the compositor and DRM display stack finish resuming before reloading state.
 sleep 2.5
 
-hyprctl dispatch 'hl.dsp.dpms("on")' 2>/dev/null || hyprctl dispatch dpms on || true
+hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = "on" }))' 2>/dev/null || true
 
 # Restart desktop portal service to recover from destroyed Wayland object references post-suspend
 systemctl --user restart xdg-desktop-portal.service || true

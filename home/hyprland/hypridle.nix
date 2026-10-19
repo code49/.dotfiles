@@ -5,7 +5,7 @@
       general = {
         lock_cmd = "pidof hyprlock || hyprlock";
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
+        after_sleep_cmd = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"on\" }))'";
       };
 
       listener = [
@@ -14,9 +14,9 @@
           on-timeout = "loginctl lock-session";
         }
         {
-          timout = 3630;
-          on-timeout = "hyprctl dispatch dpms off"; # screen off
-          on-resume = "hyprctl dispatch dpms on"; # screen on
+          timeout = 3630;
+          on-timeout = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"off\" }))'"; # screen off
+          on-resume = "hyprctl eval 'hl.dispatch(hl.dsp.dpms({ action = \"on\" }))'"; # screen on
         }
         {
           timeout = 4200;

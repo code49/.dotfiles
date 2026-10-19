@@ -1,7 +1,7 @@
 {
   "hostname": "dchan-laptop",
   "hash": "839b575a672e",
-  "updated_at": "2026-10-02 16:52:26",
+  "updated_at": "2026-10-19 12:32:36",
   "monitors": [
     {
       "name": "eDP-1",
@@ -11,7 +11,7 @@
       "description": "BOE NE135A1M-NY1",
       "width": 2880,
       "height": 1920,
-      "refreshRate": 60.001
+      "refreshRate": 120.0
     },
     {
       "name": "DP-4",
@@ -31,7 +31,7 @@
       "description": "NZXT (PNP same EDID)_ NZXTCANVAS27Q MN27Q22131370",
       "width": 2560,
       "height": 1440,
-      "refreshRate": 143.855
+      "refreshRate": 59.951
     }
   ]
 }

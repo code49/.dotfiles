@@ -41,6 +41,23 @@ def dispatch_cmd(lua_expr, legacy_args):
         log(f"Dispatch error ({res.returncode}) running {cmd}: {err_msg}")
     return res.stdout.strip()
 
+def launch_detached(cmd):
+    """Launch process detached via double fork so bwrap --die-with-parent survives script exit."""
+    pid = os.fork()
+    if pid == 0:
+        os.setsid()
+        pid2 = os.fork()
+        if pid2 == 0:
+            devnull = os.open(os.devnull, os.O_RDWR)
+            os.dup2(devnull, 0)
+            os.dup2(devnull, 1)
+            os.dup2(devnull, 2)
+            os.close(devnull)
+            os.execvp(cmd[0], cmd)
+        else:
+            os._exit(0)
+    os.waitpid(pid, 0)
+
 def get_clients():
     try:
         return json.loads(run_cmd(["hyprctl", "clients", "-j"]))
@@ -148,7 +165,7 @@ def main():
     time.sleep(0.2)
 
     log("Launching Discord...")
-    subprocess.Popen(["discord"])
+    launch_detached(["discord"])
     time.sleep(0.2)
 
     # 3. Workspace 9 apps (left-to-right: Calendar -> Notion -> Spotify)
@@ -162,7 +179,7 @@ def main():
     time.sleep(0.2)
 
     log("Launching Spotify...")
-    subprocess.Popen(["spotify"])
+    launch_detached(["spotify"])
     time.sleep(0.2)
 
     # Lambda-based target definitions for precise matching
@@ -187,7 +204,11 @@ def main():
         },
         {
             "id": "discord",
-            "match": lambda c: "discord" in c.get("class", "").lower() or "discord" in c.get("initialClass", "").lower() or "discord" in c.get("title", "").lower(),
+            "match": lambda c: (
+                ("discord" in c.get("class", "").lower() or "discord" in c.get("initialClass", "").lower() or "discord" in c.get("title", "").lower())
+                and "updater" not in c.get("title", "").lower()
+                and "updater" not in c.get("initialTitle", "").lower()
+            ),
             "workspace": 10,
             "resize": 0.5
         },
