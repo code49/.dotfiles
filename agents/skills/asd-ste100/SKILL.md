@@ -139,41 +139,47 @@ Use vertical lists for three or more items, conditions, or steps:
 - **Numbered lists (`1.`, `2.`):** For sequential instructions where order matters.
 - **Bullet lists (`-`):** For collections of items, options, or independent conditions.
 
-#### Mandatory Whitespace and Indentation Rules for Lists:
-- **Always insert an empty line between list items:** Every numbered or bulleted item must have a blank line before the next item (`\n\n` between items). Never place consecutive items on adjacent lines without an empty line between them.
-- **Surround list blocks with blank lines:** Always place an empty line before and after a list block, and between preceding headings and text.
-- **Always indent continuation text:** Indent explanatory text, sub-points, or code blocks under a numbered or bullet item by 3 or 4 spaces (or 1 tab) so they nest cleanly under the item header. Never start continuation text at column 0.
-- **Bold list item titles:** Start items with a bold title followed by a colon and space: `1. **Title:** Text...`.
+#### Mandatory Whitespace and Indentation Rules (Terminal TUI Guardrail):
+- **Why Glamour collapses lists:** The `agy` CLI renders interactive markdown with Charmbracelet Glamour. Glamour hard-codes `margin: 0` on markdown list items (`- `, `* `, `1. `), strips blank lines between them, and collapses inner paragraphs (`title:Place`).
+- **For sub-blocks, avoid Markdown list prefixes:** For multi-sentence explanations with indented sub-blocks, do not start lines with `- ` or `1. `. Format each item as a standalone bold header followed by a blank line and a 4-space indented paragraph.
+- **For simple 1-line lists:** Standard Markdown lists (`- `) are permitted only when each item is a single, concise sentence.
 
-**Bad (missing vertical whitespace between items, unindented continuation text):**
+**Bad (Markdown list syntax that Glamour collapses into `title:Place`):**
 ```markdown
-1. Maintain standard punctuation spacing:
-Always put a standard space after periods, colons, and commas.
-Never merge words across punctuation marks (e.g. size N.Successive).
-2. No whitespace removal for word-count limits:
-Never delete spaces to satisfy sentence length limits.
-If an explanation exceeds the limit, split the thought into two short sentences.
-3. Separate bullet titles from descriptions:
-Always bold the title and append a colon and a space (e.g. • **Title:** Text).
-Never run the title directly into the body text (e.g. • TitleText).
+- **Do not rely on Markdown renderers for whitespace:**
+
+    Plain text editors do not synthesize list margins or padding.
+    Models must explicitly insert empty lines between all headings, paragraphs, and list items.
+
+- **Use hanging indentation for monospaced layouts:**
+
+    When a list item contains multiple sentences or code, indent continuation lines by 4 spaces.
 ```
 
-**Good (blank line between each item, bold titles with colons, continuation text indented):**
+**Good (Standalone paragraphs that Glamour renders with full vertical whitespace and indentation):**
 ```markdown
-1. **Maintain standard punctuation spacing:**
-   Always put a standard space after periods, colons, and commas.
-   Never merge words across punctuation marks (e.g. `size N.Successive`).
+**Do not rely on Markdown renderers for whitespace:**
 
-2. **No whitespace removal for word-count limits:**
-   Never delete spaces to satisfy sentence length limits.
-   If an explanation exceeds the limit, split the thought into two short sentences.
+    Plain text editors do not synthesize list margins or padding.
+    Models must explicitly insert empty lines between all headings, paragraphs, and list items.
 
-3. **Separate bullet titles from descriptions:**
-   Always bold the title and append a colon and a space (e.g. `• **Title:** Text`).
-   Never run the title directly into the body text (e.g. `• TitleText`).
+**Use hanging indentation for monospaced layouts:**
+
+    When a list item contains multiple sentences or code, indent continuation lines by 4 spaces.
+    This indentation creates a clean visual margin in raw terminal text.
 ```
 
-### 3.3 Notes, Cautions, and Warnings
+
+
+### 3.3 Dual Plaintext & Markdown Compatibility
+The user frequently views output in pure text editors (e.g. Neovim, terminal pagers, monospace windows) without rich Markdown rendering.
+
+Follow these rules so text is pleasant and legible in both raw text and rendered Markdown:
+- **Do not rely on a renderer for whitespace:** Plain text editors do not synthesize margins or list padding. Always insert blank lines between headings, paragraphs, and list items.
+- **Use hanging indentation:** When a list item has multiple lines or code blocks, indent continuation lines by 3 or 4 spaces. This creates a clean visual margin in monospaced text.
+- **Use standard ASCII markers:** Use `- ` or `1. ` for lists and `---` for horizontal rules. Do not use variable-width Unicode glyphs like `•` or custom bullet characters.
+
+### 3.4 Notes, Cautions, and Warnings
 Follow standard STE severity indicators:
 - **WARNING:** Personal injury or fatal risk.
 - **CAUTION:** Equipment damage, data loss, or corruption risk.
