@@ -230,7 +230,7 @@
         }
         {
           match = { class = "^(kitty)$"; };
-          opacity = "1.0 0.6";
+          opacity = "1.0 1.0";
         }
         {
           match = { class = "^(code-oss)$"; };

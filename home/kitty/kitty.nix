@@ -29,8 +29,8 @@
       color0 = "#" + theme.base00;
       color8 = "#" + theme.base04;
 
-      color1 = "#" + theme.base0Dalt2;
-      color9 = "#" + theme.base0Dalt4;
+      color1 = "#" + theme.base02;
+      color9 = "#" + theme.base02;
 
       color2 = "#" + theme.base0E;
       color10 = "#" + theme.base0Ealt;
