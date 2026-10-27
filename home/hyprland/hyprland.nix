@@ -263,6 +263,14 @@
         {
           match = {
             class = "^(firefox)$";
+            title = "(.*)(dashboard \\| david le chan)(.*)";
+          };
+          fullscreen_state = "0 2";
+          opacity = "0.8 0.8";
+        }
+        {
+          match = {
+            class = "^(firefox)$";
             title = "(.*)(Tasks and Schedule)(.*)";
           };
           opacity = "0.7 0.7";
