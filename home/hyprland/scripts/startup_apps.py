@@ -210,7 +210,7 @@ def main():
                 and "updater" not in c.get("initialTitle", "").lower()
             ),
             "workspace": 10,
-            "resize": 0.5
+            "resize": 1.0
         },
         {
             "id": "calendar",
@@ -236,6 +236,7 @@ def main():
         9: ["calendar", "notion", "spotify"]
     }
 
+    target_addresses = {}
     moved_targets = set()
     resized_workspaces = set()
 
@@ -251,19 +252,20 @@ def main():
                     continue
 
                 target_obj = next(t for t in targets if t["id"] == tid)
-                c = next((client for client in clients if target_obj["match"](client)), None)
+                c = next((client for client in clients if target_obj["match"](client) and client.get("address") not in target_addresses.values()), None)
 
                 if c:
                     addr = c["address"]
+                    target_addresses[tid] = addr
                     current_ws = c.get("workspace", {}).get("id")
                     if current_ws != ws:
-                        log(f"Found target '{tid}' on workspace {current_ws}. Moving silent to workspace {ws}...")
+                        log(f"Found target '{tid}' ({addr}) on workspace {current_ws}. Moving silent to workspace {ws}...")
                         dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{addr}" }})', ["movetoworkspacesilent", f"{ws},address:{addr}"])
                         time.sleep(0.1)
                         # Ensure workspace is located on primary monitor now that it exists
                         dispatch_cmd(f'hl.dsp.workspace.move({{ workspace = "{ws}", monitor = "{primary_monitor}" }})', ["moveworkspacetomonitor", f"{ws} {primary_monitor}"])
                     else:
-                        log(f"Target '{tid}' already on workspace {ws}.")
+                        log(f"Target '{tid}' ({addr}) already on workspace {ws}.")
                     moved_targets.add(tid)
                 else:
                     # Target not ready yet. Pause processing subsequent targets for this workspace
@@ -276,27 +278,21 @@ def main():
             if ws not in resized_workspaces:
                 if all(tid in moved_targets for tid in t_ids):
                     log(f"All targets for Workspace {ws} moved. Enforcing column order and applying resizes...")
-                    
-                    # Refresh clients
-                    current_clients = get_clients()
 
                     # Re-dispatch in strict left-to-right sequence to guarantee column ordering
                     for tid in t_ids:
-                        target_obj = next(t for t in targets if t["id"] == tid)
-                        c = next((client for client in current_clients if target_obj["match"](client)), None)
-                        if c:
-                            c_addr = c["address"]
+                        c_addr = target_addresses.get(tid)
+                        if c_addr:
                             dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{c_addr}" }})', ["movetoworkspacesilent", f"{ws},address:{c_addr}"])
                             time.sleep(0.1)
 
                     pending_resizes = []
-                    current_clients = get_clients()
                     for tid in t_ids:
                         target_obj = next(t for t in targets if t["id"] == tid)
                         if "resize" in target_obj:
-                            c = next((client for client in current_clients if target_obj["match"](client)), None)
-                            if c:
-                                pending_resizes.append((c["address"], ws, target_obj["resize"]))
+                            c_addr = target_addresses.get(tid)
+                            if c_addr:
+                                pending_resizes.append((c_addr, ws, target_obj["resize"]))
 
                     if pending_resizes:
                         time.sleep(0.2)
@@ -314,20 +310,18 @@ def main():
         time.sleep(0.5)
     else:
         log("Polling loop timed out. Performing fallback order & resize for any moved targets...")
-        current_clients = get_clients()
         for ws, t_ids in ws_targets.items():
             if ws not in resized_workspaces:
                 pending_resizes = []
                 for tid in t_ids:
                     if tid in moved_targets:
                         target_obj = next(t for t in targets if t["id"] == tid)
-                        c = next((client for client in current_clients if target_obj["match"](client)), None)
-                        if c:
-                            c_addr = c["address"]
+                        c_addr = target_addresses.get(tid)
+                        if c_addr:
                             dispatch_cmd(f'hl.dsp.window.move({{ workspace = "{ws}", follow = false, window = "address:{c_addr}" }})', ["movetoworkspacesilent", f"{ws},address:{c_addr}"])
                             time.sleep(0.1)
                             if "resize" in target_obj:
-                                pending_resizes.append((c["address"], ws, target_obj["resize"]))
+                                pending_resizes.append((c_addr, ws, target_obj["resize"]))
                 if pending_resizes:
                     resize_multiple_windows(pending_resizes)
 

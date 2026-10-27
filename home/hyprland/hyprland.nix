@@ -305,8 +305,7 @@
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + F3"'') (lib.generators.mkLuaInline ''hl.dsp.layout("expel")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + F3"'') (lib.generators.mkLuaInline ''hl.dsp.layout("consume")'') ]; }
 
-        # lock/suspend/hibernate
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + ALT + H"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl hibernate")'') ]; }
+        # lock/suspend
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + S"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl suspend")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + L"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("swaylock -f")'') ]; }
 
