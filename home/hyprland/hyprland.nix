@@ -9,6 +9,27 @@
 
     extraConfig = ''
       pcall(dofile, os.getenv("HOME") .. "/.config/hypr/monitors.lua")
+
+      local function handleDashboardWindow(window)
+        if not window or window.class ~= "firefox" then return end
+        local title = window.title or ""
+        if title:find("dashboard | david le chan", 1, true) then
+          if window.fullscreen_client ~= 2 then
+            hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "set", window = window }))
+          end
+        else
+          if window.fullscreen_client == 2 and window.fullscreen == 0 then
+            hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 0, action = "set", window = window }))
+          end
+        end
+      end
+
+      hl.on("window.title", handleDashboardWindow)
+      hl.on("window.open", handleDashboardWindow)
+
+      for _, w in ipairs(hl.get_windows()) do
+        handleDashboardWindow(w)
+      end
     '';
 
     settings = {
@@ -265,7 +286,6 @@
             class = "^(firefox)$";
             title = "(.*)(dashboard \\| david le chan)(.*)";
           };
-          fullscreen_state = "0 2";
           opacity = "0.8 0.8";
         }
         {
