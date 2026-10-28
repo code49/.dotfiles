@@ -103,13 +103,22 @@ def resize_multiple_windows(resize_targets):
     log(f"Switching back to original workspace {orig_ws}...")
     dispatch_cmd(f'hl.dsp.focus({{ workspace = "{orig_ws}" }})', ["workspace", str(orig_ws)])
 
-def check_internet():
-    for host in ["1.1.1.1", "8.8.8.8"]:
-        try:
-            socket.create_connection((host, 53), timeout=2.0)
-            return True
-        except OSError:
-            pass
+def check_internet(timeout=30.0, retry_interval=1.0):
+    start_time = time.time()
+    notified = False
+    while time.time() - start_time < timeout:
+        for host in ["1.1.1.1", "8.8.8.8"]:
+            try:
+                socket.create_connection((host, 53), timeout=1.0)
+                if notified:
+                    log("Internet connection established.")
+                return True
+            except OSError:
+                pass
+        if not notified and (time.time() - start_time) >= 2.0:
+            log("Waiting for network connection...")
+            notified = True
+        time.sleep(retry_interval)
     return False
 
 def main():
@@ -122,8 +131,8 @@ def main():
     log("Starting startup_apps.py script...")
 
     # Check internet connectivity before opening external sites
-    if not check_internet():
-        log("Auto-start failed: No internet connection.")
+    if not check_internet(timeout=30.0):
+        log("Auto-start failed: No internet connection after timeout.")
         try:
             subprocess.run(["notify-send", "-i", "firefox", "Firefox Shortcuts", "Auto-start failed: No internet connection."])
         except Exception as e:
