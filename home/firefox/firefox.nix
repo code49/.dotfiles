@@ -34,6 +34,9 @@
           "browser.startup.homepage" = "about:blank";
           "browser.tabs.warnOnClose" = true;
           "services.sync.engine.addons" = false;
+          "media.eme.enabled" = true;
+          "media.gmp-widevinecdm.enabled" = true;
+          "media.gmp-widevinecdm.visible" = true;
         };
       };
     };
