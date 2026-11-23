@@ -25,6 +25,17 @@
           "browser.tabs.warnOnClose" = true;
         };
       };
+
+      streamSilencer = {
+        id = 2;
+        name = "streamSilencer";
+        isDefault = false;
+        settings = {
+          "browser.startup.homepage" = "about:blank";
+          "browser.tabs.warnOnClose" = true;
+          "services.sync.engine.addons" = false;
+        };
+      };
     };
   };
 }

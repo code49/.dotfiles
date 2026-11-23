@@ -27,8 +27,23 @@
       hl.on("window.title", handleDashboardWindow)
       hl.on("window.open", handleDashboardWindow)
 
+      local function handleStreamSilencerWindow(window)
+        if not window then return end
+        local class = window.class or ""
+        local title = window.title or ""
+        if class == "streamSilencer" or title:find("streamSilencer", 1, true) then
+          if window.fullscreen_client ~= 2 then
+            hl.dispatch(hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "set", window = window }))
+          end
+        end
+      end
+
+      hl.on("window.title", handleStreamSilencerWindow)
+      hl.on("window.open", handleStreamSilencerWindow)
+
       for _, w in ipairs(hl.get_windows()) do
         handleDashboardWindow(w)
+        handleStreamSilencerWindow(w)
       end
     '';
 
@@ -279,7 +294,7 @@
             class = "^(firefox)$";
             title = "^(Dashboard — )(.*)$";
           };
-          opacity = "0.7 0.7";
+          opacity = "0.8 0.8";
         }
         {
           match = {
@@ -334,8 +349,11 @@
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + F3"'') (lib.generators.mkLuaInline ''hl.dsp.layout("consume")'') ]; }
 
         # lock/suspend
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + S"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl suspend")'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + ALT + S"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl suspend")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + L"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("swaylock -f")'') ]; }
+
+        # do not disturb toggle (mako mode + waybar refresh)
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + D"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("makoctl mode -t dnd && pkill -RTMIN+8 waybar")'') ]; }
 
         # moving focus
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + H"'') (lib.generators.mkLuaInline ''hl.dsp.focus({ direction = "left" })'') ]; }
