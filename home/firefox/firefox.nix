@@ -34,6 +34,7 @@
           "browser.startup.homepage" = "about:blank";
           "browser.tabs.warnOnClose" = true;
           "services.sync.engine.addons" = false;
+          "extensions.activeThemeID" = "firefox-alpenglow@mozilla.org";
           "media.eme.enabled" = true;
           "media.gmp-widevinecdm.enabled" = true;
           "media.gmp-widevinecdm.visible" = true;
