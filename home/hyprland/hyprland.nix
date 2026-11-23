@@ -226,7 +226,7 @@
       # Animations
       animation = [
         { leaf = "windows"; enabled = true; speed = 7; bezier = "default"; style = "slide"; }
-        { leaf = "border"; enabled = true; speed = 20; bezier = "borderChangeBezier"; }
+        { leaf = "border"; enabled = true; speed = 2; bezier = "borderChangeBezier"; }
         { leaf = "borderangle"; enabled = true; speed = 80; bezier = "default"; style = "loop"; }
         { leaf = "fade"; enabled = true; speed = 7; bezier = "default"; }
         { leaf = "workspaces"; enabled = true; speed = 6; bezier = "workspaceChangeBezier"; style = "fade"; }
