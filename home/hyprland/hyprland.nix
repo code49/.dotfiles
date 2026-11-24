@@ -336,7 +336,7 @@
 
         # desktop/windows management
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + SPACE"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd(menu)'') ]; }
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + M"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("nwg-displays")'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + D"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("nwg-displays")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + S"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("grim -l 2 -g \"$(slurp -d)\" - | wl-copy")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + W"'') (lib.generators.mkLuaInline ''hl.dsp.window.close()'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + F"'') (lib.generators.mkLuaInline ''hl.dsp.window.float({ action = "toggle" })'') ]; }
@@ -345,8 +345,12 @@
         # scrolling layout - native swapcol without wrapping
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + F1"'') (lib.generators.mkLuaInline ''hl.dsp.layout("swapcol l")'') ]; }
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + F2"'') (lib.generators.mkLuaInline ''hl.dsp.layout("swapcol r")'') ]; }
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + F3"'') (lib.generators.mkLuaInline ''hl.dsp.layout("expel")'') ]; }
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + F3"'') (lib.generators.mkLuaInline ''hl.dsp.layout("consume")'') ]; }
+
+        # workspace focus & window navigation in numerical order
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + F3"'') (lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "e-1" })'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + F4"'') (lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "e+1" })'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + F3"'') (lib.generators.mkLuaInline ''hl.dsp.window.move({ workspace = "e-1" })'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + F4"'') (lib.generators.mkLuaInline ''hl.dsp.window.move({ workspace = "e+1" })'') ]; }
 
         # lock/suspend
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + ALT + S"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl suspend")'') ]; }
@@ -363,7 +367,8 @@
 
         # scrolling layout navigation
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + N"'') (lib.generators.mkLuaInline ''hl.dsp.layout("move -col")'') ]; }
-        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + M"'') (lib.generators.mkLuaInline ''hl.dsp.layout("move +col")'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + COMMA"'') (lib.generators.mkLuaInline ''hl.dsp.layout("move -col")'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + PERIOD"'') (lib.generators.mkLuaInline ''hl.dsp.layout("move +col")'') ]; }
 
         # resizing active window
         { _args = [ (lib.generators.mkLuaInline ''mod .. " + E"'') (lib.generators.mkLuaInline ''hl.dsp.layout("colresize 0.5")'') ]; }
@@ -390,6 +395,12 @@
           { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + ${key}"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py ${ws}")'') ]; }
         ]
       ) (lib.range 1 10)))
+      # media workspace
+      ++ [
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + M"'') (lib.generators.mkLuaInline ''hl.dsp.focus({ workspace = "name:M" })'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + SHIFT + M"'') (lib.generators.mkLuaInline ''hl.dsp.window.move({ workspace = "name:M" })'') ]; }
+        { _args = [ (lib.generators.mkLuaInline ''mod .. " + CTRL + SHIFT + M"'') (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("python3 ~/.dotfiles/home/hyprland/scripts/move_workspace_windows.py name:M")'') ]; }
+      ]
       # media keybinds
       ++ [
         { _args = [ "XF86AudioRaiseVolume" (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("pamixer -i 5")'') { locked = true; repeating = true; } ]; }

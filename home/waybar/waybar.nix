@@ -34,20 +34,13 @@
         return-type = "json";
         tooltip = true;
       };
-      "wlr/workspaces" = {
+      "hyprland/workspaces" = {
         active-only = false;
         all-outputs = false;
-        disable-scroll = false;
-        on-scroll-up = "hyprctl dispatch workspace e-1";
-        on-scroll-down = "hyprctl dispatch workspace e+1";
         format = "{name}";
         on-click = "activate";
-        format-icons = {
-          urgent = "";
-          active = "";
-          default = "";
-          sort-by-number = true;
-        };
+        on-scroll-up = "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e-1\" })'";
+        on-scroll-down = "hyprctl dispatch 'hl.dsp.focus({ workspace = \"e+1\" })'";
       };
       "custom/weather" = {
         format = "{}°";
