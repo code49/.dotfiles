@@ -7,8 +7,8 @@
 
       # Style
       font = "JetBrainsMono Nerd Font 12";
-      width = 300;
-      height = 100;
+      width = 500;
+      height = 300;
       margin = "10";
       padding = "15";
       border-size = 2;
@@ -30,6 +30,9 @@
       background-color = "#" + theme.dark_background_primary + "80";
 
       max-history = 100;
+
+      # do-not-disturb: toggle with `makoctl mode -t dnd`
+      "mode=dnd" = { invisible = true; };
     };
     # onButtonLeft = "dismiss";
     # onButtonMiddle = "none";

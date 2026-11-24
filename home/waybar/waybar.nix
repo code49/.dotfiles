@@ -27,7 +27,7 @@
       ];
       modules-center = [ "custom/clock" ];
       modules-right =
-        [ "hyprland/workspaces" "tray" "battery" "pulseaudio" "backlight" ];
+        [ "hyprland/workspaces" "tray" "battery" "pulseaudio" "backlight" "custom/dnd" ];
       "custom/clock" = {
         exec = "~/.dotfiles/home/waybar/scripts/clock.py";
         interval = 1;
@@ -109,6 +109,20 @@
         format-alt = "{icon} {capacity}% ({time})";
         format-icons = [ "" "" "" "" "" ];
         format-time = "{H} h {M} m";
+      };
+
+      "custom/dnd" = {
+        exec = "${pkgs.writeShellScript "dnd-status" ''
+          if makoctl mode | grep -qx dnd; then
+            echo '{"text":"󰂛 ","class":"dnd","tooltip":false}'
+          else
+            echo '{"text":"󰂚 ","class":"off","tooltip":false}'
+          fi
+        ''}";
+        return-type = "json";
+        interval = 5;
+        signal = 8;
+        on-click = "makoctl mode -t dnd && pkill -RTMIN+8 waybar";
       };
 
       backlight = {
@@ -249,9 +263,22 @@
       }
 
       #backlight {
-        border-radius: 0 24px 24px 0;
-        margin: 5px 4px 5px 0px;
+        border-radius: 0;
+        margin: 5px 0px;
         padding: 0 20px; 
+      }
+
+      #custom-dnd {
+        color: #${theme.base0B};
+        background: #${theme.dark_background_primary};
+        border-radius: 0 24px 24px 0;
+        padding: 0 20px 0 0;
+        margin: 5px 4px 5px 0px;
+        font-weight: bold;
+      }
+
+      #custom-dnd.dnd {
+        color: #${theme.base09};
       }
 
       #disk, #cpu, #memory {
