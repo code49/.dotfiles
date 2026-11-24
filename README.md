@@ -49,12 +49,16 @@ Tracked at [terminalTools/](terminalTools/), this submodule points to [terminalT
 *   **`ff` (Firefox Launcher):** A script wrapper offering an interactive `fzf` prompt to search bookmarks, shortcuts, or history and launch Firefox containers directly.
 *   **`gitac`:** Quick wrapper to add all changes and commit with a message (`gitac "commit message"`).
 
-### Rebuilder Script
+### Helper Scripts
 *   **`nix-rebuild-nice.sh`:** Located in [scripts/nix-rebuild-nice.sh](scripts/nix-rebuild-nice.sh) and aliased to `nix-reb`.
     *   Rebuilds and activates the NixOS configuration using the local flake.
     *   Automatically cleans up old system generations (keeps the last **25** generations by default).
     *   Cleans and updates GDM bootloader entries immediately after garbage collection.
     *   Supports interactive choice between `switch` and `boot` mode, or running directly with CLI parameters.
+*   **`setup-personal-work.sh`:** Located in [scripts/setup-personal-work.sh](scripts/setup-personal-work.sh).
+    *   Clones and initializes all `personal-work` repositories into `~/personal-work`.
+    *   Supports SSH (default) and HTTPS (`--https`) clone protocols.
+    *   Checks existing directories safely and fetches remote updates.
 
 ---
 
@@ -76,7 +80,7 @@ Tracked at [terminalTools/](terminalTools/), this submodule points to [terminalT
 │   ├── home.nix               # Main Home Manager entry point (packages, environment, aliases)
 │   └── [apps]/                # App configs (hyprland, waybar, kitty, helix, vscode, etc.)
 ├── terminalTools/             # Submodule containing custom portable utilities (lss, ff, gitac)
-└── scripts/                   # System helper scripts (e.g., nix-rebuild-nice.sh)
+└── scripts/                   # System helper scripts (nix-rebuild-nice.sh, setup-personal-work.sh)
 ```
 
 ---

@@ -137,6 +137,13 @@ Before rebuilding, make sure to customize the configuration for your own details
 
 ## 🛠️ Step 7: Post-Install Configuration & Maintenance
 
+### Setup Personal Work Repositories
+After you configure your SSH keys (or when using HTTPS), clone and set up all personal work repositories:
+```bash
+~/.dotfiles/scripts/setup-personal-work.sh
+```
+*(Pass `--https` if you have not configured GitHub SSH keys yet).*
+
 ### Changing Themes
 All colors are configured globally in [flake.nix](flake.nix) under the `theme` variable inside the outputs block. We utilize a Base16 structure (`base00` to `base0F`). Changing these colors will automatically propagate to Kitty, Waybar, Wofi, Swaylock, and Hyprland upon the next system rebuild.
 
