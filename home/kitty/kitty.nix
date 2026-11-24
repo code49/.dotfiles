@@ -16,7 +16,7 @@
       disable_ligatures = "always"; # rip systemverilog without it
 
       confirm_os_window_close = 0;
-      background_opacity = "0.6";
+      background_opacity = "0.8";
 
       # theme 
       background = "#" + theme.base00;
