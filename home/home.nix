@@ -157,6 +157,7 @@
       "n" = "nvtop";
       "ns" = "nix-shell";
       "nix-reb" = "~/.dotfiles/scripts/nix-rebuild-nice.sh";
+      "sli" = "python ~/personal-work/streamSilencer/stream_launcher.py";
     };
 
     initContent = ''
